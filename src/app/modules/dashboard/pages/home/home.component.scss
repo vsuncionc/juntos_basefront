@@ -40,14 +40,18 @@ mat-sidenav{
 }
 
 .content {
-    height: calc(91.2vh - 65px); 
+    height: calc(92vh - 65px); 
     background-color: var(--color-8);
     border-radius: 10px;
-    margin: 10px;
+    margin: 5px;
     margin-left: 10px;
     padding-top: 10px;
     padding-left: 15px;
     display: flex;
+}
+
+mat-sidenav-content {
+    height: calc(94vh - 65px);
 }
 
 .texto_nombre_usuario {
@@ -70,3 +74,5 @@ mat-sidenav{
     width:  80px;
     height: 80px;
 }
+
+
