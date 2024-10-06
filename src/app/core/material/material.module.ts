@@ -13,6 +13,7 @@ import { MatIconModule} from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 import {LayoutModule} from '@angular/cdk/layout';
 
 const materialModules = [
@@ -29,6 +30,7 @@ const materialModules = [
   MatIconModule,
   MatSlideToggleModule,
   MatFormFieldModule,
+  MatInputModule,
   LayoutModule 
 ];
 

@@ -4,7 +4,35 @@
         <mat-sidenav-content >
           
           <div class="content mat-elevation-z8">
-            Main content
+             
+            <mat-card appearance="outlined">
+              <mat-card-header>
+                <mat-card-title> INICIAR SESSION</mat-card-title>
+              </mat-card-header>
+              <p>
+              <mat-card-content class="form-custom">
+
+                <mat-form-field class="input-custom">
+                  <mat-label>Usuario</mat-label>
+                  <input matInput placeholder="Ingrese Usuario" >
+                </mat-form-field>
+
+                <mat-form-field class="input-custom">
+                  <mat-label>Clave</mat-label>
+                  <input matInput  placeholder="Ingrese Contraseña" >
+                </mat-form-field>
+
+                <div class="flex text-end">
+                  <button mat-button class="botton-login" (click)="ingresarPanel()">Iniciar Session</button>
+                </div>
+                <div class="flex">
+                  <a href="#">¿ Recuperar Contraseña ?</a>
+                </div>
+
+              </mat-card-content>
+
+            </mat-card>
+
           </div>
             
          </mat-sidenav-content>
