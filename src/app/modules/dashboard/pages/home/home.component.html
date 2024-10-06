@@ -1,0 +1,37 @@
+<!--------------- CABECERA ---------------------->
+<mat-toolbar>
+  <button mat-icon-button *ngIf="sidenav.mode ==='over'" (click)="sidenav.toggle()" >
+    <mat-icon class="white-icon" *ngIf="!sidenav.opened" >menu</mat-icon>
+    <mat-icon class="white-icon" *ngIf="sidenav.opened">close</mat-icon>
+  </button>
+  <span>SISTEMA DE VIATICOS V1.0</span>
+  <span class="example-spacer"></span>
+  <div *ngIf="display">
+    <img  class="logo mat-elevation-z8"  #imagenlogo src="images/logo-juntos.png">
+  </div>
+</mat-toolbar>
+<!--------------- FIN CABECERA ---------------------->
+
+<!------------------ CUERPO ------------------------->
+<mat-sidenav-container class="example-container">|
+  <mat-sidenav class="mat-elevation-z8" #sidenav="matSidenav" mode="side" opened>
+    <div class="img-contenedor">
+      <a href=""><img class="avatar mat-elevation-z8" src="images/avatar.png" alt="hfghf"></a>
+    </div>
+      <p class="texto_nombre_usuario">VLADIMIR SUNCION</p>
+      <mat-divider></mat-divider>
+      <app-menu></app-menu>
+  </mat-sidenav>
+
+  <mat-sidenav-content >
+     <div class="content mat-elevation-z8">
+       Main content
+     </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+<!------------------ FIN CUERPO ------------------------->
+
+
+<!------------------ PIE PAGINA ------------------------->
+<app-footer></app-footer>
+<!------------------ FIN PIE PAGINA ------------------------->

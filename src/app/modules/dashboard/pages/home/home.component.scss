@@ -1,0 +1,72 @@
+.example-spacer {
+    flex: 1 1 auto;
+  }
+
+  mat-toolbar {
+  background-color: var(--color-1);
+  color: var(--color-2);
+  }
+
+.white-icon {
+    color: var(--color-3);
+}
+/* Note: If you're using an SVG icon, you should make the class target the `<svg>` element */
+.white-icon svg {
+    fill: var(--color-3);
+}
+
+.logo { 
+    width: 308px;   
+    height: 48px; 
+     
+}
+mat-sidenav-container{
+    height: calc(94vh - 65px);
+}
+   
+mat-sidenav{
+    width: 200px;
+    border-right: none;
+    background-color: var(--color-4);
+    color: var(--color-5);
+    text-align: center;
+   border-radius: 0px;
+}
+.avatar {
+    margin-top: 10px;
+    width: 80px;   
+    height: 80px;
+    border-radius: 50%;
+}
+
+.content {
+    height: calc(91.2vh - 65px); 
+    background-color: var(--color-8);
+    border-radius: 10px;
+    margin: 10px;
+    margin-left: 10px;
+    padding-top: 10px;
+    padding-left: 15px;
+    display: flex;
+}
+
+.texto_nombre_usuario {
+    padding-top: 8px;
+    font-size: var(--font-size-1);
+    font-weight: bold;
+    font-style: italic;
+}
+.texto_nombre_usuario:hover {
+    font-size: var(--font-size-2);
+    background-color: var(--color-8);
+}
+
+.img-contenedor img{
+  width:  70px;
+  height: 70px;
+}
+
+.img-contenedor:hover img{
+    width:  80px;
+    height: 80px;
+}

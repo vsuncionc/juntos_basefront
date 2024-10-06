@@ -1,0 +1,18 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+    --color-1: #af261a;   // COLOR DE BANER PRINCIPAL
+    --color-2: #ffffff;   // COLOR DE LETRAS DE TOOLBAR MENU SUPERIOR
+    --color-3: #ffffff;   // COLOR DE LOS ICONOS DEL MENU SUPERIOR
+    --color-4: #ffffff;   // COLOR DE FONDO DEL MENU IZQUIERO
+    --color-5: #000000;   // COLOR DE LAS LETRAS DEL MENU IZQUIERDO
+    --color-6: #ffffff;   // COLOR DE LETRAS DE TOOLBAR PIE PAGINA
+    --color-7: #000000;   // COLOR DE LOS ICONOS DEL MENU IZQUIERDO
+    --color-8: #ffffff;   // COLOR DE FONDO DEL CONTENEDOR
+
+    --font-size-1: 13px;    //
+    --font-size-2: 15px;    // LETRA AL PASAR EL MAUSE POR EL NOMBRE DE USUARIO  
+}
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
