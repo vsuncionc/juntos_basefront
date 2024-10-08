@@ -4,35 +4,38 @@
         <mat-sidenav-content >
           
           <div class="content mat-elevation-z8">
-             
+             <form [formGroup]="formularioLogin" (submit)="sendLogin()">
             <mat-card appearance="outlined">
               <mat-card-header>
-                <mat-card-title> INICIAR SESSION</mat-card-title>
+                <mat-card-title class="titulo_login"> INICIAR SESSION</mat-card-title>
               </mat-card-header>
               <p>
               <mat-card-content class="form-custom">
 
                 <mat-form-field class="input-custom">
                   <mat-label>Usuario</mat-label>
-                  <input matInput placeholder="Ingrese Usuario" >
+                  <input matInput placeholder="Ingrese Usuario" formControlName="usuario" >
                 </mat-form-field>
 
                 <mat-form-field class="input-custom">
                   <mat-label>Clave</mat-label>
-                  <input matInput  placeholder="Ingrese Contraseña" >
+                  <input matInput  placeholder="Ingrese Contraseña" formControlName="clave">
                 </mat-form-field>
 
                 <div class="flex text-end">
-                  <button mat-button class="botton-login" (click)="ingresarPanel()">Iniciar Session</button>
+                  <button mat-button class="botton-login" [disabled]="formularioLogin.invalid">
+                    <mat-icon>login</mat-icon> 
+                    INICIAR SESSION
+                  </button>
                 </div>
                 <div class="flex">
-                  <a href="#">¿ Recuperar Contraseña ?</a>
+                  <a href="#" class="texto_recuperarcontrania">¿ Recuperar Contraseña ?</a>
                 </div>
-
+                  
               </mat-card-content>
 
             </mat-card>
-
+          </form>
           </div>
             
          </mat-sidenav-content>

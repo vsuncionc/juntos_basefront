@@ -1,10 +1,12 @@
 <!--------------- CABECERA ---------------------->
+<form  [formGroup]="formularioDashboard">
 <mat-toolbar>
   <button mat-icon-button *ngIf="sidenav.mode ==='over'" (click)="sidenav.toggle()" >
     <mat-icon class="white-icon" *ngIf="!sidenav.opened" >menu</mat-icon>
     <mat-icon class="white-icon" *ngIf="sidenav.opened">close</mat-icon>
   </button>
-  <span>SISTEMA REGISTRO REVISION POSTERIOR V1.0</span>
+  <span class="titulo_principal">REVISION POSTERIOR</span>
+  <mat-slide-toggle (change)="mostrarMenu()" formControlName="ocultarMenu" />
   <span class="example-spacer"></span>
   <div *ngIf="display">
     <img  class="logo mat-elevation-z8"  #imagenlogo src="images/logo-juntos.png">
@@ -16,7 +18,7 @@
 <mat-sidenav-container class="example-container">|
   <mat-sidenav class="mat-elevation-z8" #sidenav="matSidenav" mode="side" opened>
     <div class="img-contenedor">
-      <a href=""><img class="avatar mat-elevation-z8" src="images/avatar.png" alt="hfghf"></a>
+       <img (click)="cargarInformacion()" class="avatar mat-elevation-z8" src="images/avatar.png" alt="hfghf"> 
     </div>
       <p class="texto_nombre_usuario">VLADIMIR SUNCION</p>
       <mat-divider></mat-divider>
@@ -24,11 +26,12 @@
   </mat-sidenav>
 
   <mat-sidenav-content >
-     <div class="content mat-elevation-z8">
-       Main content
+     <div class="content mat-elevation-z8"> 
+       <router-outlet></router-outlet>
      </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
+</form>
 <!------------------ FIN CUERPO ------------------------->
 
 

@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FooterComponent } from './component/footer/footer.component';
 import { MenuComponent } from './component/menu/menu.component';
 import { MaterialModule } from '@principal/material/material.module';
- 
 
 
 
@@ -19,6 +18,6 @@ import { MaterialModule } from '@principal/material/material.module';
   exports: [
     FooterComponent,
     MenuComponent
-  ]
+  ] 
 })
 export class SharedModule { }

@@ -4,8 +4,8 @@ import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
   {
-    path: '',
-    component: HomeComponent
+    path: 'usuario',
+    loadChildren: ()=>import('@modulos/users/users.module').then(m => m.UsersModule)
   }
 ];
 

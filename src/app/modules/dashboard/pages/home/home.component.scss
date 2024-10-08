@@ -38,6 +38,9 @@ mat-sidenav{
     height: 80px;
     border-radius: 50%;
 }
+.avatar:hover {
+  cursor: pointer
+}
 
 .content {
     height: calc(92vh - 65px); 
@@ -52,6 +55,10 @@ mat-sidenav{
 
 mat-sidenav-content {
     height: calc(94vh - 65px);
+}
+
+mat-slide-toggle {
+    margin-left: 10px;
 }
 
 .texto_nombre_usuario {
@@ -73,6 +80,10 @@ mat-sidenav-content {
 .img-contenedor:hover img{
     width:  80px;
     height: 80px;
+}
+
+.titulo_principal {
+    font-size: var(--font-size-5);
 }
 
 

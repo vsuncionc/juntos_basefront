@@ -38,6 +38,19 @@ mat-sidenav-content {
 .botton-login {
   background-color: var(--color-10);
   color: white !important;
+  font-size: var(--font-size-8);
+}
+
+.titulo_login {
+  font-size: var(--font-size-6);
+  font-weight: bold;
+}
+
+.texto_recuperarcontrania {
+ font-size: var(--font-size-7);
+ text-decoration: none;
+ color: var(--color-10);
+ font-weight: bold;
 }
 
  

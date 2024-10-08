@@ -2,13 +2,13 @@ import {
   CdkScrollableModule,
   ScrollDispatcher,
   ViewportRuler
-} from "./chunk-6L7YMFEL.js";
-import "./chunk-3H6TQBZD.js";
+} from "./chunk-6PZ22Q7L.js";
+import "./chunk-L2AM66FG.js";
 import {
   Directionality,
   isFakeMousedownFromScreenReader,
   isFakeTouchstartFromScreenReader
-} from "./chunk-OMTNI2YC.js";
+} from "./chunk-MSUYCR7Q.js";
 import {
   _getEventTarget,
   _getShadowRoot,
@@ -16,10 +16,10 @@ import {
   coerceElement,
   coerceNumberProperty,
   normalizePassiveListenerOptions
-} from "./chunk-PMBXYTDD.js";
+} from "./chunk-A3UMAUAE.js";
 import {
   DOCUMENT
-} from "./chunk-66XJ5MHW.js";
+} from "./chunk-CMFAMFZ2.js";
 import {
   ApplicationRef,
   BehaviorSubject,
@@ -76,7 +76,8 @@ import {
   ɵɵdefineNgModule,
   ɵɵdirectiveInject,
   ɵɵinject
-} from "./chunk-C43OICTL.js";
+} from "./chunk-W4XL3JCB.js";
+import "./chunk-WDMUDEB6.js";
 
 // node_modules/@angular/cdk/fesm2022/drag-drop.mjs
 function deepCloneNode(node) {

@@ -1,10 +1,19 @@
-.example-spacer2 {
-    flex: 1 1 auto;
-  }
-
- mat-toolbar {
+.example-spacer {
+  flex: 1 1 auto;
+}
+mat-toolbar {
     background-color: var(--color-1);
     color: var(--color-6);
     width: 100%;
     height: 43px;
+}
+.infoprograma {
+  align-content: end;
+}
+.letras_piepagina {
+  font-size: var(--font-size-3);
+}
+
+.letras_fecha {
+  font-size: var(--font-size-4); 
 }
