@@ -3,7 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { InfoComponent } from './pages/info/info.component';
 
 const routes: Routes = [
-  {path:'',component:InfoComponent}
+  {
+    path:'',
+    component:InfoComponent,
+    data: { title: 'MODULO USUARIO' }
+  }
 ];
 
 @NgModule({

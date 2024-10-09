@@ -10,6 +10,7 @@
     --color-8: #ffffff;   // COLOR DE FONDO DEL CONTENEDOR
     --color-9: #ffffff;   // COLOR DE FONDO DEL LOGIN
     --color-10: #af261a;  // COLOR DE FONDO DEL BOTON DE LOGIN
+    --color-11: #af261a;  // COLOR LETRAS ETIQUETAS USUARIO
 
     --font-size-1: 13px;    //
     --font-size-2: 15px;    // TAMANIO LETRA AL PASAR EL MAUSE POR EL NOMBRE DE USUARIO  
@@ -19,6 +20,14 @@
     --font-size-6: 25px;    // TAMANIO LETRAS TITULO LOGIN
     --font-size-7: 17px;    // TAMANIO LETRAS RECUPERAR CONTRASENIA
     --font-size-8: 15px;    // TAMANIO LETRAS BOTON INICIAR SESSION
+    --font-size-9: 15px;    // TAMANIO LETRAS TITULO DE LOS MODULOS DASHBOARD
+    --font-size-10: 15px;    // TAMANIO LETRAS SUB TITULO DE LOS MODULOS 
+}
+
+
+.titulo_modulo {
+  font-size: var(--font-size-9);
+  font-weight: bolder;
 }
 
 

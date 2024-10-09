@@ -1,7 +1,63 @@
- <div class="flex">
-  dxg
+<span class="titulo_modulo">{{title}}</span>
+ <mat-divider></mat-divider>
+ 
+<div class="row text-center">
+  
+    <mat-card class="caja_informacion">
+      <mat-card-header>
+        <mat-card-title><span class="sub_titulo">INFORMACION DEL USUARIO</span> </mat-card-title> 
+      </mat-card-header>
+
+        <mat-card-content>
+          <form [formGroup]="formularioUsuario"  (ngSubmit)="actualizarInformacion()">
+            <div class="row text-start pt-3">
+                <mat-form-field appearance="outline">
+                  <mat-label>NOMBRE</mat-label>
+                  <input matInput placeholder="Ingrese Nombre" formControlName="nombre">
+                  <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                </mat-form-field>
+            </div>
+
+            <div class="row text-start">
+              <mat-form-field appearance="outline">
+                <mat-label>APELLIDO PATERNO</mat-label>
+                <input matInput placeholder="Ingrese Nombre" formControlName="apellidoPaterno">
+                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+              </mat-form-field>
+            </div>
+                
+
+            <div class="row text-start">
+                <mat-form-field appearance="outline">
+                  <mat-label>APELLIDO MATERNO</mat-label>
+                  <input matInput placeholder="Ingrese Nombre" formControlName="apellidoMaterno">
+                  <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+                </mat-form-field>
+             </div>
+                
+             <div class="row text-start">
+              <mat-form-field>
+                <mat-label>FECHA NACIMIENTO</mat-label>
+                <input matInput [matDatepicker]="picker1" formControlName="fechaNacimiento">
+                <mat-hint>DD/MMM/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+              </mat-form-field>
+             </div>
+ 
+             <div class="row justify-content-end">
+              <button mat-fab extended  aria-label="Example icon button with a delete icon">
+                <mat-icon>save</mat-icon> GRABAR
+              </button>
+             </div>
+            
+          </form>
+        </mat-card-content>
+    </mat-card>
+  
 </div>
-<div class="flex">
-  dxg
-</div>
+
+ 
+ 
+
  

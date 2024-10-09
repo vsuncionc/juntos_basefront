@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
   display = false;
 
   formularioDashboard: FormGroup = new FormGroup({});
+  
 
   constructor( private observer: BreakpointObserver, private cd: ChangeDetectorRef ,
     private router: Router) {

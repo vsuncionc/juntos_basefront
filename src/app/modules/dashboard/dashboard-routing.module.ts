@@ -5,7 +5,8 @@ import { HomeComponent } from './pages/home/home.component';
 const routes: Routes = [
   {
     path: 'usuario',
-    loadChildren: ()=>import('@modulos/users/users.module').then(m => m.UsersModule)
+    loadChildren: ()=>import('@modulos/users/users.module').then(m => m.UsersModule),
+    data: { title: 'MODULO USUARIO' }
   }
 ];
 
