@@ -15,6 +15,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {LayoutModule} from '@angular/cdk/layout';
+import {MatStepperModule} from '@angular/material/stepper';
 
 const materialModules = [
   MatDividerModule,
@@ -31,7 +32,8 @@ const materialModules = [
   MatSlideToggleModule,
   MatFormFieldModule,
   MatInputModule,
-  LayoutModule 
+  LayoutModule ,
+  MatStepperModule
 ];
 
 @NgModule({

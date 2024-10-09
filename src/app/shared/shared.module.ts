@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FooterComponent } from './component/footer/footer.component';
 import { MenuComponent } from './component/menu/menu.component';
 import { MaterialModule } from '@principal/material/material.module';
-
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -13,7 +13,8 @@ import { MaterialModule } from '@principal/material/material.module';
   ],
   imports: [
     CommonModule,
-    MaterialModule
+    MaterialModule,
+    RouterModule
   ],
   exports: [
     FooterComponent,

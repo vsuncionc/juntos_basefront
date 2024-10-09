@@ -1,12 +1,12 @@
 import {
+  MatDividerModule
+} from "./chunk-2WDTUEY5.js";
+import {
   SelectionModel
 } from "./chunk-L2AM66FG.js";
 import {
   NG_VALUE_ACCESSOR
 } from "./chunk-POHTAXWR.js";
-import {
-  MatDividerModule
-} from "./chunk-2WDTUEY5.js";
 import {
   MAT_RIPPLE_GLOBAL_OPTIONS,
   MatCommonModule,

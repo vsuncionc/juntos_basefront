@@ -4,6 +4,7 @@
     align-items: center;
     justify-content: flex-start;
     font-size: 1rem;
+    
     mat-icon,span,a {
       margin-right: 8px;
       color: var(--color-7);
@@ -12,5 +13,9 @@
 
 .menu-boton:hover {
   font-size: 18px;
+}
+
+a {
+  text-decoration: none;
 }
     
