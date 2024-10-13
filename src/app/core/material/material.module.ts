@@ -14,6 +14,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import {LayoutModule} from '@angular/cdk/layout';
 
 const materialModules = [
@@ -31,6 +32,7 @@ const materialModules = [
   MatSlideToggleModule,
   MatFormFieldModule,
   MatInputModule,
+  MatCheckboxModule,
   LayoutModule 
 ];
 

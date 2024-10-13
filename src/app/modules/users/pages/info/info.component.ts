@@ -14,6 +14,7 @@ export class InfoComponent implements OnInit {
   constructor(private route: ActivatedRoute) { }
   
   ngOnInit(): void {
+    
     this.route.data.subscribe(data => {
       this.title = data['title'];
       console.log(this.title);
@@ -24,9 +25,16 @@ export class InfoComponent implements OnInit {
         nombre: new FormControl('JUAN ANGEL',[Validators.required]),
         apellidoPaterno: new FormControl('MENDOZA',[Validators.required]),
         apellidoMaterno: new FormControl('BAZAN',[Validators.required]),
-        fechaNacimiento: new FormControl(this.date1,[Validators.required])
+        correo: new FormControl('juan@juntos.gob.pe'),
+        telefono: new FormControl('943589858'),
+        usuario: new FormControl('VJUAN'),
+        region: new FormControl('PIURA'),
+        clave: new FormControl('dfd')
       }
     );
+
+    this.formularioUsuario.disable();
+    this.formularioUsuario.get('clave')?.enable();
   }
 
 
