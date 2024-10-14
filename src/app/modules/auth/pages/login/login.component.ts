@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '@modulos/auth/service/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,9 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent  implements OnInit{
   formularioLogin: FormGroup = new FormGroup({});
-  constructor(private router: Router) {}
+  constructor(private router: Router,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.formularioLogin = new FormGroup(
@@ -25,8 +28,10 @@ export class LoginComponent  implements OnInit{
   }
 
   sendLogin(){
-    console.log("inresee");
-    this.router.navigate(["/principal"]);
+    console.log("===== INGRESO ENVIO DE CREDENCIALES ===");
+     const {usuario,clave} = this.formularioLogin.value;
+     this.authService.enviarCredenciales(usuario,clave);
+    //this.router.navigate(["/principal"]);
   }
 
   
