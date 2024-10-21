@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    font-size: 1rem;
+    font-size: 14px;
     
     mat-icon,span,a {
       margin-right: 8px;
@@ -12,7 +12,7 @@
 }
 
 .menu-boton:hover {
-  font-size: 18px;
+  font-size: 15px;
 }
 
 a {
