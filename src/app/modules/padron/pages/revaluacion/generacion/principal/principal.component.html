@@ -1,0 +1,48 @@
+<span class="titulo_modulo">{{title}}</span>
+ <mat-divider></mat-divider> 
+<form class="form-inline"  [formGroup]="frmProceo"  (ngSubmit)="procesarPadron()" >
+
+  <mat-card appearance="outlined">
+ 
+      <mat-card-content>
+          <br>
+          <div class="row">
+  
+              <div class="col-sm-3 text-center">
+                  <mat-label>CANTIDAD HOGARES</mat-label> <br>
+                  <mat-label>5</mat-label> 
+              </div>
+              <div class="col-sm-3 text-center">
+                  <mat-label>MONTO TOTAL</mat-label>  <br>
+                  <mat-label>350</mat-label> 
+              </div>
+              <div class="col-sm-3 text-start">
+                  <mat-form-field appearance="outline">
+                    <mat-label>DESCRIPCION</mat-label>
+                    <input matInput placeholder="Ingrese la Descripcion" value="" formControlName="strDescripcion">
+                  </mat-form-field>
+              </div>
+              <div class="col-sm-3 text-start">
+                  <button mat-fab extended class="boton_general">
+                   <mat-icon>save</mat-icon>
+                      PROCESAR
+                  </button>
+              </div>  
+               
+          </div>
+      </mat-card-content>
+    </mat-card>
+  
+  </form>
+
+  <label class="title_center">LISTAS DE HOGARES Y MIEMBROS OBJETIVOS</label>
+    <div class="row">
+      <mat-tab-group>
+          <mat-tab label="HOGARES">
+             <app-listahogares></app-listahogares>
+          </mat-tab>
+          <mat-tab label="MIEMBROS OBJETIVOS">
+             <app-listamobjetivo></app-listamobjetivo>
+          </mat-tab> 
+      </mat-tab-group>
+    </div>

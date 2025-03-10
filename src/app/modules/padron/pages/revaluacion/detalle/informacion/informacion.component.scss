@@ -1,0 +1,28 @@
+ .caja_tipo{
+  display: block;
+  padding-left: 10px;   
+}
+
+.caja_expediente{
+  display: block;
+}
+
+.caja_documento{
+  display: block;
+  padding-right: 10px;
+}
+
+.caja_descripcion{
+  display: block;
+  padding-left: 10px; 
+  padding-right: 10px;
+}
+
+.boton_general {
+  margin-top: 1em;
+  background-color: var(--color-10);
+  color: white !important;
+  font-size: var(--font-size-8);
+}
+
+ 

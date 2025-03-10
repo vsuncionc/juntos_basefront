@@ -1,0 +1,193 @@
+<mat-stepper linear #stepper class="contenido_precierre">
+
+  <!-- PASO 1 VISTA PREVIA DE LOS HOGARES  Y BOTON DEL PRE CIERRE-->
+    <mat-step [stepControl]="firstFormGroup"  [editable]="false">
+      <form [formGroup]="firstFormGroup">
+        <input type="hidden"  formControlName="strContinua1"  [value]="pcontinua1" />
+        <p></p>
+        <ng-template matStepLabel>VISTA PREVIA PRE CIERRE</ng-template>
+
+        <mat-card class="contenido_precierre text-center" appearance="outlined" >
+            <mat-card-content  >
+               <div class="row">
+
+                  <div class="col-sm-3" >
+                    <mat-form-field appearance="outline" >
+                        <mat-label>USUARIO</mat-label>
+                        <input readonly matInput  formControlName="strUsuario" class="text-center" >
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-sm-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>CANTIDAD HOGARES</mat-label>
+                        <input readonly matInput  formControlName="strCantidadHogares" class="text-center">
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-sm-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>MONTO</mat-label>
+                        <input readonly matInput  formControlName="strMontoPagar" class="text-center">
+                    </mat-form-field>
+                  </div>
+
+                  <div class="col-sm-3">
+                    <mat-form-field appearance="outline">
+                        <mat-label>FECHA CIERRE</mat-label>
+                        <input readonly matInput  formControlName="strFechaPreCierre" class="text-center">
+                    </mat-form-field>
+                  </div>
+ 
+               </div>
+               
+               <div class="rows">
+                <div class="col-sm-12">
+                  <app-hg-seleccion-precierre></app-hg-seleccion-precierre>
+                </div>
+                   
+               </div>
+               <div class="row">
+                <div class="col-sm-12 text-center">
+                   <button mat-fab extended class="boton_general" (click)="clickButton(2, stepper)">
+                    <mat-icon>library_add_check</mat-icon>
+                    GENERAR PRE CIERRE
+                  </button>
+                </div>
+                
+              </div>
+            </mat-card-content>
+        </mat-card>
+
+        <div>
+          <!-- <button mat-button matStepperNext>Siguiente</button>-->
+        </div>
+      </form>
+    </mat-step>
+
+
+    <!-- PASO 2 RESULTADO DEL PRE CIERRE Y BOTON DEL CIERRE-->
+    <mat-step [stepControl]="secondFormGroup" editable="false">
+      <form [formGroup]="secondFormGroup">
+        <input type="hidden"  formControlName="strContinua2"  [value]="pcontinua1" />
+        <ng-template matStepLabel>RESUMEN PRE CIERRE</ng-template>
+
+        <mat-card class="contenido_precierre text-center" appearance="outlined" >
+          <mat-card-content  >
+             <div class="row">
+
+                <div class="col-sm-3">
+                  <mat-form-field appearance="outline">
+                      <mat-label>USUARIO</mat-label>
+                      <input readonly matInput  formControlName="strUsuarioResumen" class="text-center" >
+                  </mat-form-field>
+                </div>
+
+                <div class="col-sm-3">
+                  <mat-form-field appearance="outline">
+                      <mat-label>CANTIDAD HOGARES</mat-label>
+                      <input readonly matInput  formControlName="strCantidadHogaresResumen" class="text-center">
+                  </mat-form-field>
+                </div>
+
+                <div class="col-sm-3">
+                  <mat-form-field appearance="outline">
+                      <mat-label>MONTO</mat-label>
+                      <input readonly matInput  formControlName="strMontoPagarResumen" class="text-center">
+                  </mat-form-field>
+                </div>
+
+                <div class="col-sm-3">
+                  <mat-form-field appearance="outline">
+                      <mat-label>FECHA CIERRE</mat-label>
+                      <input readonly matInput  formControlName="strFechaPreCierreResumen" class="text-center">
+                  </mat-form-field>
+                </div>
+
+             </div>
+             <hr>
+             <div class="rows">
+              <div class="col-sm-12">
+                <label class="title_center">LISTA DE RESULTDO DE LA VALIDACION</label>
+                <mat-tab-group animationDuration="2000ms">
+                  <mat-tab label="HOGARES APTOS">
+                    <app-hogares-actos></app-hogares-actos>
+                  </mat-tab>
+                  <mat-tab label="HOGARES SUSPENDIDOS">
+                    <app-hogare-suspendidos></app-hogare-suspendidos>
+                  </mat-tab> 
+                </mat-tab-group>
+              </div>
+             </div>
+             <div class="row">
+              <div class="col-sm-12 text-center">
+                 <button mat-fab extended class="boton_general" (click)="clickButton(3, stepper)">
+                  <mat-icon>library_add_check</mat-icon>
+                  GENERAR CIERRE
+                </button>
+              </div>
+            </div>
+          </mat-card-content>
+      </mat-card>
+      </form>
+    </mat-step>
+
+
+
+    <!-- PASO 3 RESUMEN DEL CIERRE-->
+    <mat-step [stepControl]="tercerFormGroup" editable="false">
+      <form [formGroup]="tercerFormGroup">
+      <ng-template matStepLabel>CIERRE</ng-template>
+
+      <mat-card class="contenido_precierre text-center" appearance="outlined" >
+        <mat-card-content  >
+          <div class="row">
+
+            <div class="col-sm-3">
+              <mat-form-field appearance="outline">
+                  <mat-label>USUARIO</mat-label>
+                  <input readonly matInput  formControlName="strUsuarioCierre" class="text-center" >
+              </mat-form-field>
+            </div>
+
+            <div class="col-sm-3">
+              <mat-form-field appearance="outline">
+                  <mat-label>CANTIDAD HOGARES</mat-label>
+                  <input readonly matInput  formControlName="strCantidadHogaresCierre" class="text-center">
+              </mat-form-field>
+            </div>
+
+            <div class="col-sm-3">
+              <mat-form-field appearance="outline">
+                  <mat-label>MONTO</mat-label>
+                  <input readonly matInput  formControlName="strMontoPagarCierre" class="text-center">
+              </mat-form-field>
+            </div>
+
+            <div class="col-sm-3">
+              <mat-form-field appearance="outline">
+                  <mat-label>FECHA CIERRE</mat-label>
+                  <input readonly matInput  formControlName="strFechaCierre" class="text-center">
+              </mat-form-field>
+            </div>
+
+         </div>
+        </mat-card-content>
+      </mat-card>     
+
+      <div class="row text-center">
+
+      </div>
+
+        <app-hogares-actos></app-hogares-actos>
+        <div style="text-align: center;">
+          <button mat-fab extended class="boton_general">
+            <mat-icon>library_add_check</mat-icon>
+              DESCARGAR REPORTE
+          </button>
+       </div>
+
+      </form>
+    </mat-step>
+    
+  </mat-stepper>

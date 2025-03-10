@@ -1,0 +1,8 @@
+<h2 mat-dialog-title style="text-align: center;">PROCESAMIENTO</h2>
+<mat-dialog-content style="text-align: center;">
+  <h6>{{mensaje}}</h6>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No</button>
+  <button mat-button [mat-dialog-close]="btn" >SI</button>
+</mat-dialog-actions>

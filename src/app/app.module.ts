@@ -7,6 +7,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 import localePy from '@angular/common/locales/es-PY';
 import { registerLocaleData } from '@angular/common';
+import { provideHttpClient } from '@angular/common/http';
 registerLocaleData(localePy,'es')
 
 @NgModule({
@@ -19,7 +20,8 @@ registerLocaleData(localePy,'es')
   ],
   providers: [
     provideAnimationsAsync(),
-    {provide: LOCALE_ID,useValue: 'es'}
+    {provide: LOCALE_ID,useValue: 'es'},
+    provideHttpClient()
   ],
   bootstrap: [AppComponent]
 })

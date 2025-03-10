@@ -1,0 +1,146 @@
+
+<form   [formGroup]="frmRevaluacion" (submit)="procesarRevaluaciones()" >
+
+       <div class="row text-start">
+            
+            <div class="col-sm-3 text-center" >
+              <mat-form-field appearance="outline" style="padding-top: 10px;" >
+                <mat-label>Opciones Busqueda</mat-label>
+                <mat-select  formControlName="cbOpcionesBusqueda" >
+                  <mat-option value="option1">Numero Expediente</mat-option>
+                  <mat-option value="option2">Documento </mat-option>
+                  <mat-option value="option3">Descripcion</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-sm-3 text-center" style="padding-top: 10px;">
+              <mat-form-field appearance="outline">
+                <mat-label>Dato Busqueda</mat-label>
+                <input matInput   value="" formControlName="StrCriterio">
+              </mat-form-field>
+            </div>
+
+            <div class="col-sm-3 text-center" style="padding-top: 10px;">
+              <mat-form-field appearance="outline">
+                <mat-label>Tipo Esquema</mat-label>
+                <mat-select  formControlName="cbTipoEsquema" >
+                  <mat-option value="option1">BASE</mat-option>
+                  <mat-option value="option2">TPI </mat-option>
+                  <mat-option value="option3">TAS</mat-option>
+                  <mat-option value="option4">BASE Y TPI</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+            <div class="col-sm-3 text-start">
+              <button mat-fab extended class="boton_general">
+                <mat-icon>search</mat-icon>
+                BUSCAR
+              </button>
+            </div>
+
+              
+
+       </div>
+
+
+       <div class="rows text-start"><label class="title_center">LISTA DE REVALUACIONES</label></div>
+       
+       <mat-card appearance="outlined">
+         <mat-card-content>
+
+           <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+             <!--- Note that these columns can be defined in any order.
+                   The actual rendered columns are set as a property on the row definition" -->
+           
+                   <ng-container matColumnDef="OP">
+                    <th mat-header-cell *matHeaderCellDef>
+                      <mat-checkbox (change)="$event ? masterToggle() : null"  
+                                    [checked]="selection.hasValue() && isAllSelected()"
+                                    [indeterminate]="selection.hasValue() && !isAllSelected()">
+                      </mat-checkbox>
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                      <mat-checkbox (click)="$event.stopPropagation()"  
+                                    (change)="$event ? selection.toggle(row) : null"
+                                    [checked]="selection.isSelected(row)">
+                      </mat-checkbox>
+                    </td>
+                   </ng-container>
+             
+                   <!-- Position Column -->
+             <ng-container matColumnDef="IDREVAL">
+               <th mat-header-cell *matHeaderCellDef> CODIGO </th>
+               <td mat-cell *matCellDef="let element"> {{element.idrevaluacion}} </td>
+             </ng-container>
+           
+             <!-- Name Column -->
+             <ng-container matColumnDef="TIPO">
+               <th mat-header-cell *matHeaderCellDef> TIPO </th>
+               <td mat-cell *matCellDef="let element"> {{element.tipoesquema}} </td>
+             </ng-container>
+           
+             <!-- Weight Column -->
+             <ng-container matColumnDef="EXPEDIENTE">
+               <th mat-header-cell *matHeaderCellDef> EXPEDIENTE </th>
+               <td mat-cell *matCellDef="let element"> {{element.expediente}} </td>
+             </ng-container>
+           
+             <!-- Symbol Column -->
+             <ng-container matColumnDef="DOCUMENTO">
+               <th mat-header-cell *matHeaderCellDef> DOCUMENTO </th>
+               <td mat-cell *matCellDef="let element"> {{element.documento}} </td>
+             </ng-container>
+
+             <ng-container matColumnDef="FECHA">
+               <th mat-header-cell *matHeaderCellDef> FECHA </th>
+               <td mat-cell *matCellDef="let element"> {{element.fecha}} </td>
+             </ng-container>
+
+             <ng-container matColumnDef="PROCESO">
+               <th mat-header-cell *matHeaderCellDef> PROCESO </th>
+               <td mat-cell *matCellDef="let element"> {{element.proceso}} </td>
+             </ng-container>
+
+             <ng-container matColumnDef="HOGARES">
+               <th mat-header-cell *matHeaderCellDef> CANT HOGARES </th>
+               <td mat-cell *matCellDef="let element"> {{element.cantidadhogares}} </td>
+             </ng-container>
+
+             <ng-container matColumnDef="DETALLE">
+               <th mat-header-cell *matHeaderCellDef> DETALLE </th>
+               <td mat-cell *matCellDef="let element">
+                 <a  title="ver detalle"  class="pointer" (click)="verDetalle(element.idrevaluacion,element.tipoesquema,element.expediente,element.documento,element.proceso)" >
+                  <mat-icon  aria-hidden="false" aria-label="Example home icon" fontIcon="wysiwyg"></mat-icon> 
+                 </a>
+                </td>
+             </ng-container>
+           
+             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+           </table>
+ 
+           <div class="row" style="padding-top: 10px;">
+             <div class="col-sm-12 text-start">
+              <mat-paginator [pageSizeOptions]="[3, 4]"
+              showFirstLastButtons
+              aria-label="Select page of periodic elements">
+              </mat-paginator>
+             </div>
+           </div>
+
+           <div class="row">
+            <div class="col-sm-12  text-center">
+              <button  mat-fab extended class="boton_general" >
+                <mat-icon>settings</mat-icon>
+                PROCESAR
+              </button>
+            </div>
+           </div>
+ 
+         </mat-card-content>
+       </mat-card>
+
+</form>

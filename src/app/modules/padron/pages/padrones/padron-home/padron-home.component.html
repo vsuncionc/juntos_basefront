@@ -1,0 +1,184 @@
+<span class="titulo_modulo">{{title}}</span>
+ <mat-divider></mat-divider> <br>
+<form [formGroup]="formProcesarPadron" (submit)="procesarHogares()">
+    <mat-card class="title_center" appearance="outlined">
+        <mat-card-content>
+            <div class="row text-center">
+                <div class="col-sm-2">
+                    <mat-form-field appearance="outline"  class="combos">
+                        <mat-label class="titulo_combos">TIPO PADRON</mat-label>
+                        <mat-select  formControlName="strCbtipoPadron">
+                          <mat-option value="option1" >Revision Posterior</mat-option> 
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-2">
+                    <mat-form-field appearance="outline" class="combos" >
+                        <mat-label class="titulo_combos">PERIODO INICIO</mat-label>
+                        <mat-select  formControlName="strPeriodoInicio" >
+                            <mat-option value="option1" >202301</mat-option>
+                            <mat-option value="option1" >202302</mat-option> 
+                            <mat-option value="option1" >202401</mat-option> 
+                            <mat-option value="option1" >202402</mat-option>  
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-2">
+                    <mat-form-field appearance="outline" class="combos">
+                        <mat-label class="titulo_combos">PERIODO FIN</mat-label>
+                        <mat-select  formControlName="strPeriodoFin" >
+                            <mat-option value="option1" >202301</mat-option>
+                            <mat-option value="option1" >202302</mat-option> 
+                            <mat-option value="option1" >202401</mat-option> 
+                            <mat-option value="option1" >202402</mat-option> 
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-2">
+                    <mat-form-field appearance="outline" class="custom-datepicker">
+                        <mat-label class="titulo_combos">FECHA PADRON</mat-label>
+                        <input matInput [matDatepicker]="picker" readonly >
+                        <mat-datepicker-toggle matIconSuffix [for]="picker" > </mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                </div>
+
+                <div class="col-sm-2">
+                    <mat-form-field appearance="outline" class="caja_criterio">
+                        <mat-label class="titulo_combos">DESCRIPCION</mat-label>
+                        <input    matInput placeholder="Ingrese la Descripcion"   formControlName="strDescripcion">
+                    </mat-form-field>
+                </div>
+
+                <div class="col-sm-2">
+                    <button mat-fab extended class="boton_general">
+                        <mat-icon>search</mat-icon>
+                        BUSCAR
+                      </button>
+                </div>
+             </div>
+
+        </mat-card-content>   
+    </mat-card>        
+  
+    <div class="rows "><label class="titulo_pre_cierre">LISTA DE HOGARES</label></div>
+       
+ <mat-card appearance="outlined">
+      <mat-card-content>
+
+       
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" >
+
+
+    <ng-container matColumnDef="OP"  >
+      <th mat-header-cell *matHeaderCellDef   >
+        <mat-checkbox (change)="$event ? masterToggle() : null"  
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"  
+                      (change)="$event ? selection.toggle(row) : null"
+                      [checked]="selection.isSelected(row)">
+        </mat-checkbox>
+      </td>
+     </ng-container>
+
+    
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="DEPARTAMENTO">
+      <th mat-header-cell  *matHeaderCellDef > DEPARTAMENTO </th>
+      <td mat-cell *matCellDef="let element"> {{element.departamento}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="PROVINCIA">
+      <th mat-header-cell *matHeaderCellDef> PROVINCIA </th>
+      <td mat-cell *matCellDef="let element"> {{element.provincia}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="DISTRITO" >
+      <th mat-header-cell *matHeaderCellDef> DISTRITO </th>
+      <td mat-cell *matCellDef="let element"> {{element.distrito}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="CENTROPOBLADO"  >
+      <th mat-header-cell *matHeaderCellDef> CENTROPOBLADO </th>
+      <td mat-cell *matCellDef="let element"> {{element.centroPoblado}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="TIPOPADRON"  >
+      <th mat-header-cell *matHeaderCellDef> TIPOPADRON </th>
+      <td mat-cell *matCellDef="let element"> {{element.tipoPadron}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="PADRON"  >
+      <th mat-header-cell *matHeaderCellDef> PADRON </th>
+      <td mat-cell *matCellDef="let element"> {{element.codigoPadron}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="PERIODO"  >
+      <th mat-header-cell *matHeaderCellDef> PERIODO </th>
+      <td mat-cell *matCellDef="let element"> {{element.periodo}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="IDHOGAR"  >
+      <th mat-header-cell *matHeaderCellDef> IDHOGAR </th>
+      <td mat-cell *matCellDef="let element"> {{element.idhogar}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="MONTO"  >
+      <th mat-header-cell *matHeaderCellDef> MONTO </th>
+      <td mat-cell *matCellDef="let element" > {{element.monto}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="TITULAR"  >
+      <th mat-header-cell *matHeaderCellDef> TITULAR </th>
+      <td mat-cell *matCellDef="let element"> {{element.titular}} </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table> 
+
+  <div class="row" style="padding-top: 5px;">
+    <div class="col-sm-14 text-end" >
+      <mat-paginator  
+      [pageSizeOptions]="[3, 4]" 
+      showFirstLastButtons
+      aria-label="Select page of periodic elements">
+     </mat-paginator>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12 text-center">
+      <button mat-fab extended class="boton_general">
+        <mat-icon>library_add_check</mat-icon>
+        VISTA PREVIA PRE CIERRE
+      </button>
+    </div>
+  </div>
+
+
+
+
+
+   </mat-card-content> 
+ </mat-card>
+</form>
+ 

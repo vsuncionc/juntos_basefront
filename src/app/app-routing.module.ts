@@ -6,7 +6,7 @@ const routes: Routes = [
   { path: '',redirectTo: '/login', pathMatch: 'full' }, 
   { path: 'login', loadChildren: ()=>import('@modulos/auth/auth.module').then(m=>m.AuthModule)},
   { 
-    path: 'principal', 
+    path: 'principal', // path: 'principal', 
     component: HomeComponent,
     loadChildren: ()=>import('@modulos/dashboard/dashboard.module').then(m=>m.DashboardModule)
   }

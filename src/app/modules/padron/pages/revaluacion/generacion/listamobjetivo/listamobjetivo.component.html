@@ -1,0 +1,52 @@
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+ 
+    
+ 
+  <!-- Name Column -->
+  <ng-container matColumnDef="CODIGOHOGAR">
+    <th mat-header-cell *matHeaderCellDef> CODIGOHOGAR </th>
+    <td mat-cell *matCellDef="let element"> {{element.codigohogar}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="IDHOGAR">
+    <th mat-header-cell *matHeaderCellDef> IDHOGAR </th>
+    <td mat-cell *matCellDef="let element"> {{element.idhogar}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="PERIODO">
+    <th mat-header-cell *matHeaderCellDef> PERIODO </th>
+    <td mat-cell *matCellDef="let element"> {{element.periodo}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="IDCORTE">
+    <th mat-header-cell *matHeaderCellDef> IDCORTE </th>
+    <td mat-cell *matCellDef="let element"> {{element.idcorte}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="MIEMBROOBJETIVO">
+    <th mat-header-cell *matHeaderCellDef> MIEMBROOBJETIVO </th>
+    <td mat-cell *matCellDef="let element"> {{element.mobjetivo}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="CUMPLIMIENTO">
+    <th mat-header-cell *matHeaderCellDef> CUMPLIMIENTO </th>
+    <td mat-cell *matCellDef="let element"> {{element.mescumplimiento}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="CUMPLIO">
+    <th mat-header-cell *matHeaderCellDef> CUMPLIO </th>
+    <td mat-cell *matCellDef="let element"> {{element.cumplimiento}} </td>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<mat-paginator [pageSizeOptions]="[3, 5]"
+showFirstLastButtons
+aria-label="Select page of periodic elements">
+</mat-paginator>
+ 

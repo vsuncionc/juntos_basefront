@@ -5,7 +5,7 @@
     <mat-icon class="white-icon" *ngIf="!sidenav.opened" >menu</mat-icon>
     <mat-icon class="white-icon" *ngIf="sidenav.opened">close</mat-icon>
   </button>
-  <span class="titulo_principal">REVISION POSTERIOR V.1</span>
+  <span class="titulo_principal">PADRON POSTERIOR V.1</span>
   <mat-slide-toggle (change)="mostrarMenu()" formControlName="ocultarMenu" />
   <span class="example-spacer"></span>
   <div *ngIf="display">
@@ -20,14 +20,14 @@
     <div class="img-contenedor">
        <img (click)="cargarInformacion()" class="avatar mat-elevation-z8" src="images/avatar.png" alt="hfghf"> 
     </div>
-      <p class="texto_nombre_usuario">VLADIMIR SUNCION</p>
+      <p class="texto_nombre_usuario">SCUTIPAC</p>
       <mat-divider></mat-divider>
       <app-menu></app-menu>
   </mat-sidenav>
 
   <mat-sidenav-content >
      <div class="content mat-elevation-z8"> 
-      <div class="container-fluid">
+      <div class="container">
         <router-outlet></router-outlet>
       </div>
      </div>

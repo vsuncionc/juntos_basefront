@@ -1,0 +1,44 @@
+<span class="titulo_modulo">{{title}}</span>
+ <mat-divider></mat-divider><br>
+<form [formGroup]="formResumen">
+<mat-card appearance="outlined">
+
+    <mat-card-content>
+      <div class="row text-center">
+         <div class="col-sm-3 ">
+            <mat-form-field appearance="outline"  >
+                <mat-label>CODIGO PADRON</mat-label>
+                <input style="text-align: center;font-weight: bold;" readonly matInput placeholder="Ingrese la Descripcion"  formControlName="codigoPadron">
+            </mat-form-field>
+         </div>
+         <div class="col-sm-3">
+            <mat-form-field appearance="outline">
+                <mat-label>FECHA GENERACION</mat-label>
+                <input style="text-align: center;font-weight: bold;" readonly matInput placeholder="Ingrese la Descripcion"   formControlName="fechaGeneracion">
+            </mat-form-field>
+         </div>
+         <div class="col-sm-3">
+            <mat-form-field appearance="outline">
+                <mat-label>CANTIDAD HOGARES</mat-label>
+                <input style="text-align: center;font-weight: bold;" readonly matInput placeholder="Ingrese la Descripcion"   formControlName="cantidadHogares">
+            </mat-form-field>
+         </div>
+         <div class="col-sm-3">
+            <mat-form-field appearance="outline">
+                <mat-label>MONTO TOTAL</mat-label>
+                <input style="text-align: center;font-weight: bold;" readonly matInput placeholder="Ingrese la Descripcion"   formControlName="montoTotal">
+            </mat-form-field>
+         </div>
+      </div>
+ 
+    </mat-card-content>
+    <mat-card-actions style="padding-top: 60PX;padding-bottom: 30px;padding-right: 20px;justify-content: center;">
+      <button mat-button style="background-color: brown;color: white;">
+        <mat-icon>
+            download
+        </mat-icon>
+          DESCARGAR RESUMEN EXCEL
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>

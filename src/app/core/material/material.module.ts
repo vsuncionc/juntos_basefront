@@ -16,6 +16,14 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {LayoutModule} from '@angular/cdk/layout';
 import {MatStepperModule} from '@angular/material/stepper';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatTableModule} from '@angular/material/table';
+import {MatSelectModule} from '@angular/material/select'; 
+import {MatPaginatorModule} from '@angular/material/paginator'; 
+import {MatChipsModule} from '@angular/material/chips';
+import {MatDialogModule} from '@angular/material/dialog';
+
 
 const materialModules = [
   MatDividerModule,
@@ -33,7 +41,14 @@ const materialModules = [
   MatFormFieldModule,
   MatInputModule,
   LayoutModule ,
-  MatStepperModule
+  MatStepperModule,
+  MatCheckboxModule,
+  MatTabsModule,
+  MatTableModule,
+  MatSelectModule,
+  MatPaginatorModule,
+  MatChipsModule,
+  MatDialogModule
 ];
 
 @NgModule({

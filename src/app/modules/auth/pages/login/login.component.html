@@ -7,7 +7,7 @@
              <form [formGroup]="formularioLogin" (submit)="sendLogin()">
             <mat-card appearance="outlined">
               <mat-card-header>
-                <mat-card-title class="titulo_login"> INICIAR SESSION</mat-card-title>
+                <mat-card-title class="titulo_login"> INICIAR SESION</mat-card-title>
               </mat-card-header>
               <p>
               <mat-card-content class="form-custom">
@@ -21,6 +21,8 @@
                   <mat-label>Clave</mat-label>
                   <input matInput  placeholder="Ingrese Contraseña" formControlName="clave">
                 </mat-form-field>
+
+                <mat-checkbox  >Soy Humano</mat-checkbox>
 
                 <div class="flex text-end">
                   <button mat-button class="botton-login" [disabled]="formularioLogin.invalid">

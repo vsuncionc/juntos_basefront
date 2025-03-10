@@ -1,0 +1,20 @@
+mat-card{
+    background-color: rgb(255, 255, 255);
+}
+
+.boton_general {
+  
+    background-color: var(--color-10);
+    color: white !important;
+    font-size: var(--font-size-8);
+  }
+
+  .title_center {
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center; /* align vertical */
+    font-weight: bold;
+    padding-top: 10px;
+  }
+
+ 

@@ -21,7 +21,12 @@
     --font-size-7: 17px;    // TAMANIO LETRAS RECUPERAR CONTRASENIA
     --font-size-8: 15px;    // TAMANIO LETRAS BOTON INICIAR SESSION
     --font-size-9: 15px;    // TAMANIO LETRAS TITULO DE LOS MODULOS DASHBOARD
-    --font-size-10: 15px;    // TAMANIO LETRAS SUB TITULO DE LOS MODULOS 
+    --font-size-10: 15px;   // TAMANIO LETRAS SUB TITULO DE LOS MODULOS 
+    --font-size-12: 12px;   //  
+    --font-size-13: 13px;   //  
+    --font-size-14: 14px;   //  
+    --font-size-15: 15px;   //  
+    --font-size-16: 16px;   // SUBTITULO 
 }
 
 
@@ -36,3 +41,5 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 button:disabled{
  opacity: .5;   
 }
+
+ 

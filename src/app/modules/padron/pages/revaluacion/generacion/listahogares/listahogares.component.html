@@ -1,0 +1,67 @@
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+ 
+    
+    <!-- Position Column -->
+  <ng-container matColumnDef="MEMORANDO">
+    <th mat-header-cell *matHeaderCellDef>MEMORANDO</th>
+    <td mat-cell *matCellDef="let element"> {{element.memorando}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="EXPEDIENTE">
+    <th mat-header-cell *matHeaderCellDef> EXPEDIENTE </th>
+    <td mat-cell *matCellDef="let element"> {{element.expediente}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="CODIGOHOGAR">
+    <th mat-header-cell *matHeaderCellDef> CODIGOHOGAR </th>
+    <td mat-cell *matCellDef="let element"> {{element.codigohogar}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="IDHOGAR">
+    <th mat-header-cell *matHeaderCellDef> IDHOGAR </th>
+    <td mat-cell *matCellDef="let element"> {{element.idhogar}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="IDCORTE">
+    <th mat-header-cell *matHeaderCellDef> IDCORTE </th>
+    <td mat-cell *matCellDef="let element"> {{element.idcorte}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="PERIODO">
+    <th mat-header-cell *matHeaderCellDef> PERIODO </th>
+    <td mat-cell *matCellDef="let element"> {{element.periodo}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="MES">
+    <th mat-header-cell *matHeaderCellDef> MES </th>
+    <td mat-cell *matCellDef="let element"> {{element.mes}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="CUMPLIO">
+    <th mat-header-cell *matHeaderCellDef> CUMPLIO </th>
+    <td mat-cell *matCellDef="let element"> {{element.cumplio}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="MONTO">
+    <th mat-header-cell *matHeaderCellDef> MONTO </th>
+    <td mat-cell *matCellDef="let element"> {{element.monto}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="TITULAR">
+    <th mat-header-cell *matHeaderCellDef> TITULAR </th>
+    <td mat-cell *matCellDef="let element"> {{element.titular}} </td>
+  </ng-container>
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<mat-paginator [pageSizeOptions]="[3, 5]"
+showFirstLastButtons
+aria-label="Select page of periodic elements">
+</mat-paginator>
+ 

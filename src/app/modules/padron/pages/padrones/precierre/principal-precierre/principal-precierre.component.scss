@@ -1,0 +1,37 @@
+.mat-stepper-horizontal {
+    margin-top: 8px;
+  }
+  
+  .mat-mdc-form-field {
+    margin-top: 16px;
+  }
+
+  .contenido_precierre{
+    background-color: rgb(255, 255, 255);
+  }
+
+
+  .boton_general {
+    margin-top: 1em;
+    background-color: var(--color-10);
+    color: white !important;
+    font-size: var(--font-size-8);
+}
+
+.mat-tab-group {
+  margin-bottom: 48px;
+}
+
+mat-form-field{
+  width: 80%;
+  font-size: 15px;
+}
+
+.title_center {
+  display: flex;
+  justify-content: center; /* align horizontal */
+  align-items: center; /* align vertical */
+  font-weight: bold;
+}
+
+ 

@@ -1,5 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+
+ 
 
 @Component({
   selector: 'app-home',
@@ -7,22 +10,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent  implements OnInit{
-
-formularioPadron: FormGroup = new FormGroup({});
-
-private _formBuilder = inject(FormBuilder);
-
-firstFormGroup = this._formBuilder.group({
-  firstCtrl: ['', Validators.required],
-});
-secondFormGroup = this._formBuilder.group({
-  secondCtrl: ['', Validators.required],
-});
-
+title: string='';
+constructor(private fb:FormBuilder,private route: ActivatedRoute) {
+ }
+ 
   ngOnInit(): void {
-
-   
-   console.log('sdfsf');
+    this.route.data.subscribe(data => {
+      this.title = data['title'];
+      console.log(this.title);
+    });
   }
+
 
 }

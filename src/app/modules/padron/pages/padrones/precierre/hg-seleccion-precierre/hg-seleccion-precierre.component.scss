@@ -1,0 +1,30 @@
+.boton_general {
+    margin-top: 1em;
+    background-color: var(--color-10);
+    color: white !important;
+    font-size: var(--font-size-8);
+}
+
+
+table {
+    background-color: rgb(255, 255, 255); 
+  }
+  table th{
+    background-color: #AF261A;
+    color: aliceblue;
+ }
+  tr:hover td{
+    background:rgb(214, 213, 213);
+  }
+  .pointer{
+    cursor: pointer; 
+    color: #AF261A;
+   }  
+
+mat-form-field{
+ height: 40px;
+}
+
+
+
+ 

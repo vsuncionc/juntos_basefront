@@ -1,0 +1,79 @@
+<form class="form-inline"  [formGroup]="frmRevaluacionpadron" (submit)="buscarRevaluacionPadron()" >
+
+      <mat-card appearance="outlined" class="outline">
+        <mat-card-content>
+
+          <mat-form-field  appearance="outline">
+            <mat-label>Ingrese Codigo Padron</mat-label>
+            <input matInput type="number"  value="" >
+          </mat-form-field>
+          &nbsp;
+              <button mat-fab extended class="boton_general">
+                <mat-icon>search</mat-icon>
+                BUSCAR
+              </button>
+              
+        </mat-card-content>
+      </mat-card>
+
+      
+      <div class="rows text-start" style="padding-top: 20px;padding-bottom: 10px;">LISTAR REVALUACIONES</div>
+       
+      <mat-card appearance="outlined">
+        <mat-card-content>
+          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        
+            <!-- Position Column -->
+          <ng-container matColumnDef="TIPO">
+            <th mat-header-cell *matHeaderCellDef> TIPO </th>
+            <td mat-cell *matCellDef="let element"> {{element.tipoEsquema}} </td>
+          </ng-container>
+        
+          <!-- Weight Column -->
+          <ng-container matColumnDef="EXPEDIENTE">
+            <th mat-header-cell *matHeaderCellDef> EXPEDIENTE </th>
+            <td mat-cell *matCellDef="let element"> {{element.expediente}} </td>
+          </ng-container>
+        
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="DOCUMENTO">
+            <th mat-header-cell *matHeaderCellDef> DOCUMENTO </th>
+            <td mat-cell *matCellDef="let element"> {{element.documento}} </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="FECHA">
+            <th mat-header-cell *matHeaderCellDef> FECHA </th>
+            <td mat-cell *matCellDef="let element"> {{element.fecha}} </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="PROCESO">
+            <th mat-header-cell *matHeaderCellDef> PROCESO </th>
+            <td mat-cell *matCellDef="let element"> {{element.proceso}} </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="HOGARES">
+            <th mat-header-cell *matHeaderCellDef> CANT HOGARES </th>
+            <td mat-cell *matCellDef="let element"> {{element.cantHogares}} </td>
+          </ng-container>
+  
+          <ng-container matColumnDef="DETALLE">
+            <th mat-header-cell *matHeaderCellDef> DETALLE </th>
+            <td mat-cell *matCellDef="let element"><a href="">
+              <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="wysiwyg"></mat-icon>
+            </a></td>
+          </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <br>
+        <mat-paginator [pageSizeOptions]="[1, 2]"
+        showFirstLastButtons
+        aria-label="Select page of periodic elements">
+       </mat-paginator>
+      
+      </mat-card-content>
+    </mat-card>    
+
+</form>   

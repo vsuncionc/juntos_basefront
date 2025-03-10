@@ -9,9 +9,9 @@ const routes: Routes = [
     data: { title: 'MODULO USUARIO' }
   },
   {
-    path: 'padron',
+    path: 'revaluacion',
     loadChildren: ()=>import('@modulos/padron/padron.module').then(m=>m.PadronModule),
-    data: { title: 'MODULO PADRON' }
+    data: { title: 'MODULO REVALUACIONES' }
   }
 ];
 
