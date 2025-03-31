@@ -1,29 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { HogaresPadronRevaluacionResponse } from '@principal/model/padron/response/HogaresPadronRevaluacionResponse';
 
-export interface ITfListaHogares {
-  codigo: number,
-  departamento: String,
-  provincia: String,
-  distrito: String,
-  centroPoblado: String,
-  tipoPadron: String,
-  codigoPadron: String,
-  periodo: String,
-  idhogar: String,
-  monto: String,
-  titular: String
-}
-
-const ELEMENT_DATA: ITfListaHogares[] = [
-  {codigo:1,departamento:"CAJAMARCA",provincia:"CAJAMARCA",distrito: "CAJAMARCA",centroPoblado:"CELENDIN",tipoPadron:"REVISION POSTERIOR",codigoPadron:"457",periodo:"202402",idhogar:"4823081",monto:"50",titular:"LOPEZ LOPEZ ZULMA"},
-  {codigo:2,departamento:"CAJAMARCA",provincia:"CAJAMARCA",distrito: "CAJAMARCA",centroPoblado:"CELENDIN",tipoPadron:"REVISION POSTERIOR",codigoPadron:"457",periodo:"202403",idhogar:"4823081",monto:"100",titular:"LOPEZ LOPEZ ZULMA"},
-  {codigo:3,departamento:"CAJAMARCA",provincia:"CAJAMARCA",distrito: "CAJAMARCA",centroPoblado:"CELENDIN",tipoPadron:"REVISION POSTERIOR",codigoPadron:"457",periodo:"202402",idhogar:"5426664",monto:"100",titular:"LOPEZ LOPEZ ZULMA"},
-  {codigo:4,departamento:"TUMBES",provincia:"TUMBES",distrito: "ZARUMILLA",centroPoblado:"LA PALMA",tipoPadron:"REVISION POSTERIOR",codigoPadron:"450",periodo:"202401",idhogar:"8785454",monto:"200",titular:"MARIA RASTA RAMIREZ"}
-];
-
-
+ 
 @Component({
   selector: 'app-hg-seleccion-precierre',
   templateUrl: './hg-seleccion-precierre.component.html',
@@ -31,11 +12,14 @@ const ELEMENT_DATA: ITfListaHogares[] = [
 })
 export class HgSeleccionPrecierreComponent implements OnInit {
 
-  displayedColumns: string[] = ['DEPARTAMENTO','PROVINCIA', 'DISTRITO', 'CENTROPOBLADO', 'TIPOPADRON', 'CODIGOPADRON', 'PERIODO', 'IDHOGAR', 'MONTO', 'TITULAR'];
-  dataSource =new MatTableDataSource<any>(ELEMENT_DATA);
+  @Input() lsHogarSeleccionadoVistaPrevia : HogaresPadronRevaluacionResponse[] = [];
+
+  displayedColumns: string[] = ['DEPARTAMENTO','ESQUEMA', 'IDCORTE', 'IDHOGAR', 'CODIGOHOGAR', 'PERIODO', 'FPADRON', 'TITULAR', 'CUENTA', 'CODIGO_PADRON','MONTO'];
+  dataSource =new MatTableDataSource<any>();
    color = '#AF261A'
   
    @ViewChild(MatPaginator) paginator!: MatPaginator;
+   @ViewChild(MatSort) sort!: MatSort;
     ngAfterViewInit() {
       this.dataSource.paginator = this.paginator;
     }
@@ -43,6 +27,17 @@ export class HgSeleccionPrecierreComponent implements OnInit {
     
 
   ngOnInit(): void {
+    this.obtenerHogaresSeleccionadosVistaPrevia();
   }
+
+  obtenerHogaresSeleccionadosVistaPrevia(){
+   console.log("lsHogarSeleccionadoVistaPrevia",this.lsHogarSeleccionadoVistaPrevia.length);
+   this.dataSource =new MatTableDataSource<HogaresPadronRevaluacionResponse>(this.lsHogarSeleccionadoVistaPrevia);
+   setTimeout(() => {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  });
  
+}
+
 }

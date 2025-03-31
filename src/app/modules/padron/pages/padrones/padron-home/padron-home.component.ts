@@ -1,49 +1,50 @@
+import { PadronService } from './../../../service/padron.service';
+import { HogaresPadronRevaluacionResponse } from '@principal/model/padron/response/HogaresPadronRevaluacionResponse';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Route, Router } from '@angular/router';
+import { MatSort } from '@angular/material/sort';
+import { PadronBuscarHogaresRequest } from '@principal/model/padron/request/PadronBuscarHogaresRequest';
+import { ComboGenericoResponse } from '@principal/model/padron/response/ComboGenericoResponse';
+import { ComboGenericoNumResponse } from '@principal/model/padron/response/ComboGenericoNumResponse';
+import { DatePipe } from '@angular/common';
 
-export interface ITfListaHogares {
-  codigo: number,
-  departamento: String,
-  provincia: String,
-  distrito: String,
-  centroPoblado: String,
-  tipoPadron: String,
-  codigoPadron: String,
-  periodo: String,
-  idhogar: String,
-  monto: String,
-  titular: String
-}
 
-const ELEMENT_DATA: ITfListaHogares[] = [
-  {codigo:1,departamento:"CAJAMARCA",provincia:"CAJAMARCA",distrito: "CAJAMARCA",centroPoblado:"CELENDIN",tipoPadron:"REVISION POSTERIOR",codigoPadron:"457",periodo:"202402",idhogar:"4823081",monto:"50",titular:"LOPEZ LOPEZ ZULMA"},
-  {codigo:2,departamento:"CAJAMARCA",provincia:"CAJAMARCA",distrito: "CAJAMARCA",centroPoblado:"CELENDIN",tipoPadron:"REVISION POSTERIOR",codigoPadron:"457",periodo:"202403",idhogar:"4823081",monto:"100",titular:"LOPEZ LOPEZ ZULMA"},
-  {codigo:3,departamento:"CAJAMARCA",provincia:"CAJAMARCA",distrito: "CAJAMARCA",centroPoblado:"CELENDIN",tipoPadron:"REVISION POSTERIOR",codigoPadron:"457",periodo:"202402",idhogar:"5426664",monto:"100",titular:"LOPEZ LOPEZ ZULMA"},
-  {codigo:4,departamento:"TUMBES",provincia:"TUMBES",distrito: "ZARUMILLA",centroPoblado:"LA PALMA",tipoPadron:"REVISION POSTERIOR",codigoPadron:"450",periodo:"202401",idhogar:"8785454",monto:"200",titular:"MARIA RASTA RAMIREZ"}
-];
 
-let lista: number[] = [];
+
 @Component({
   selector: 'app-padron-home',
   templateUrl: './padron-home.component.html',
   styleUrl: './padron-home.component.scss'
 })
 export class PadronHomeComponent implements OnInit{
-constructor(private fb:FormBuilder,private route:Router,private router: ActivatedRoute){}
+constructor(
+  private fb:FormBuilder,
+  private route:Router,
+  private router: ActivatedRoute,
+  private padronService: PadronService,
+  private datePipe: DatePipe
+){}
+
 formProcesarPadron!: FormGroup;
-selection = new SelectionModel<ITfListaHogares>(true, []);
-displayedColumns: string[] = ['OP','DEPARTAMENTO','PROVINCIA', 'DISTRITO', 'CENTROPOBLADO', 'TIPOPADRON', 'PADRON', 'PERIODO', 'IDHOGAR', 'MONTO', 'TITULAR'];
-dataSource =new MatTableDataSource<any>(ELEMENT_DATA);
+selection = new SelectionModel<HogaresPadronRevaluacionResponse>(true, []);
+displayedColumns: string[] = ['OP','DEPARTAMENTO','TIPO_ESQUEMA', 'ID_CORTE', 'IDHOGAR','CODIGOHOGAR', 'PERIODO', 'FEHCA_PADRON', 'TITULAR','ESTADO_CUENTA','CODIGO_PADRON', 'MONTO'];
+dataSource =new MatTableDataSource<HogaresPadronRevaluacionResponse>();
 title: string='';
 
+listaHogaresPadron : HogaresPadronRevaluacionResponse[]=[];
+listacombo: ComboGenericoResponse[] = [];
+listacomboPeriodos: ComboGenericoNumResponse[] = [];
+lista: number[] = [];
+
  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-  }
+  } 
 
   ngOnInit(): void {
     this.router.data.subscribe(data => {
@@ -51,6 +52,9 @@ title: string='';
       console.log(this.title);
     });
      this.cargarFormulario();
+    this.cargaInicialHogares();
+    this.listarTipoEsquema();
+    this.listarComboPeridos()
   }
 
   isAllSelected() {
@@ -70,28 +74,135 @@ title: string='';
   logSelection() {
    // this.selection.selected.forEach(s => console.log(s.idrevaluacion)  );
     this.selection.selected.forEach(s => 
-      console.log(s.codigo)
-      //lista.push(s.codigo)
+     // console.log(s.id)
+      this.lista.push(s.id)
     );
 
-    return lista;
+    return this.lista;
   }
 
   cargarFormulario(){
    this.formProcesarPadron = this.fb.group({
-    strCbtipoPadron  : this.fb.control(''),
-    strPeriodoInicio : this.fb.control(''),
-    strPeriodoFin    : this.fb.control(''),
+    strCbtipoEsquema  : this.fb.control(''),
+    strCbPeriodo : this.fb.control(''),
+    numCodigoHogar    : this.fb.control(''),
     strFechaPadron   : this.fb.control(''),
     strDescripcion   :this.fb.control('')
    });
   }
 
+  cargaInicialHogares(){
+   const request = {
+    codigoPeriodo:"",
+    fechaPadron:"",
+    descripcionPadron:""
+   } as PadronBuscarHogaresRequest;
+    
+    this.padronService.buscarHogaresPadron<HogaresPadronRevaluacionResponse>(request).
+     subscribe({
+       next: (data) => {
+        if(data.status==='1'){
+           this.listaHogaresPadron = data.data;
+           this.dataSource = new MatTableDataSource<HogaresPadronRevaluacionResponse>(data.data);
+           setTimeout(() => {
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          });
+         }else{
+          console.log('error al consultar');
+        }
+       },
+       error: (error) => {
+       console.error('Error en la petición:', error);
+      },
+     });
+  }
+
+  listarTipoEsquema(){
+       this.padronService.listarGrupoEsquema<ComboGenericoResponse>('TIPOESQUEMATIM').
+        subscribe({
+          next: (data)=>{
+            if(data.status === '1'){
+             // console.log("---- grupo esquema"+data.data);
+               this.listacombo = data.data;
+               //console.log(this.listacombo);
+            }else{
+              console.log('error al consultar');
+            }
+          },
+           error: (error) => {
+            console.error('Error en la petición:', error);
+          },
+        });
+  }
+
+
+  buscarHogares(){
+    const request = {
+      tipoEsquema:   this.formProcesarPadron.get('strCbtipoEsquema')?.value,
+      codigoHogar:   this.formProcesarPadron.get('numCodigoHogar')?.value,
+      codigoPeriodo: this.formProcesarPadron.get('strCbPeriodo')?.value,
+      fechaPadron:   this.datePipe.transform(this.formProcesarPadron.get('strFechaPadron')?.value, 'dd/MM/yyyy'),
+      descripcionPadron:this.formProcesarPadron.get('strDescripcion')?.value
+     } as PadronBuscarHogaresRequest;
+     console.log("********************"+request);
+      this.padronService.buscarHogaresPadron<HogaresPadronRevaluacionResponse>(request).
+       subscribe({
+         next: (data) => {
+          if(data.status==='1'){
+             this.listaHogaresPadron = data.data;
+             this.dataSource = new MatTableDataSource<HogaresPadronRevaluacionResponse>(data.data);
+             setTimeout(() => {
+              this.dataSource.paginator = this.paginator;
+              this.dataSource.sort = this.sort;
+            });
+           }else{
+            console.log('error al consultar');
+          }
+         },
+         error: (error) => {
+         console.error('Error en la petición:', error);
+        },
+       });
+  }
+
 
   procesarHogares(){
     this.logSelection();
-    this.route.navigate(['principal/revaluacion/precierre']);
+    console.log("CANTIDAD REGISTROS ==="+this.lista.length)
+     if(this.lista.length>0){
+    
+       /* const navigationExtras: NavigationExtras = {
+          state: { data: this.lista }
+        };*/
+        this.padronService.setDatoslsHgSel(this.lista);
+        this.route.navigate(['principal/revaluacion/precierre']);
+        /*this.route.navigate(['principal/revaluacion/precierre'],navigationExtras).then(() => {
+          this.lista = this.lista ; // Limpiar la lista después de enviarla
+        });*/
+      }else{
+      }
+   
 
+  }
+
+
+  listarComboPeridos(){
+    this.padronService.listarPeriodos<ComboGenericoNumResponse>().
+    subscribe({
+      next: (data)=>{
+        if(data.status === '1'){
+          console.log("---- grupo esquema"+data.data);
+          this.listacomboPeriodos = data.data;
+          console.log(this.listacomboPeriodos);
+        }else{
+          console.log('error al consultar');
+        }
+      },
+      error: (error) => {
+        console.error('Error en la petición:', error);
+      },
+    });
   }
 
 }

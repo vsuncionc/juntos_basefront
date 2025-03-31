@@ -1,28 +1,26 @@
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
- 
-    
-    <!-- Position Column -->
-  <ng-container matColumnDef="MEMORANDO">
-    <th mat-header-cell *matHeaderCellDef>MEMORANDO</th>
-    <td mat-cell *matCellDef="let element"> {{element.memorando}} </td>
+  
+  
+  <!-- Weight Column -->
+  <ng-container matColumnDef="ESQUEMA">
+    <th mat-header-cell *matHeaderCellDef> ESQUEMA </th>
+    <td mat-cell *matCellDef="let element"> {{element.tipoEsquema}} </td>
   </ng-container>
-
-  <!-- Name Column -->
-  <ng-container matColumnDef="EXPEDIENTE">
-    <th mat-header-cell *matHeaderCellDef> EXPEDIENTE </th>
-    <td mat-cell *matCellDef="let element"> {{element.expediente}} </td>
-  </ng-container>
-
   <!-- Weight Column -->
   <ng-container matColumnDef="CODIGOHOGAR">
     <th mat-header-cell *matHeaderCellDef> CODIGOHOGAR </th>
-    <td mat-cell *matCellDef="let element"> {{element.codigohogar}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.codigoHogar}} </td>
   </ng-container>
 
   <!-- Symbol Column -->
   <ng-container matColumnDef="IDHOGAR">
     <th mat-header-cell *matHeaderCellDef> IDHOGAR </th>
-    <td mat-cell *matCellDef="let element"> {{element.idhogar}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.idHogar}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="TITULAR">
+    <th mat-header-cell *matHeaderCellDef> TITULAR </th>
+    <td mat-cell *matCellDef="let element"> {{element.nombreTitular}} </td>
   </ng-container>
 
   <ng-container matColumnDef="IDCORTE">
@@ -36,31 +34,31 @@
   </ng-container>
 
   <ng-container matColumnDef="MES">
-    <th mat-header-cell *matHeaderCellDef> MES </th>
-    <td mat-cell *matCellDef="let element"> {{element.mes}} </td>
+    <th mat-header-cell *matHeaderCellDef> MES 1 </th>
+    <td mat-cell *matCellDef="let element"> {{element.mes1}} </td>
   </ng-container>
 
   <ng-container matColumnDef="CUMPLIO">
-    <th mat-header-cell *matHeaderCellDef> CUMPLIO </th>
-    <td mat-cell *matCellDef="let element"> {{element.cumplio}} </td>
+    <th mat-header-cell *matHeaderCellDef> MES 2 </th>
+    <td mat-cell *matCellDef="let element"> {{element.mes2}} </td>
   </ng-container>
 
   <ng-container matColumnDef="MONTO">
     <th mat-header-cell *matHeaderCellDef> MONTO </th>
     <td mat-cell *matCellDef="let element"> {{element.monto}} </td>
   </ng-container>
-
-  <ng-container matColumnDef="TITULAR">
-    <th mat-header-cell *matHeaderCellDef> TITULAR </th>
-    <td mat-cell *matCellDef="let element"> {{element.titular}} </td>
+  
+  <!-- Position Column -->
+  <ng-container matColumnDef="EXPEDIENTE">
+    <th mat-header-cell *matHeaderCellDef>EXPEDIENTE</th>
+    <td mat-cell *matCellDef="let element" [matTooltip]="element.documento"> {{element.expediente}} </td>
   </ng-container>
-
-
+ 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
 
-<mat-paginator [pageSizeOptions]="[3, 5]"
+<mat-paginator [pageSizeOptions]="[10, 15]"
 showFirstLastButtons
 aria-label="Select page of periodic elements">
 </mat-paginator>

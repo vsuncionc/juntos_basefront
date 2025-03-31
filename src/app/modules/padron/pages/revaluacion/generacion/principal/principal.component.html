@@ -10,11 +10,11 @@
   
               <div class="col-sm-3 text-center">
                   <mat-label>CANTIDAD HOGARES</mat-label> <br>
-                  <mat-label>5</mat-label> 
+                  <mat-label>{{cantidadHogares}}</mat-label> 
               </div>
               <div class="col-sm-3 text-center">
                   <mat-label>MONTO TOTAL</mat-label>  <br>
-                  <mat-label>350</mat-label> 
+                  <mat-label>{{MontoTotal}}</mat-label> 
               </div>
               <div class="col-sm-3 text-start">
                   <mat-form-field appearance="outline">
@@ -23,8 +23,8 @@
                   </mat-form-field>
               </div>
               <div class="col-sm-3 text-start">
-                  <button mat-fab extended class="boton_general">
-                   <mat-icon>save</mat-icon>
+                  <button type="submit" mat-fab extended class="boton_general">
+                   <mat-icon >save</mat-icon>
                       PROCESAR
                   </button>
               </div>  
@@ -34,15 +34,19 @@
     </mat-card>
   
   </form>
-
+  
+  <div class="title_center">
+    <app-spiner *ngIf="this.cargando"></app-spiner>
+  </div>
+    
   <label class="title_center">LISTAS DE HOGARES Y MIEMBROS OBJETIVOS</label>
     <div class="row">
-      <mat-tab-group>
+      <mat-tab-group *ngIf="this.cargando==false" >
           <mat-tab label="HOGARES">
-             <app-listahogares></app-listahogares>
+             <app-listahogares *ngIf="listaHogarSeleccionadoRevPost.length > 0" [hogares]="listaHogarSeleccionadoRevPost"></app-listahogares>
           </mat-tab>
           <mat-tab label="MIEMBROS OBJETIVOS">
-             <app-listamobjetivo></app-listamobjetivo>
+             <app-listamobjetivo  *ngIf="listaMoSeleccionadoRevPost.length > 0" [miembrosobjetivos]="listaMoSeleccionadoRevPost" ></app-listamobjetivo>
           </mat-tab> 
       </mat-tab-group>
     </div>

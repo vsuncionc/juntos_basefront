@@ -23,7 +23,8 @@
       "@modulos/*"    : ["src/app/modules/*"],
       "@datos/*"      : ["src/app/data/*"],
       "@principal/*"  : ["src/app/core/*"],
-      "@compartido/*" : ["src/app/shared/*"]
+      "@compartido/*" : ["src/app/shared/*"],
+      "@envieromen/*" : ["src/environments/*"]
     },
     "lib": [
       "ES2022",

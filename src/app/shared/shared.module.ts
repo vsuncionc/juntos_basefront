@@ -5,13 +5,15 @@ import { MenuComponent } from './component/menu/menu.component';
 import { MaterialModule } from '@principal/material/material.module';
 import { RouterModule } from '@angular/router';
 import { MensajeConfirmacionComponent } from './component/mensaje-confirmacion/mensaje-confirmacion.component';
+import { SpinerComponent } from './component/spiner/spiner.component';
 
 
 @NgModule({
   declarations: [
     FooterComponent,
     MenuComponent,
-    MensajeConfirmacionComponent
+    MensajeConfirmacionComponent,
+    SpinerComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +22,9 @@ import { MensajeConfirmacionComponent } from './component/mensaje-confirmacion/m
   ],
   exports: [
     FooterComponent,
-    MenuComponent
+    MenuComponent,
+    MensajeConfirmacionComponent,
+    SpinerComponent
   ] 
 })
 export class SharedModule { }

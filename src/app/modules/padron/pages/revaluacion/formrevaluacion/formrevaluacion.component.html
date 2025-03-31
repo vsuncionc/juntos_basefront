@@ -1,53 +1,66 @@
 
-<form   [formGroup]="frmRevaluacion" (submit)="procesarRevaluaciones()" >
-
+<form   [formGroup]="frmRevaluacion"  method="post" (ngSubmit)="procesarRevaluaciones()">
+  
+ 
        <div class="row text-start">
             
-            <div class="col-sm-3 text-center" >
+            <div class="col-sm-2 text-center" >
               <mat-form-field appearance="outline" style="padding-top: 10px;" >
                 <mat-label>Opciones Busqueda</mat-label>
                 <mat-select  formControlName="cbOpcionesBusqueda" >
-                  <mat-option value="option1">Numero Expediente</mat-option>
-                  <mat-option value="option2">Documento </mat-option>
-                  <mat-option value="option3">Descripcion</mat-option>
+                  <mat-option value="opcexpediente">Expediente</mat-option>
+                  <mat-option value="opcdocumento">Documento </mat-option>
+                  <mat-option value="opcdescripcion">Descripcion</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
 
-            <div class="col-sm-3 text-center" style="padding-top: 10px;">
+            <div class="col-sm-2 text-center" style="padding-top: 10px;">
               <mat-form-field appearance="outline">
-                <mat-label>Dato Busqueda</mat-label>
+                <mat-label>Criterio Busqueda</mat-label>
                 <input matInput   value="" formControlName="StrCriterio">
               </mat-form-field>
             </div>
 
-            <div class="col-sm-3 text-center" style="padding-top: 10px;">
+            <div class="col-sm-2 text-center" style="padding-top: 10px;">
               <mat-form-field appearance="outline">
                 <mat-label>Tipo Esquema</mat-label>
                 <mat-select  formControlName="cbTipoEsquema" >
-                  <mat-option value="option1">BASE</mat-option>
-                  <mat-option value="option2">TPI </mat-option>
-                  <mat-option value="option3">TAS</mat-option>
-                  <mat-option value="option4">BASE Y TPI</mat-option>
+                  <mat-option *ngFor="let tipoesquema of this.listacombo" [value]="tipoesquema.id">
+                    {{tipoesquema.descripcion}}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
 
             <div class="col-sm-3 text-start">
-              <button mat-fab extended class="boton_general">
+              <button type="button" mat-fab extended class="boton_general" (click)="buscarRevaluacionCriterio()">
                 <mat-icon>search</mat-icon>
                 BUSCAR
+              </button>&nbsp;&nbsp;
+              <button type="button"  mat-fab extended class="boton_general" (click)="limpiarBusqueda()">
+                <mat-icon>restart_alt</mat-icon>
+                LIMPIAR
               </button>
             </div>
 
+ 
+            <div class="col-sm-3 text-end">
+              <button  mat-fab extended class="boton_general"    type="submit" >
+                <mat-icon>settings</mat-icon>
+                PROCESAR
+              </button>
+            </div>
               
 
        </div>
-
-
-       <div class="rows text-start"><label class="title_center">LISTA DE REVALUACIONES</label></div>
+        <div class="title_center">
+          <app-spiner *ngIf="this.cargando" ></app-spiner>
+        </div>
+        
+      <!-- <div class="rows text-start"><label class="title_center">LISTA DE REVALUACIONES</label></div> --> 
        
-       <mat-card appearance="outlined">
+       <mat-card appearance="outlined" *ngIf="this.cargando==false">
          <mat-card-content>
 
            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -73,13 +86,13 @@
                    <!-- Position Column -->
              <ng-container matColumnDef="IDREVAL">
                <th mat-header-cell *matHeaderCellDef> CODIGO </th>
-               <td mat-cell *matCellDef="let element"> {{element.idrevaluacion}} </td>
+               <td mat-cell *matCellDef="let element"> {{element.id}} </td>
              </ng-container>
            
              <!-- Name Column -->
-             <ng-container matColumnDef="TIPO">
-               <th mat-header-cell *matHeaderCellDef> TIPO </th>
-               <td mat-cell *matCellDef="let element"> {{element.tipoesquema}} </td>
+             <ng-container matColumnDef="GRUPO">
+               <th mat-header-cell *matHeaderCellDef> GRUPO </th>
+               <td mat-cell *matCellDef="let element"> {{element.tipoEsquema}} </td>
              </ng-container>
            
              <!-- Weight Column -->
@@ -88,31 +101,34 @@
                <td mat-cell *matCellDef="let element"> {{element.expediente}} </td>
              </ng-container>
            
-             <!-- Symbol Column -->
-             <ng-container matColumnDef="DOCUMENTO">
-               <th mat-header-cell *matHeaderCellDef> DOCUMENTO </th>
-               <td mat-cell *matCellDef="let element"> {{element.documento}} </td>
-             </ng-container>
+             
 
              <ng-container matColumnDef="FECHA">
                <th mat-header-cell *matHeaderCellDef> FECHA </th>
-               <td mat-cell *matCellDef="let element"> {{element.fecha}} </td>
+               <td mat-cell *matCellDef="let element"> {{element.fechaProceso}} </td>
              </ng-container>
 
-             <ng-container matColumnDef="PROCESO">
-               <th mat-header-cell *matHeaderCellDef> PROCESO </th>
-               <td mat-cell *matCellDef="let element"> {{element.proceso}} </td>
-             </ng-container>
+
+             <!-- Symbol Column -->
+             <ng-container matColumnDef="DOCUMENTO">
+              <th mat-header-cell *matHeaderCellDef> DOCUMENTO </th>
+              <td mat-cell *matCellDef="let element" [matTooltip]="element.descripcion"> {{element.documento}} </td>
+            </ng-container>
+             <!-- 
+             <ng-container matColumnDef="DESCRIPCION">
+               <th mat-header-cell *matHeaderCellDef > DESCRIPCION </th>
+               <td mat-cell *matCellDef="let element" > {{element.descripCorta}} </td>
+             </ng-container>-->
 
              <ng-container matColumnDef="HOGARES">
                <th mat-header-cell *matHeaderCellDef> CANT HOGARES </th>
-               <td mat-cell *matCellDef="let element"> {{element.cantidadhogares}} </td>
+               <td mat-cell *matCellDef="let element"> {{element.cantidadHogares}} </td>
              </ng-container>
 
              <ng-container matColumnDef="DETALLE">
                <th mat-header-cell *matHeaderCellDef> DETALLE </th>
-               <td mat-cell *matCellDef="let element">
-                 <a  title="ver detalle"  class="pointer" (click)="verDetalle(element.idrevaluacion,element.tipoesquema,element.expediente,element.documento,element.proceso)" >
+               <td mat-cell *matCellDef="let element" >
+                 <a  title="ver detalle"  class="pointer" (click)="verDetalle(element.id,element.tipoEsquema,element.expediente,element.documento,element.descripcion)" >
                   <mat-icon  aria-hidden="false" aria-label="Example home icon" fontIcon="wysiwyg"></mat-icon> 
                  </a>
                 </td>
@@ -124,13 +140,13 @@
  
            <div class="row" style="padding-top: 10px;">
              <div class="col-sm-12 text-start">
-              <mat-paginator [pageSizeOptions]="[3, 4]"
+              <mat-paginator [pageSizeOptions]="[8]"
               showFirstLastButtons
               aria-label="Select page of periodic elements">
               </mat-paginator>
              </div>
            </div>
-
+<!-- 
            <div class="row">
             <div class="col-sm-12  text-center">
               <button  mat-fab extended class="boton_general" >
@@ -139,6 +155,7 @@
               </button>
             </div>
            </div>
+-->
  
          </mat-card-content>
        </mat-card>

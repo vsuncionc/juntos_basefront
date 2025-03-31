@@ -23,7 +23,9 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatPaginatorModule} from '@angular/material/paginator'; 
 import {MatChipsModule} from '@angular/material/chips';
 import {MatDialogModule} from '@angular/material/dialog';
-
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 const materialModules = [
   MatDividerModule,
@@ -48,7 +50,10 @@ const materialModules = [
   MatSelectModule,
   MatPaginatorModule,
   MatChipsModule,
-  MatDialogModule
+  MatDialogModule,
+  MatProgressBarModule,
+  MatTooltipModule ,
+  MatProgressSpinnerModule
 ];
 
 @NgModule({

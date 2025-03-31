@@ -1,8 +1,8 @@
 <mat-stepper linear #stepper class="contenido_precierre">
 
   <!-- PASO 1 VISTA PREVIA DE LOS HOGARES  Y BOTON DEL PRE CIERRE-->
-    <mat-step [stepControl]="firstFormGroup"  [editable]="false">
-      <form [formGroup]="firstFormGroup">
+    <mat-step [stepControl]="vistaPreviaFormGroup"  [editable]="false">
+      <form [formGroup]="vistaPreviaFormGroup">
         <input type="hidden"  formControlName="strContinua1"  [value]="pcontinua1" />
         <p></p>
         <ng-template matStepLabel>VISTA PREVIA PRE CIERRE</ng-template>
@@ -40,10 +40,10 @@
                   </div>
  
                </div>
-               
+                <div class="title_center"><app-spiner *ngIf="this.cargando"></app-spiner></div>
                <div class="rows">
                 <div class="col-sm-12">
-                  <app-hg-seleccion-precierre></app-hg-seleccion-precierre>
+                  <app-hg-seleccion-precierre *ngIf="this.listaHogarSeleccionadoVistaPrevia.length > 0" [lsHogarSeleccionadoVistaPrevia]="this.listaHogarSeleccionadoVistaPrevia"></app-hg-seleccion-precierre>
                 </div>
                    
                </div>
@@ -67,8 +67,8 @@
 
 
     <!-- PASO 2 RESULTADO DEL PRE CIERRE Y BOTON DEL CIERRE-->
-    <mat-step [stepControl]="secondFormGroup" editable="false">
-      <form [formGroup]="secondFormGroup">
+    <mat-step [stepControl]="resumenPreCierreFormGroup" editable="false">
+      <form [formGroup]="resumenPreCierreFormGroup">
         <input type="hidden"  formControlName="strContinua2"  [value]="pcontinua1" />
         <ng-template matStepLabel>RESUMEN PRE CIERRE</ng-template>
 
@@ -111,17 +111,18 @@
                 <label class="title_center">LISTA DE RESULTDO DE LA VALIDACION</label>
                 <mat-tab-group animationDuration="2000ms">
                   <mat-tab label="HOGARES APTOS">
-                    <app-hogares-actos></app-hogares-actos>
+                    <app-hogares-actos *ngIf="this.listaHogaresAptosPrecierre.length > 0" [lsHogaresAptosPreCierre]="this.listaHogaresAptosPrecierre"></app-hogares-actos>
                   </mat-tab>
                   <mat-tab label="HOGARES SUSPENDIDOS">
-                    <app-hogare-suspendidos></app-hogare-suspendidos>
+                    <app-hogare-suspendidos *ngIf="this.listaHogaresSuspendidosPrecierre.length > 0" [lsHogaresSuspendidosPreCierre]="this.listaHogaresSuspendidosPrecierre"></app-hogare-suspendidos>
                   </mat-tab> 
                 </mat-tab-group>
               </div>
              </div>
              <div class="row">
               <div class="col-sm-12 text-center">
-                 <button mat-fab extended class="boton_general" (click)="clickButton(3, stepper)">
+                 <button mat-fab extended class="boton_general" (click)="clickButton(3, stepper)"
+                 [disabled]="listaHogaresAptosPrecierre.length === 0">
                   <mat-icon>library_add_check</mat-icon>
                   GENERAR CIERRE
                 </button>
@@ -135,8 +136,8 @@
 
 
     <!-- PASO 3 RESUMEN DEL CIERRE-->
-    <mat-step [stepControl]="tercerFormGroup" editable="false">
-      <form [formGroup]="tercerFormGroup">
+    <mat-step [stepControl]="cierreFormGroup" editable="false">
+      <form [formGroup]="cierreFormGroup">
       <ng-template matStepLabel>CIERRE</ng-template>
 
       <mat-card class="contenido_precierre text-center" appearance="outlined" >
@@ -181,7 +182,7 @@
 
         <app-hogares-actos></app-hogares-actos>
         <div style="text-align: center;">
-          <button mat-fab extended class="boton_general">
+          <button mat-fab extended class="boton_general" (click)="descargarReporteHogaresValidados(this.codigoPrecierre)">
             <mat-icon>library_add_check</mat-icon>
               DESCARGAR REPORTE
           </button>

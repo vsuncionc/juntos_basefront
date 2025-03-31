@@ -6,6 +6,7 @@ import { ResumenComponent } from '@modulos/padron/pages/revaluacion/generacion/r
 import { PrincipalComponent } from '@modulos/padron/pages/revaluacion/generacion/principal/principal.component';
 import { PadronHomeComponent } from '@modulos/padron/pages/padrones/padron-home/padron-home.component';
 import { PrincipalPrecierreComponent } from '@modulos/padron/pages/padrones/precierre/principal-precierre/principal-precierre.component';
+import { ProcesarComponent } from './pages/revaluacion/generacion/procesar/procesar.component';
 const routes: Routes = [
   {
     path:'',component:HomeComponent,
@@ -21,7 +22,7 @@ const routes: Routes = [
   },
   {
     path: 'padron',component:PadronHomeComponent,
-    data: { title: 'MODULO PADRON REVALUACIONES DE HOGARES' }
+    data: { title: 'MODULO VALIDACION HOGARES' }
   },
   {
     path: 'precierre',component:PrincipalPrecierreComponent,

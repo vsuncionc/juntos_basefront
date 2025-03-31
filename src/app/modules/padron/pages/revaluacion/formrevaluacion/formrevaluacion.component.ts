@@ -6,30 +6,16 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InformacionComponent } from '../detalle/informacion/informacion.component';
 import { SelectionModel } from '@angular/cdk/collections';
+import {ListaRevaluacionesService} from '@modulos/padron/service/lista-revaluaciones.service';
+import { RevaluacionResponse } from '@principal/model/padron/response/RevaluacionResponse';
+import { RevaluacionRequest } from '@principal/model/padron/request/RevaluacionRequest';
+import { MatSort } from '@angular/material/sort';
+import { ComboGenericoResponse } from '@principal/model/padron/response/ComboGenericoResponse';
+ 
+ 
 
 
-export interface PeriodicElement {
-  idrevaluacion: number;
-  tipoesquema: string;
-  expediente: string;
-  documento: string;
-  fecha: string;
-  proceso: string;
-  cantidadhogares: number; 
-  detalle: string
-}
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { idrevaluacion:100, tipoesquema: 'TAS', expediente: 'UTLI0020240000496', documento: 'MEMORANDO N° 000371-2024-MIDIS/PNADP-UCC', fecha: '2/09/2024',  proceso: 'posterior de VCC III 2024 hogares con MO del Grupo 1', cantidadhogares: 1 ,detalle:''},
-  { idrevaluacion:101, tipoesquema: 'TPI', expediente: 'UTLA0020240000786', documento: 'MEMORANDO N° 000381-2024-MIDIS/PNADP-UCC', fecha: '20/09/2024',  proceso: 'usuaria López López Zulma con DNI Nº 46914520', cantidadhogares: 1 ,detalle:''},
-  { idrevaluacion:105, tipoesquema: 'BASE', expediente: 'UTICA020240000319', documento: 'MEMORANDO N° 000376-2024-MIDIS/PNADP-UCC', fecha: '13/09/2024',  proceso: 'Anquely Farfan Garcia DNI N° 46405145', cantidadhogares: 1 ,detalle:''},
-  { idrevaluacion:106, tipoesquema: 'TAS', expediente: 'UTLI0020240000496', documento: 'MEMORANDO N° 000371-2024-MIDIS/PNADP-UCC', fecha: '2/09/2024',  proceso: 'posterior de VCC III 2024 hogares con MO del Grupo 1', cantidadhogares: 1 ,detalle:''},
-  { idrevaluacion:107, tipoesquema: 'TPI', expediente: 'UTLA0020240000786', documento: 'MEMORANDO N° 000381-2024-MIDIS/PNADP-UCC', fecha: '20/09/2024',  proceso: 'usuaria López López Zulma con DNI Nº 46914520', cantidadhogares: 1 ,detalle:''},
-  { idrevaluacion:108, tipoesquema: 'BASE', expediente: 'UTICA020240000319', documento: 'MEMORANDO N° 000376-2024-MIDIS/PNADP-UCC', fecha: '13/09/2024',  proceso: 'Anquely Farfan Garcia DNI N° 46405145', cantidadhogares: 1 ,detalle:''}
-  
-];
-
-let lista: number[] = [];
 @Component({
   selector: 'app-formrevaluacion',
   templateUrl: './formrevaluacion.component.html',
@@ -39,19 +25,29 @@ export class FormrevaluacionComponent implements OnInit {
 
 frmRevaluacion!: FormGroup;
 title: string='';
-selection = new SelectionModel<PeriodicElement>(true, []);
+selection = new SelectionModel<RevaluacionResponse>(true, []);
+respuesta: RevaluacionResponse[] = [];
+listacombo: ComboGenericoResponse[] = [];
+lista: number[]= [];
 
+cargando: boolean = false;
 
-displayedColumns: string[] = ['OP','IDREVAL', 'TIPO', 'EXPEDIENTE', 'DOCUMENTO', 'FECHA', 'PROCESO', 'HOGARES', 'DETALLE'];
-dataSource =new MatTableDataSource<any>(ELEMENT_DATA);
+displayedColumns: string[] = ['OP','IDREVAL', 'GRUPO', 'EXPEDIENTE',  'FECHA' , 'DOCUMENTO', 'HOGARES', 'DETALLE'];
+dataSource =new MatTableDataSource<RevaluacionResponse>();
 
 @ViewChild(MatPaginator) paginator!: MatPaginator;
+@ViewChild(MatSort) sort!: MatSort;
 ngAfterViewInit() {
   this.dataSource.paginator = this.paginator;
 }
 
-constructor(private fb:FormBuilder,private route: ActivatedRoute,private router: Router,
-  private matDialog: MatDialog) {
+constructor(
+  private fb:FormBuilder,
+  private route: ActivatedRoute,
+  private router: Router,
+  private matDialog: MatDialog,
+  private revaluacionService: ListaRevaluacionesService
+) {
   
  }
  
@@ -61,6 +57,10 @@ constructor(private fb:FormBuilder,private route: ActivatedRoute,private router:
       console.log(this.title);
       this.cargarFormulario();
     });
+
+    // LISTAMOS TODAS LAS REVALUACIONES
+    this.listarTodasRevaluaciones();
+    this.listarTiposEsquema();
     
   }
 
@@ -82,11 +82,11 @@ constructor(private fb:FormBuilder,private route: ActivatedRoute,private router:
   logSelection() {
    // this.selection.selected.forEach(s => console.log(s.idrevaluacion)  );
     this.selection.selected.forEach(s => 
-      //console.log(s.idrevaluacion)  
-      lista.push(s.idrevaluacion)
+      //console.log("-----"+s.id) 
+      this.lista.push(s.id)
     );
 
-    return lista;
+    return this.lista;
   }
 
   cargarFormulario(){
@@ -99,29 +99,24 @@ constructor(private fb:FormBuilder,private route: ActivatedRoute,private router:
   }
  
   procesarRevaluaciones(){
+ 
    // console.log(this.frmRevaluacion.value);
-  lista =this.logSelection();
-  console.log("--logSelection--"+lista.length);
-  if(lista.length>0){
-    this.router.navigate(
-      ["principal/revaluacion/procesar"],
-       {
-        state: { data: lista},
-       }
-    );
-    lista=[];
+   this.lista =this.logSelection();
+   console.log("--logSelection--"+this.lista);
+
+   if(this.lista.length>0){
+
+    this.revaluacionService.setDatosRev(this.lista);
+    this.router.navigate(['principal/revaluacion/procesar']);
+   // this.lista=[];
   }else{
     alert("--SELECCIONE REVALUACIONES--");
   }
-
-
-    //console.log(lista);
-    
+   
   }
 
 
   verDetalle(pidrevaluacion:number,ptipo:String,pexpediente:String,pdocumento:String,proceso:String): void{
-    console.log('------');
     const dialogRef = this.matDialog.open(InformacionComponent,{
       width: '80vw', // Ancho del diálogo
       height: '85vh', // Altura del diálogo
@@ -129,10 +124,107 @@ constructor(private fb:FormBuilder,private route: ActivatedRoute,private router:
       maxHeight: '90vh', // Máxima altura (opcional)
       data: { tipo: ptipo, expediente: pexpediente,documento:pdocumento,proceso:proceso,idrevaluacion: pidrevaluacion} 
     });
+  }
 
- 
+
+  listarTodasRevaluaciones(){
+  //console.log("----- LLAMADA AL SERVICIO="+this.frmRevaluacion.get('cbTipoEsquema')?.value);
+   
+  const request = {
+    tipobusqueda : "",
+    criterio : "",
+    grupoesquema : "" 
+  } as RevaluacionRequest;
+
+  this.revaluacionService.obtenerTodasRevaluaciones<RevaluacionResponse>(request).
+   subscribe({
+    next: (data) => {
+      if (data.status === '1') {
+        this.cargando=true;
+        this.respuesta = data.data;
+        this.dataSource =new MatTableDataSource<RevaluacionResponse>(data.data);
+        setTimeout(() => {
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        });
+
+       /* setTimeout(() => {
+          console.log("Retrasado por 1 segundo.");
+        }, 5000);*/
+        this.cargando=false;
+      }else{
+        console.log('error al consultar');
+        this.cargando=false;
+      }
+        
+    },
+    error: (error) => {
+      console.error('Error en la petición:', error);
+      this.cargando=false;
+    }
+  });
+  
+  }
+
+  buscarRevaluacionCriterio(){
+    const request = {
+      tipobusqueda : this.frmRevaluacion.get('cbOpcionesBusqueda')?.value,
+      criterio     : this.frmRevaluacion.get('StrCriterio')?.value,
+      grupoesquema : this.frmRevaluacion.get('cbTipoEsquema')?.value
+    } as RevaluacionRequest;
+
+    this.revaluacionService.obtenerTodasRevaluaciones<RevaluacionResponse>(request).
+    subscribe({
+      next: (data) => {
+        if (data.status === '1') {
+          this.cargando=true;
+          this.respuesta = data.data;
+          this.dataSource =new MatTableDataSource<RevaluacionResponse>(data.data);
+        setTimeout(() => {
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        });
+        console.log("cargando");
+        this.cargando=false;
+        }else{
+          this.cargando=false;
+          console.log('error al consultar');
+        }
+      },
+      error: (error) => {
+       this.cargando=false;
+        console.error('Error en la petición:', error);
+      }
+    });
 
   }
+
+  limpiarBusqueda(){
+    this.frmRevaluacion.reset();
+    this.listarTodasRevaluaciones();
+  }
+
+  listarTiposEsquema(){
+    this.revaluacionService.listarGrupoEsquema<ComboGenericoResponse>('GRUPOESQUEMATIM').
+    subscribe({
+      next: (data)=>{
+        if(data.status === '1'){
+         // console.log("---- grupo esquema"+data.data);
+           this.listacombo = data.data;
+           //console.log(this.listacombo);
+        }else{
+          console.log('error al consultar');
+        }
+      },
+       error: (error) => {
+        console.error('Error en la petición:', error);
+      },
+    });
+  }
+
+
+
+ 
 
 
 }

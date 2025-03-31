@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'; 
 
 import localePy from '@angular/common/locales/es-PY';
-import { registerLocaleData } from '@angular/common';
+import { DatePipe, registerLocaleData } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 registerLocaleData(localePy,'es')
 
@@ -21,7 +21,8 @@ registerLocaleData(localePy,'es')
   providers: [
     provideAnimationsAsync(),
     {provide: LOCALE_ID,useValue: 'es'},
-    provideHttpClient()
+    provideHttpClient(),
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

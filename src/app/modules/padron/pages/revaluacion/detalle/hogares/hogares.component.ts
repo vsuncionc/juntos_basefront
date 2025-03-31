@@ -1,23 +1,12 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ListaRevaluacionesService } from '@modulos/padron/service/lista-revaluaciones.service';
+import { RevaluacionRequest } from '@principal/model/padron/request/RevaluacionRequest';
+import { ListaHogaresPorRevaluacionResponse } from '@principal/model/padron/response/ListaHogaresPorRevaluacionResponse';
+import {ListaHogaresRevisionResponse}  from '@principal/model/padron/response/ListaHogaresRevisionResponse'
 
-export interface Ihogares {
-  codigoHogar: number;
-  idhogar: number;
-  idcorte: number;
-  periodo: string;
-  dni: string;
-  titular: string; 
-}
-
-
-const ELEMENT_DATA: Ihogares[] = [
-  { codigoHogar:3936774, idhogar: 5274326, idcorte: 291, periodo: '202403', dni: '05356440',  titular: 'ACHO PEÑA BERSABI'},
-  { codigoHogar:3830396, idhogar: 4964320, idcorte: 291, periodo: '202403', dni: '43046590',  titular: 'ACUÑA EULOGIO YESSICA MIRIAN'},
-  { codigoHogar:1749805, idhogar: 2438417, idcorte: 291, periodo: '202403', dni: '47087189',  titular: 'AGUINDA CAPINOA LEYLA'} 
-  
-];
 
 @Component({
   selector: 'app-hogares',
@@ -28,16 +17,60 @@ export class HogaresComponent  implements OnInit{
 
   @Input() codigoRevaluacion:number=0;
 
-  displayedColumns: string[] = ['CODIGOHOGAR','IDHOGAR', 'IDCORTE', 'PERIODO', 'DNI', 'TITULAR'];
-  dataSource =new MatTableDataSource<any>(ELEMENT_DATA);
+  listaHogaresRevaluacion:ListaHogaresRevisionResponse[]=[];
+
+  displayedColumns: string[] = ['ESQUEMA','CODIGOHOGAR','IDHOGAR', 'IDCORTE', 'PERIODO', 'DNI', 'TITULAR'];
+  dataSource =new MatTableDataSource<ListaHogaresRevisionResponse>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
 
+  constructor(
+    private  revaluacionService: ListaRevaluacionesService
+  ){ }
+
 
   ngOnInit(): void { 
+    this.listarHogares();
   }
+
+ 
+  listarHogares(){
+    const request = {
+      codigoRevaluacion : this.codigoRevaluacion,
+      tipobusqueda : '',
+      criterio     : '',
+      grupoesquema : ''
+    }as RevaluacionRequest;
+    this.revaluacionService.listaHogaresPorRevaluacion<ListaHogaresPorRevaluacionResponse>(request).
+     subscribe({
+       next: (data) => {
+         if(data.status==='1'){
+           this.listaHogaresRevaluacion = data.data;
+           this.dataSource = new MatTableDataSource<ListaHogaresPorRevaluacionResponse>(data.data);
+           setTimeout(() => {
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          });
+         }else{
+          console.log('error al consultar');
+        }
+       },
+       error: (error) => {
+       console.error('Error en la petición:', error);
+      },
+     });
+
+  }
+
+  
+
+
+
+
+
 
 }

@@ -9,51 +9,39 @@
   </ng-container>
 
   <!-- Weight Column -->
-  <ng-container matColumnDef="PROVINCIA">
-    <th mat-header-cell *matHeaderCellDef > PROVINCIA </th>
-    <td mat-cell *matCellDef="let element"> {{element.provincia}} </td>
+  <ng-container matColumnDef="ESQUEMA">
+    <th mat-header-cell *matHeaderCellDef > ESQUEMA </th>
+    <td mat-cell *matCellDef="let element"> {{element.tipoEsquema}} </td>
   </ng-container>
 
   <!-- Weight Column -->
-  <ng-container matColumnDef="DISTRITO">
-    <th mat-header-cell *matHeaderCellDef > DISTRITO </th>
-    <td mat-cell *matCellDef="let element"> {{element.distrito}} </td>
-  </ng-container>
-
-  <!-- Weight Column -->
-  <ng-container matColumnDef="CENTROPOBLADO">
-    <th mat-header-cell *matHeaderCellDef > CENTROPOBLADO </th>
-    <td mat-cell *matCellDef="let element"> {{element.centroPoblado}} </td>
-  </ng-container>
-
-  <!-- Weight Column -->
-  <ng-container matColumnDef="TIPOPADRON">
-    <th mat-header-cell *matHeaderCellDef > TIPOPADRON </th>
-    <td mat-cell *matCellDef="let element"> {{element.tipoPadron}} </td>
-  </ng-container>
-
-  <!-- Weight Column -->
-  <ng-container matColumnDef="CODIGOPADRON">
-    <th mat-header-cell *matHeaderCellDef > CODIGOPADRON </th>
-    <td mat-cell *matCellDef="let element"> {{element.codigoPadron}} </td>
-  </ng-container>
-
-  <!-- Weight Column -->
-  <ng-container matColumnDef="PERIODO">
-    <th mat-header-cell *matHeaderCellDef > PERIODO </th>
-    <td mat-cell *matCellDef="let element"> {{element.periodo}} </td>
+  <ng-container matColumnDef="IDCORTE">
+    <th mat-header-cell *matHeaderCellDef > IDCORTE </th>
+    <td mat-cell *matCellDef="let element"> {{element.idCorte}} </td>
   </ng-container>
 
   <!-- Weight Column -->
   <ng-container matColumnDef="IDHOGAR">
     <th mat-header-cell *matHeaderCellDef > IDHOGAR </th>
-    <td mat-cell *matCellDef="let element"> {{element.idhogar}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.idHogar}} </td>
   </ng-container>
 
   <!-- Weight Column -->
-  <ng-container matColumnDef="MONTO">
-    <th mat-header-cell *matHeaderCellDef> MONTO </th>
-    <td mat-cell *matCellDef="let element"> {{element.monto}} </td>
+  <ng-container matColumnDef="CODIGOHOGAR">
+    <th mat-header-cell *matHeaderCellDef > CODIGOHOGAR </th>
+    <td mat-cell *matCellDef="let element"> {{element.codigoHogar}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="PERIODO">
+    <th mat-header-cell *matHeaderCellDef > PERIODO </th>
+    <td mat-cell *matCellDef="let element"> {{element.codigoPeriodo}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="FPADRON">
+    <th mat-header-cell *matHeaderCellDef > FPADRON </th>
+    <td mat-cell *matCellDef="let element"> {{element.fechaPadron}} </td>
   </ng-container>
 
   <!-- Weight Column -->
@@ -61,6 +49,26 @@
     <th mat-header-cell *matHeaderCellDef > TITULAR </th>
     <td mat-cell *matCellDef="let element"> {{element.titular}} </td>
   </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="CUENTA">
+    <th mat-header-cell *matHeaderCellDef> CUENTA </th>
+    <td mat-cell *matCellDef="let element"> {{element.estadoCuenta}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="CODIGO_PADRON">
+    <th mat-header-cell *matHeaderCellDef > CODPADRON </th>
+    <td mat-cell *matCellDef="let element"> {{element.codigoPadron}} </td>
+  </ng-container>
+
+ 
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="MONTO">
+      <th mat-header-cell *matHeaderCellDef > MONTO </th>
+      <td mat-cell *matCellDef="let element"> {{element.monto}} </td>
+    </ng-container>
 
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

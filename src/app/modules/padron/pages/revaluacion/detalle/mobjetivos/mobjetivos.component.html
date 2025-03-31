@@ -10,34 +10,34 @@
   <!-- Name Column -->
   <ng-container matColumnDef="IDHOGAR">
     <th mat-header-cell *matHeaderCellDef> IDHOGAR </th>
-    <td mat-cell *matCellDef="let element"> {{element.idhogar}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.idHogar}} </td>
   </ng-container>
 
   <!-- Weight Column -->
   <ng-container matColumnDef="PERIODO">
     <th mat-header-cell *matHeaderCellDef> PERIODO </th>
-    <td mat-cell *matCellDef="let element"> {{element.periodo}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.codigoPeriodo}} </td>
   </ng-container>
 
   <!-- Symbol Column -->
   <ng-container matColumnDef="IDCORTE">
     <th mat-header-cell *matHeaderCellDef> IDCORTE </th>
-    <td mat-cell *matCellDef="let element"> {{element.idcorte}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.codigoCorte}} </td>
   </ng-container>
 
   <ng-container matColumnDef="MIEMBRO_OBJETIVO">
     <th mat-header-cell *matHeaderCellDef> MIEMBRO OBJETIVO </th>
-    <td mat-cell *matCellDef="let element"> {{element.miemObjetivo}} </td>
+    <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="CUMPLIMIENTO">
-    <th mat-header-cell *matHeaderCellDef> MES </th>
-    <td mat-cell *matCellDef="let element"> {{element.mescumplimiento}} </td>
+  <ng-container matColumnDef="CUMPLIO_MES_1">
+    <th mat-header-cell *matHeaderCellDef> MES 1</th>
+    <td mat-cell *matCellDef="let element"> {{element.mes_1}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="CUMPLIO">
-    <th mat-header-cell *matHeaderCellDef> CUMPLIMIENTO </th>
-    <td mat-cell *matCellDef="let element"> {{element.cumplio}} </td>
+  <ng-container matColumnDef="CUMPLIO_MES_2">
+    <th mat-header-cell *matHeaderCellDef> MES 2</th>
+    <td mat-cell *matCellDef="let element"> {{element.mes_2}} </td>
   </ng-container>
 
 
@@ -49,5 +49,5 @@
 showFirstLastButtons
 aria-label="Select page of periodic elements">
 </mat-paginator>
-coig revalu {{codigoRevaluacion}}
+<!-- coig revalu {{codigoRevaluacion}} -->
   
