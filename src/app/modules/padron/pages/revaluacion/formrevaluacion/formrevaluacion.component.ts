@@ -11,11 +11,9 @@ import { RevaluacionResponse } from '@principal/model/padron/response/Revaluacio
 import { RevaluacionRequest } from '@principal/model/padron/request/RevaluacionRequest';
 import { MatSort } from '@angular/material/sort';
 import { ComboGenericoResponse } from '@principal/model/padron/response/ComboGenericoResponse';
+import {MensajeComponent} from '@compartido/component/mensaje/mensaje.component'
  
  
-
-
-
 @Component({
   selector: 'app-formrevaluacion',
   templateUrl: './formrevaluacion.component.html',
@@ -31,6 +29,7 @@ listacombo: ComboGenericoResponse[] = [];
 lista: number[]= [];
 
 cargando: boolean = false;
+//colorMensaje: string ="#000000";
 
 displayedColumns: string[] = ['OP','IDREVAL', 'GRUPO', 'EXPEDIENTE',  'FECHA' , 'DOCUMENTO', 'HOGARES', 'DETALLE'];
 dataSource =new MatTableDataSource<RevaluacionResponse>();
@@ -46,7 +45,8 @@ constructor(
   private route: ActivatedRoute,
   private router: Router,
   private matDialog: MatDialog,
-  private revaluacionService: ListaRevaluacionesService
+  private revaluacionService: ListaRevaluacionesService,
+  private dialog: MatDialog
 ) {
   
  }
@@ -110,7 +110,8 @@ constructor(
     this.router.navigate(['principal/revaluacion/procesar']);
    // this.lista=[];
   }else{
-    alert("--SELECCIONE REVALUACIONES--");
+    //alert("--SELECCIONE REVALUACIONES--");
+    this.mostrarMensaje('OCURRIO ERROR','Debe seleccionar revaluaciones para continuar','var(--mensaje-color-informativo)');
   }
    
   }
@@ -154,6 +155,7 @@ constructor(
         this.cargando=false;
       }else{
         console.log('error al consultar');
+        this.mostrarMensaje('2 OCURRIO UN ERROR',data.message,'var(--mensaje-color-error)');
         this.cargando=false;
       }
         
@@ -161,9 +163,10 @@ constructor(
     error: (error) => {
       console.error('Error en la petición:', error);
       this.cargando=false;
+      this.mostrarMensaje('3 OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
     }
   });
-  
+
   }
 
   buscarRevaluacionCriterio(){
@@ -189,11 +192,16 @@ constructor(
         }else{
           this.cargando=false;
           console.log('error al consultar');
+          
+          this.mostrarMensaje('5 OCURRIO UN ERROR',data.message,'var(--mensaje-color-error)');
+          
         }
       },
       error: (error) => {
        this.cargando=false;
         console.error('Error en la petición:', error);
+        //this.colorMensaje = 'var(--color-error)';
+        this.mostrarMensaje('6 OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
       }
     });
 
@@ -224,7 +232,12 @@ constructor(
 
 
 
- 
+ mostrarMensaje(titulo_p:string,mensaje_p:string,color_p:string){
+  const dialogRef = this.dialog.open(MensajeComponent, {
+    width: '500px',
+    data: { titulo: titulo_p ,mensaje: mensaje_p,colorTitulo: color_p }
+ });
+ }
 
 
 }

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { MensajeConfirmacionComponent } from '@compartido/component/mensaje-confirmacion/mensaje-confirmacion.component';
+import { MensajeComponent } from '@compartido/component/mensaje/mensaje.component';
 import { ListaRevaluacionesService } from '@modulos/padron/service/lista-revaluaciones.service';
 import { PadronService } from '@modulos/padron/service/padron.service';
 import { RevaluacionSeleccionadaRevPostRequest } from '@principal/model/padron/request/RevaluacionSeleccionadaRevPostRequest';
@@ -87,6 +88,7 @@ export class PrincipalComponent  implements OnInit{
       },
       error: (error) => {
         console.error('Error en la petición:', error);
+        this.mostrarMensaje('OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
         this.cargando = false;
       }
     });
@@ -103,6 +105,7 @@ export class PrincipalComponent  implements OnInit{
          }
       },
       error: (error) => {
+        this.mostrarMensaje('OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
         console.error('Error en la petición:', error);
       }
     });
@@ -136,11 +139,13 @@ export class PrincipalComponent  implements OnInit{
                this.codpadron = data.data[0].codigopadron;
               this.router.navigate(['principal/revaluacion/resumen/',this.codpadron]);
             }else if(data.code === 'NOK'){
-              alert(data.message);
+              this.mostrarMensaje('OCURRIO UN ERROR',data.message,'var(--mensaje-color-error)');
+              //alert(data.message);
             }
           },
           error: (error) => {
             console.error('Error en la petición:', error);
+            this.mostrarMensaje('OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
           }
         });
 
@@ -160,5 +165,13 @@ export class PrincipalComponent  implements OnInit{
        this.MontoTotal = this.MontoTotal+posicion.monto;
     }
   }
+
+
+  mostrarMensaje(titulo_p:string,mensaje_p:string,color_p:string){
+    const dialogRef = this.dialog.open(MensajeComponent, {
+      width: '500px',
+      data: { titulo: titulo_p ,mensaje: mensaje_p,colorTitulo: color_p }
+   });
+   }
 
 }

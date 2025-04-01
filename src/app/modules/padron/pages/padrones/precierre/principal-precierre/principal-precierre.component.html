@@ -106,6 +106,7 @@
 
              </div>
              <hr>
+             <div class="title_center"><app-spiner *ngIf="this.cargando"></app-spiner></div>
              <div class="rows">
               <div class="col-sm-12">
                 <label class="title_center">LISTA DE RESULTDO DE LA VALIDACION</label>
@@ -176,11 +177,13 @@
         </mat-card-content>
       </mat-card>     
 
-      <div class="row text-center">
+      <div class="title_center"><app-spiner *ngIf="this.cargando"></app-spiner></div>
 
+      <div class="row"  *ngIf="this.listaHogaresAptosPrecierre.length>0">
+        <app-hogares-actos></app-hogares-actos>
       </div>
 
-        <app-hogares-actos></app-hogares-actos>
+        
         <div style="text-align: center;">
           <button mat-fab extended class="boton_general" (click)="descargarReporteHogaresValidados(this.codigoPrecierre)">
             <mat-icon>library_add_check</mat-icon>

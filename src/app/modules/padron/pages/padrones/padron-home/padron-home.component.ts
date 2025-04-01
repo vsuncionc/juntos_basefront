@@ -5,12 +5,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, NavigationExtras, Route, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSort } from '@angular/material/sort';
 import { PadronBuscarHogaresRequest } from '@principal/model/padron/request/PadronBuscarHogaresRequest';
 import { ComboGenericoResponse } from '@principal/model/padron/response/ComboGenericoResponse';
 import { ComboGenericoNumResponse } from '@principal/model/padron/response/ComboGenericoNumResponse';
 import { DatePipe } from '@angular/common';
+import { MensajeComponent } from '@compartido/component/mensaje/mensaje.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 
@@ -26,7 +28,8 @@ constructor(
   private route:Router,
   private router: ActivatedRoute,
   private padronService: PadronService,
-  private datePipe: DatePipe
+  private datePipe: DatePipe,
+  private dialog: MatDialog
 ){}
 
 formProcesarPadron!: FormGroup;
@@ -110,10 +113,12 @@ lista: number[] = [];
           });
          }else{
           console.log('error al consultar');
+          this.mostrarMensaje('OCURRIO UN ERROR',data.message,'var(--mensaje-color-error)');
         }
        },
        error: (error) => {
        console.error('Error en la petición:', error);
+       this.mostrarMensaje('OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
       },
      });
   }
@@ -128,10 +133,12 @@ lista: number[] = [];
                //console.log(this.listacombo);
             }else{
               console.log('error al consultar');
+              this.mostrarMensaje('OCURRIO UN ERROR',data.message,'var(--mensaje-color-error)');
             }
           },
            error: (error) => {
             console.error('Error en la petición:', error);
+            this.mostrarMensaje('OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
           },
         });
   }
@@ -158,10 +165,12 @@ lista: number[] = [];
             });
            }else{
             console.log('error al consultar');
+            this.mostrarMensaje('OCURRIO UN ERROR',data.message,'var(--mensaje-color-error)');
           }
          },
          error: (error) => {
          console.error('Error en la petición:', error);
+         this.mostrarMensaje('OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
         },
        });
   }
@@ -171,16 +180,10 @@ lista: number[] = [];
     this.logSelection();
     console.log("CANTIDAD REGISTROS ==="+this.lista.length)
      if(this.lista.length>0){
-    
-       /* const navigationExtras: NavigationExtras = {
-          state: { data: this.lista }
-        };*/
         this.padronService.setDatoslsHgSel(this.lista);
         this.route.navigate(['principal/revaluacion/precierre']);
-        /*this.route.navigate(['principal/revaluacion/precierre'],navigationExtras).then(() => {
-          this.lista = this.lista ; // Limpiar la lista después de enviarla
-        });*/
       }else{
+        this.mostrarMensaje('INFORMACION','Seleccione hogares a Validar','var(--mensaje-color-informativo)');
       }
    
 
@@ -197,12 +200,22 @@ lista: number[] = [];
           console.log(this.listacomboPeriodos);
         }else{
           console.log('error al consultar');
+          this.mostrarMensaje('OCURRIO UN ERROR',data.message,'var(--mensaje-color-error)');
         }
       },
       error: (error) => {
         console.error('Error en la petición:', error);
+        this.mostrarMensaje('OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
       },
     });
   }
+
+
+  mostrarMensaje(titulo_p:string,mensaje_p:string,color_p:string){
+    const dialogRef = this.dialog.open(MensajeComponent, {
+      width: '500px',
+      data: { titulo: titulo_p ,mensaje: mensaje_p,colorTitulo: color_p }
+   });
+   }
 
 }

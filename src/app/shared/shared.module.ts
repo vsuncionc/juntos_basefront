@@ -6,6 +6,7 @@ import { MaterialModule } from '@principal/material/material.module';
 import { RouterModule } from '@angular/router';
 import { MensajeConfirmacionComponent } from './component/mensaje-confirmacion/mensaje-confirmacion.component';
 import { SpinerComponent } from './component/spiner/spiner.component';
+import { MensajeComponent } from './component/mensaje/mensaje.component';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { SpinerComponent } from './component/spiner/spiner.component';
     FooterComponent,
     MenuComponent,
     MensajeConfirmacionComponent,
-    SpinerComponent
+    SpinerComponent,
+    MensajeComponent
   ],
   imports: [
     CommonModule,

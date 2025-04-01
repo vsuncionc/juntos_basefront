@@ -2,7 +2,6 @@ import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatStepper } from '@angular/material/stepper';
-import { Router } from '@angular/router';
 import { MensajeConfirmacionComponent } from '@compartido/component/mensaje-confirmacion/mensaje-confirmacion.component';
 import { PadronService } from '@modulos/padron/service/padron.service';
 import { PadronSeleccionHogaresRequest } from '@principal/model/padron/request/PadronSeleccionHogaresRequest';
@@ -15,6 +14,7 @@ import { HogaresPreValidadosAptosResponse } from '@principal/model/padron/respon
 import { HogaresPreValidadoSuspendidosResponse } from '@principal/model/padron/response/HogaresPreValidadoSuspendidosResponse';
 import { GeneracionCierrePadronResponse } from '@principal/model/padron/request/GeneracionCierrePadronResponse';
 import { saveAs } from 'file-saver';
+import { MensajeComponent } from '@compartido/component/mensaje/mensaje.component';
 
 @Component({
   selector: 'app-principal-precierre',
@@ -26,19 +26,12 @@ export class PrincipalPrecierreComponent implements OnInit {
   listaRecibida: number[] = [345533434,345533435]; // Variable para almacenar la lista recibida
   datosRecibidos: any;
   
-  private datosProcesados = false;
+  
   constructor(
-    private fb:FormBuilder,
-    private route:Router,
     private dialog: MatDialog,
     private datePipe: DatePipe,
     private padronService: PadronService
   ){
-   /* const navigation = this.route.getCurrentNavigation();
-    if (!this.datosProcesados) {
-     // this.listaRecibida = navigation?.extras.state?.['data'] || [];
-      this.datosProcesados = true; // Marcar como procesado
-    }*/
   }
 
 
@@ -97,9 +90,6 @@ export class PrincipalPrecierreComponent implements OnInit {
 
   ngOnInit(): void {
     this.vFechaSistema = this.datePipe.transform(new Date(), 'dd/MM/yyyy') || '';
-    //this.cargarFormularioVistaPrevia();
-    //this.cargarFormularioResumenVistaPrevia();
-    //this.cargarFormularioCierre();
 
   // Cargas de datos para el formulario Vistaprevia precierre
     this.listarHogaresVistaPreviaCierre();
@@ -163,6 +153,7 @@ export class PrincipalPrecierreComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error al cerrar el diálogo:', error);
+        this.mostrarMensaje('OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
       }
     });
   }
@@ -194,12 +185,14 @@ export class PrincipalPrecierreComponent implements OnInit {
           this.cargando=false;
           console.log('error al consultar');
           console.log('error al consultar');
+          this.mostrarMensaje('OCURRIO UN ERROR',data.message,'var(--mensaje-color-error)');
         }
           
       },
       error: (error) => {
         this.cargando=false;
         console.error('Error en la petición:', error);
+        this.mostrarMensaje('OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
       }
     });
    }
@@ -241,11 +234,13 @@ export class PrincipalPrecierreComponent implements OnInit {
         this.ObtenerInformacionCabeceraResumenPreCierre(this.codigoPrecierre);
       }else{
         console.log('error al consultar');
+        this.mostrarMensaje('OCURRIO UN ERROR',data.message,'var(--mensaje-color-error)');
       }
         
     },
     error: (error) => {
       console.error('Error en la petición:', error);
+      this.mostrarMensaje('OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
     }
   });
  
@@ -279,11 +274,13 @@ ObtenerInformacionCabeceraResumenPreCierre(codigo:number){
 
       }else{
         console.log('error al consultar');
+        this.mostrarMensaje('OCURRIO UN ERROR',data.message,'var(--mensaje-color-error)');
       }
         
     },
     error: (error) => {
       console.error('Error en la petición:', error);
+      this.mostrarMensaje('OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
     }
   });
   
@@ -308,6 +305,7 @@ this.padronService.listaHogaresAptosPrecierre<HogaresPreValidadosAptosResponse>(
     },
     error: (error) => {
       console.error('Error en la petición:', error);
+      this.mostrarMensaje('OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
     },
   });
 }
@@ -351,15 +349,18 @@ generarCierre(){
         this.respuestaCierre = data.data;
         if(this.respuestaCierre[0].respuesta == "OK"){
           console.log('MOSTRA MENSAJE DE GENERACION CORRECTA');
+          this.mostrarMensaje('GENERACION CORRECTA','Se genero el cierre','var(--mensaje-color-informativo)');
         }
         console.log("INFORMACION DEL CIERRE CON EL CODIGO: "+this.codigoPrecierre);
       }else{
+        this.mostrarMensaje('OCURRIO UN ERROR',data.message,'var(--mensaje-color-error)');
         console.log('error al consultar');
       }
        this.obtenerInformacionCabeceraResumenCierre(this.codigoPrecierre); 
     },
     error: (error) => {
       console.error('Error en la petición:', error);
+      this.mostrarMensaje('OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
     }
   });
 }
@@ -382,10 +383,12 @@ obtenerInformacionCabeceraResumenCierre(codigo:number){
  
       }else{
         console.log('error al consultar');
+        this.mostrarMensaje('OCURRIO UN ERROR',data.message,'var(--mensaje-color-error)');
       }
         
     },
     error: (error) => {
+      this.mostrarMensaje('OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
       console.error('Error en la petición:', error);
     }
   });
@@ -397,6 +400,14 @@ descargarReporteHogaresValidados(codigo:number){
     saveAs(data,`ReporteHogaresAptos_${codigo}.xlsx`);
   });
 }
+
+
+mostrarMensaje(titulo_p:string,mensaje_p:string,color_p:string){
+  const dialogRef = this.dialog.open(MensajeComponent, {
+    width: '500px',
+    data: { titulo: titulo_p ,mensaje: mensaje_p,colorTitulo: color_p }
+ });
+ }
 
 
 }

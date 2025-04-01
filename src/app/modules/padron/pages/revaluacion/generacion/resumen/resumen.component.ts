@@ -1,7 +1,9 @@
 import { PadronService } from './../../../../service/padron.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params } from '@angular/router';
+import { MensajeComponent } from '@compartido/component/mensaje/mensaje.component';
 import { PadronBuscarRequest } from '@principal/model/padron/request/PadronBuscarRequest';
 import { ResumenGeneracionPadronResponse } from '@principal/model/padron/response/ResumenGeneracionPadronResponse';
 import { saveAs } from 'file-saver';
@@ -18,7 +20,9 @@ export class ResumenComponent implements OnInit {
   constructor(
     private fb:FormBuilder,
     private route: ActivatedRoute,
-    private padronservice :PadronService){  }
+    private padronservice :PadronService,
+    private dialog: MatDialog
+){  }
 
   codigoPadron:number=0;
   formResumen!: FormGroup;
@@ -65,11 +69,13 @@ export class ResumenComponent implements OnInit {
             this.formResumen.get('montoTotal')?.setValue(this.infoResumen[0].montoTotal);
             this.cargando = false;
             console.log('Fecha del padrón:', this.infoResumen[0].fechaPadron);
+            this.mostrarMensaje('GENERACION PADRON :','CODIGO : '+this.codigoPadron.toString(),'var(--mensaje-color-normal)');
           }
         },
-        error: (err) => {
-          console.error('Error al obtener la información del padrón:', err);
+        error: (error) => {
+          console.error('Error al obtener la información del padrón:', error);
           this.cargando = false; // Detener el indicador de carga en caso de error
+          this.mostrarMensaje('OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
         }
       });
   }
@@ -82,6 +88,11 @@ descargarReporte(){
   });
 }
 
-
+ mostrarMensaje(titulo_p:string,mensaje_p:string,color_p:string){
+  const dialogRef = this.dialog.open(MensajeComponent, {
+    width: '500px',
+    data: { titulo: titulo_p ,mensaje: mensaje_p,colorTitulo: color_p }
+ });
+ }
 
 }
