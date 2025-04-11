@@ -8,6 +8,7 @@ import { ListaRevaluacionesService } from '@modulos/padron/service/lista-revalua
 import { PadronBuscarRequest } from '@principal/model/padron/request/PadronBuscarRequest';
 import { RevaluacionPadronResponse } from '@principal/model/padron/response/RevaluacionPadronResponse';
 import { InformacionComponent } from '../detalle/informacion/informacion.component';
+import { MensajeComponent } from '@compartido/component/mensaje/mensaje.component';
  
 @Component({
   selector: 'app-formrevalupadron',
@@ -58,11 +59,13 @@ constructor(
           this.dataSource.sort = this.sort;
         });
        } else {
+        this.mostrarMensaje('OCURRIO UN ERROR','No se encontraron resultados','var(--mensaje-color-informativo)');
         console.log('error al consultar');
       }
     } ,
     error: (error) => {
       console.error('Error en la petición:', error);
+      this.mostrarMensaje('OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
     },
    });
  }
@@ -77,6 +80,14 @@ constructor(
       data: { tipo: ptipo, expediente: pexpediente,documento:pdocumento,proceso:proceso,idrevaluacion: pidrevaluacion} 
     });
   }
+
+
+  mostrarMensaje(titulo_p:string,mensaje_p:string,color_p:string){
+    const dialogRef = this.matDialog.open(MensajeComponent, {
+      width: '500px',
+      data: { titulo: titulo_p ,mensaje: mensaje_p,colorTitulo: color_p }
+   });
+   }
 
 
 }

@@ -1,4 +1,3 @@
-import { InformacionCabeceraPreCierreResponse } from './../../../core/model/padron/response/InformacionCabeceraPreCierreResponse';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@envieromen/environment';

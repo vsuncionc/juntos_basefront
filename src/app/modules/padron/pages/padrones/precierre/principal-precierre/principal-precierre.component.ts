@@ -23,7 +23,7 @@ import { MensajeComponent } from '@compartido/component/mensaje/mensaje.componen
 })
 export class PrincipalPrecierreComponent implements OnInit {
 
-  listaRecibida: number[] = [345533434,345533435]; // Variable para almacenar la lista recibida
+  listaRecibida: number[] = []; // Variable para almacenar la lista recibida
   datosRecibidos: any;
   
   

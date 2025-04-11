@@ -20,8 +20,7 @@ import { PrincipalPrecierreComponent } from './pages/padrones/precierre/principa
 import { HgSeleccionPrecierreComponent } from './pages/padrones/precierre/hg-seleccion-precierre/hg-seleccion-precierre.component';
 import { HogaresActosComponent } from './pages/padrones/precierre/hogares-actos/hogares-actos.component';
 import { HogareSuspendidosComponent } from './pages/padrones/precierre/hogare-suspendidos/hogare-suspendidos.component';
-import { ResumenPrecierreComponent } from './pages/padrones/precierre/resumen-precierre/resumen-precierre.component';
-import { ProcesarComponent } from './pages/revaluacion/generacion/procesar/procesar.component'; 
+import { TablonPrincipalComponent } from './pages/tablones/tablon-principal/tablon-principal.component';
  
 
 @NgModule({
@@ -41,8 +40,7 @@ import { ProcesarComponent } from './pages/revaluacion/generacion/procesar/proce
     HgSeleccionPrecierreComponent,
     HogaresActosComponent,
     HogareSuspendidosComponent,
-    ResumenPrecierreComponent,
-    ProcesarComponent 
+    TablonPrincipalComponent 
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,75 @@
+.mat-mdc-card-outlined{
+    background-color: rgb(255, 255, 255);
+  }
+
+  .titulo_combos{
+    font-size: var(--font-size-14);
+  }
+
+  .combos{
+    width: 100%;
+  }
+
+  .title_center {
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center; /* align vertical */
+  }
+
+    .boton_general {
+    margin-top: 1%;
+    background-color: var(--color-10);
+    color: white !important;
+    font-size: var(--font-size-8);
+  }
+
+  table {
+    background-color: rgb(255, 255, 255); 
+  }
+  th {
+    color: #ffffff; 
+  }
+  table th{
+    background-color: #AF261A;
+    color: aliceblue;
+ }
+  tr:hover td{
+    background:rgb(214, 213, 213);
+  }
+  .pointer{
+  cursor: pointer; 
+  color: #AF261A;
+ }
+
+  .custom-datepicker {
+    width: 100%; /* Ajusta el ancho deseado */
+   // height: 40px; /* Ajusta la altura deseada */
+  
+    .mat-form-field-wrapper {
+      padding-bottom: 0; /* Opcional: reduce el padding interno */
+    }
+  
+    .mat-form-field-infix {
+      padding: 0 8px; /* Ajusta el padding horizontal */
+      height: 30px; /* Ajusta la altura de la caja de texto */
+      line-height: 30px;
+    }
+  
+    .mat-datepicker-toggle {
+      height: 30px; /* Ajusta el tamaño del botón de toggle */
+      width: 30px;
+  
+      .mat-icon-button {
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+      }
+    }
+  
+    input.mat-input-element {
+      font-size: 12px; /* Tamaño de texto */
+      height: 30px;
+      line-height: 30px;
+    }
+}
+  

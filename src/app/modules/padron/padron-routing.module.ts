@@ -6,7 +6,8 @@ import { ResumenComponent } from '@modulos/padron/pages/revaluacion/generacion/r
 import { PrincipalComponent } from '@modulos/padron/pages/revaluacion/generacion/principal/principal.component';
 import { PadronHomeComponent } from '@modulos/padron/pages/padrones/padron-home/padron-home.component';
 import { PrincipalPrecierreComponent } from '@modulos/padron/pages/padrones/precierre/principal-precierre/principal-precierre.component';
-import { ProcesarComponent } from './pages/revaluacion/generacion/procesar/procesar.component';
+import { TablonPrincipalComponent } from './pages/tablones/tablon-principal/tablon-principal.component';
+ 
 const routes: Routes = [
   {
     path:'',component:HomeComponent,
@@ -26,7 +27,11 @@ const routes: Routes = [
   },
   {
     path: 'precierre',component:PrincipalPrecierreComponent,
-    data: { title: 'MODULO 5' }
+    data: { title: 'Pre Cierre' }
+  },
+  {
+    path: 'tablon',component:TablonPrincipalComponent,
+    data: { title: 'TABLONES' }
   }
 
 ];

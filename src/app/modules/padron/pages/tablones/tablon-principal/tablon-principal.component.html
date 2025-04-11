@@ -1,0 +1,152 @@
+<span class="titulo_modulo">{{title}}</span>
+ <mat-divider></mat-divider> <br>
+ <form  class="form-inline" [formGroup]="frmTablon"  method="post">
+
+ <mat-card   appearance="outlined">
+    <mat-card-content>
+        <div class="row text-center">
+            
+            <div class="col-sm-2">
+                <mat-form-field appearance="outline"  class="combos">
+                    <mat-label class="titulo_combos">BUSCAR POR</mat-label>
+                    <mat-select  formControlName="cbOpcionesBusqueda"> 
+                      <mat-option *ngFor="let tipoesquema of this.listacombo" [value]="tipoesquema.id">
+                        {{tipoesquema.descripcion}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+
+            <div class="col-sm-2">
+                <mat-form-field appearance="outline" class="combos">
+                    <mat-label class="titulo_combos">CRITERIO</mat-label>
+                    <input type="text" matInput placeholder="Ingrese Criterio"  formControlName="StrCriterio">
+                </mat-form-field>
+            </div>
+
+
+            <div class="col-sm-3">
+                <mat-form-field appearance="outline" class="custom-datepicker" >
+                    <mat-label class="titulo_combos">FECHA PROCESADO</mat-label>
+                    <input matInput [matDatepicker]="picker" readonly formControlName="strFechaTablon">
+                    <mat-datepicker-toggle matIconSuffix [for]="picker" > </mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+            </div>
+
+            
+            <div class="col-sm-4 text-start">
+                <button type="button" mat-fab extended class="boton_general" (click)="buscarTablones()">
+                  <mat-icon>search</mat-icon>
+                  BUSCAR
+                </button>&nbsp;&nbsp;
+                <button type="button"  mat-fab extended class="boton_general" (click)="limpiarBusqueda()">
+                  <mat-icon>restart_alt</mat-icon>
+                  LIMPIAR
+                </button>
+              </div>
+
+        </div>
+    </mat-card-content>    
+ </mat-card>
+<br>
+ <div class="rows "><label class="title_center">LISTA TABLONES VALIDADOS</label></div>
+
+ <mat-card appearance="outlined">
+    <mat-card-content>
+      <div class="title_center"><app-spiner *ngIf="this.cargando" ></app-spiner></div>
+
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+         
+        <!-- Position Column -->
+         <ng-container matColumnDef="ITEM">
+          <th mat-header-cell *matHeaderCellDef> ITEM </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="CODIGO">
+          <th mat-header-cell *matHeaderCellDef> CODIGO </th>
+          <td mat-cell *matCellDef="let element"> {{element.codigo}} </td>
+        </ng-container>
+
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="USUARIO">
+          <th mat-header-cell *matHeaderCellDef> USUARIO </th>
+          <td mat-cell *matCellDef="let element"> {{element.usuario}} </td>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="FECHA_REGISTRO">
+          <th mat-header-cell *matHeaderCellDef> FECHA_REGISTRO </th>
+          <td mat-cell *matCellDef="let element"> {{element.fechaRegistro}} </td>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="FECHA_PROCESADO">
+          <th mat-header-cell *matHeaderCellDef> FECHA PROCESADO </th>
+          <td mat-cell *matCellDef="let element"> {{element.fechaTermino}} </td>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="CANTIDAD_APTOS">
+          <th mat-header-cell *matHeaderCellDef> CANTIDAD_APTOS </th>
+          <td mat-cell *matCellDef="let element"> {{element.cantidadAptos}} </td>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="CANTIDAD_SUSPENDIDOS">
+          <th mat-header-cell *matHeaderCellDef> CODIGO </th>
+          <td mat-cell *matCellDef="let element"> {{element.cantidadSuspendidos}} </td>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="CANTIDAD_ERROR">
+          <th mat-header-cell *matHeaderCellDef> CANTIDAD_ERROR </th>
+          <td mat-cell *matCellDef="let element"> {{element.cantidadError}} </td>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="TOTAL">
+          <th mat-header-cell *matHeaderCellDef> TOTAL </th>
+          <td mat-cell *matCellDef="let element"> {{element.cantidadTotal}} </td>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="MONTO">
+          <th mat-header-cell *matHeaderCellDef> MONTO </th>
+          <td mat-cell *matCellDef="let element"> {{element.monto}} </td>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="DESCARGAR">
+          <th mat-header-cell *matHeaderCellDef> DESCARGAR </th>
+          <td mat-cell *matCellDef="let element" style="text-align: center;">
+            <a  title="Descargar"  class="pointer" (click)="descargarReporteHogaresValidados(element.codigo)">
+             <mat-icon  aria-hidden="false" aria-label="Example home icon" fontIcon="download"></mat-icon> 
+            </a>
+           </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table> 
+
+
+      <div class="row" style="padding-top: 5px;">
+        <div class="col-sm-14 text-end" >
+          <mat-paginator  
+          [pageSizeOptions]="[6]" 
+          showFirstLastButtons
+          aria-label="Select page of periodic elements">
+         </mat-paginator>
+        </div>
+      </div>
+
+    </mat-card-content>
+ </mat-card>
+
+
+ </form>

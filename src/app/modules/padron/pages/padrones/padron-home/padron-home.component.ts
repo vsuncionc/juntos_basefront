@@ -1,4 +1,4 @@
-import { PadronService } from './../../../service/padron.service';
+import { PadronService } from '@modulos/padron/service/padron.service'
 import { HogaresPadronRevaluacionResponse } from '@principal/model/padron/response/HogaresPadronRevaluacionResponse';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
