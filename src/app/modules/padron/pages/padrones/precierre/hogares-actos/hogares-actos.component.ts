@@ -4,22 +4,6 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { HogaresPreValidadosAptosResponse } from '@principal/model/padron/response/HogaresPreValidadosAptosResponse';
 
-
-export interface ITfListaHogares {
-  codigo: number,
-  departamento: String,
-  provincia: String,
-  distrito: String,
-  centroPoblado: String,
-  tipoPadron: String,
-  codigoPadron: String,
-  periodo: String,
-  idhogar: String,
-  monto: String,
-  titular: String
-}
-
-
  
 @Component({
   selector: 'app-hogares-actos',
@@ -33,8 +17,6 @@ export class HogaresActosComponent implements OnInit {
 
   @Input() lsHogaresAptosPreCierre: HogaresPreValidadosAptosResponse[] = [];
 
-
-  
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;

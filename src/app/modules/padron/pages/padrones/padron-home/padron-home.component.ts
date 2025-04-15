@@ -195,9 +195,9 @@ lista: number[] = [];
     subscribe({
       next: (data)=>{
         if(data.status === '1'){
-          console.log("---- grupo esquema"+data.data);
+          //console.log("---- grupo esquema"+data.data);
           this.listacomboPeriodos = data.data;
-          console.log(this.listacomboPeriodos);
+          //console.log(this.listacomboPeriodos);
         }else{
           console.log('error al consultar');
           this.mostrarMensaje('OCURRIO UN ERROR',data.message,'var(--mensaje-color-error)');

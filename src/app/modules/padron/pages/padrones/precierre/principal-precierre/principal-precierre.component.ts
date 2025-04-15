@@ -16,6 +16,7 @@ import { GeneracionCierrePadronResponse } from '@principal/model/padron/request/
 import { saveAs } from 'file-saver';
 import { MensajeComponent } from '@compartido/component/mensaje/mensaje.component';
 import { finalize } from 'rxjs/operators';
+import { HogaresValidadosAptosResponse } from '@principal/model/padron/response/HogaresValidadosAptosResponse';
 
 @Component({
   selector: 'app-principal-precierre',
@@ -62,6 +63,7 @@ export class PrincipalPrecierreComponent implements OnInit {
 
   // Variables para el formulario Cierre
   respuestaCierre: GeneracionCierrePadronResponse[] = [];
+  lsHogaresAptosValidados: HogaresValidadosAptosResponse[] = [];
   
 
   @ViewChild('stepper') private myStepper!: MatStepper;
@@ -180,7 +182,7 @@ export class PrincipalPrecierreComponent implements OnInit {
           
           this.listaHogarSeleccionadoVistaPrevia = data.data;
           this.obtenerInformacionCabeceraVistaPreviaCierre(data.data);
-          this.obtenerHogarSeleccionadoPrecierre(data.data);
+          //this.obtenerHogarSeleccionadoPrecierre(data.data);
           
           setTimeout(() => {
             console.log("Delayed for 1 second.");
@@ -221,12 +223,6 @@ export class PrincipalPrecierreComponent implements OnInit {
   }
 
  } 
-
-
- obtenerHogarSeleccionadoPrecierre(datos:HogaresPadronRevaluacionResponse[]){
-  
- }
-
 
 // *****************  Funciones para el formulario Resumen precierre ***********************
 
@@ -372,7 +368,14 @@ this.padronService.listaHogaresSuspendidosPrecierre<HogaresPreValidadoSuspendido
   });
 }
  
-
+descargarReportePrecierreTodos(){
+  let codigo = this.codigoPrecierre;
+  this.padronService.descargaReporteTodosHogaresPreCierre(codigo).
+  subscribe((data)=>{
+    saveAs(data,`ReporteHogaresTodos_${codigo}.xlsx`);
+  });
+   
+}
 
 // *****************  Funciones para el formulario Cierre ***********************
 
@@ -385,8 +388,11 @@ generarCierre(){
   this.padronService.generarCierre<GeneracionCierrePadronResponse>(request)
   .pipe(
     finalize(() => {
+      // Cargamos los hogares aptos del cierre
+      this.obtenerHogaresAptosCierre(this.codigoPrecierre);
       this.cargando = false; // Finaliza el spinner
       console.log('Finalizó la petición del padrón');
+      
     })
   )
   .subscribe({
@@ -416,8 +422,14 @@ obtenerInformacionCabeceraResumenCierre(codigo:number){
   const request: PadronPreCierreRequest = {
     codigoPreValidacionHogar : codigo
   };
- this.padronService.informacionCabeceraResumenPreCierreResponse<InformacionCabeceraPreCierreResponse>(request).
-  subscribe({
+ this.padronService.informacionCabeceraResumenPreCierreResponse<InformacionCabeceraPreCierreResponse>(request)
+ .pipe(
+  finalize(() => {
+    this.cargando = false; // Finaliza el spinner
+    console.log('Finalizó obtenerInformacionCabeceraResumenCierre');
+   })
+  )
+ .subscribe({
     next: (data) => {
       if (data.status === '1') {
         this.infoCabeceraResumenPreCierre = data.data;  
@@ -440,6 +452,44 @@ obtenerInformacionCabeceraResumenCierre(codigo:number){
   });
 }
 
+
+obtenerHogaresAptosCierre(codigo:number){
+  const request: PadronPreCierreRequest = {
+    codigoPreValidacionHogar : codigo
+  };
+  
+  this.padronService.listaHogaresAptosPrecierre<HogaresValidadosAptosResponse>(request)
+  .pipe(
+    finalize(() => {
+      this.cargando = false; // Finaliza el spinner
+      console.log('Finalizó obtenerHogaresAptosCierre');
+    })
+  )
+  .subscribe({ 
+    next: (data) =>{
+      if(data.status==='1'){
+        this.cargando=true;
+        this.lsHogaresAptosValidados = data.data
+        console.log('HOGARES APTOS CIERRE: '+this.lsHogaresAptosValidados.length);
+      }else{
+        this.lsHogaresAptosValidados = [];
+        console.log('error al consultar');
+        this.mostrarMensaje('2 OCURRIO UN ERROR',data.message,'var(--mensaje-color-error)');
+        this.cargando=false;
+      }
+
+    },
+    error: (error) => {
+      console.error('Error en la petición:', error);
+      this.cargando=false;
+      this.mostrarMensaje('3 OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
+    }
+
+
+  });
+
+}
+
 descargarReporteHogaresValidados(codigo:number){
   this.padronService.descargaReporteHogaresAptos(codigo).
   subscribe((data)=>{
@@ -455,9 +505,7 @@ mostrarMensaje(titulo_p:string,mensaje_p:string,color_p:string){
  });
  }
 
- descargarReportePrecierre(codigo:number){
-   
- }
+
 
 
 }

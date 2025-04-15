@@ -102,4 +102,10 @@ listaHogaresAptoscierre<T>(parametro:PadronPreCierreRequest):Observable<ApiRespo
 }
 
 
+descargaReporteTodosHogaresPreCierre(params: number): Observable<Blob>{
+  return this.http.get(this.URL+`padron/lshogaresvalprecierrexel?id=${params}`, {
+    responseType: 'blob'
+ });
+}
+
 }

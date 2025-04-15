@@ -21,6 +21,7 @@ import { HgSeleccionPrecierreComponent } from './pages/padrones/precierre/hg-sel
 import { HogaresActosComponent } from './pages/padrones/precierre/hogares-actos/hogares-actos.component';
 import { HogareSuspendidosComponent } from './pages/padrones/precierre/hogare-suspendidos/hogare-suspendidos.component';
 import { TablonPrincipalComponent } from './pages/tablones/tablon-principal/tablon-principal.component';
+import { HogaresActosCierreComponent } from './pages/padrones/precierre/hogares-actos-cierre/hogares-actos-cierre.component';
  
 
 @NgModule({
@@ -40,7 +41,8 @@ import { TablonPrincipalComponent } from './pages/tablones/tablon-principal/tabl
     HgSeleccionPrecierreComponent,
     HogaresActosComponent,
     HogareSuspendidosComponent,
-    TablonPrincipalComponent 
+    TablonPrincipalComponent,
+    HogaresActosCierreComponent 
   ],
   imports: [
     CommonModule,

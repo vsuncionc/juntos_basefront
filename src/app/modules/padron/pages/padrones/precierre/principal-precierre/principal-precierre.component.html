@@ -121,12 +121,22 @@
               </div>
              </div>
              <div class="row">
-              <div class="col-sm-12 text-center" *ngIf="this.listaHogaresAptosPrecierre.length > 0">
+
+              <div class="col-sm-6" style="text-align: right">
+                <button mat-fab extended class="boton_general" (click)="this.descargarReportePrecierreTodos()">
+                  <mat-icon>library_books</mat-icon>
+                  DESCARGAR REPORTE
+                </button>
+              </div>
+
+              <div class="col-sm-6" style="text-align: left" *ngIf="this.listaHogaresAptosPrecierre.length > 0">
                  <button mat-fab extended class="boton_general" (click)="clickButton(3, stepper)">
                   <mat-icon>library_add_check</mat-icon>
                   GENERAR CIERRE
                 </button>
               </div>
+  
+
             </div>
           </mat-card-content>
       </mat-card>
@@ -174,15 +184,13 @@
 
          </div>
         </mat-card-content>
-      </mat-card>     
+      </mat-card>    
 
-      <div class="title_center"><app-spiner *ngIf="this.cargando"></app-spiner></div>
-
-      <div class="row"  *ngIf="this.listaHogaresAptosPrecierre.length>0">
-        <app-hogares-actos></app-hogares-actos>
+      <app-spiner *ngIf="this.cargando"></app-spiner><br>
+      <div class="title_center"> Lista de Hoagres Actos Validados</div>
+      <div class="row">
+        <app-hogares-actos-cierre *ngIf="this.lsHogaresAptosValidados.length>0"  [lsHogaresActosValidados]="this.lsHogaresAptosValidados"></app-hogares-actos-cierre>
       </div>
-
-        
         <div style="text-align: center;">
           <button mat-fab extended class="boton_general" (click)="descargarReporteHogaresValidados(this.codigoPrecierre)" *ngIf="this.listaHogaresAptosPrecierre.length>0">
             <mat-icon>library_add_check</mat-icon>
