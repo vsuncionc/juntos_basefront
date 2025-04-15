@@ -4,8 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ListaMoPorRevaluacionResponse } from '@principal/model/padron/response/ListaMoPorRevaluacionResponse';
-import { RevaluacionRequest } from '@principal/model/padron/request/RevaluacionRequest';
-import { ListaHogaresRevisionResponse } from '@principal/model/padron/response/ListaHogaresRevisionResponse';
+import { RevaluacionRequest } from '@principal/model/padron/request/RevaluacionRequest'; 
 
 @Component({
   selector: 'app-mobjetivos',
@@ -14,10 +13,9 @@ import { ListaHogaresRevisionResponse } from '@principal/model/padron/response/L
 })
 export class MobjetivosComponent implements OnInit {
 
-
-
-  displayedColumns: string[] = ['CODIGOHOGAR','IDHOGAR', 'PERIODO', 'IDCORTE', 'MIEMBRO_OBJETIVO', 'CUMPLIO_MES_1', 'CUMPLIO_MES_2'];
-  dataSource =new MatTableDataSource<ListaMoPorRevaluacionResponse>();
+displayedColumns: string[] = ['CODIGOHOGAR','IDHOGAR', 'PERIODO', 'IDCORTE', 'MIEMBRO_OBJETIVO', 'CUMPLIO_MES_1', 'CUMPLIO_MES_2'];
+dataSource =new MatTableDataSource<ListaMoPorRevaluacionResponse>();
+listaMoPorHogar:ListaMoPorRevaluacionResponse[]=[];
 
 @ViewChild(MatPaginator) paginator!: MatPaginator;
 @ViewChild(MatSort) sort!: MatSort;
@@ -27,6 +25,7 @@ ngAfterViewInit() {
 
 @Input() codigoRevaluacion:number=0;
 
+ 
 constructor(
   private revaluacionService:ListaRevaluacionesService
 ){}
@@ -42,10 +41,16 @@ constructor(
       criterio : "",
       grupoesquema : "" 
     } as RevaluacionRequest
-   this.revaluacionService.listarMoPorRevaluacion<ListaHogaresRevisionResponse>(request).
+   this.revaluacionService.listarMoPorRevaluacion<ListaMoPorRevaluacionResponse>(request).
     subscribe({
       next: (data) => {
         if(data.status === '1'){
+          this.listaMoPorHogar=data.data;
+          this.dataSource = new MatTableDataSource<ListaMoPorRevaluacionResponse>(data.data);
+          setTimeout(() => {
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          });
           console.log("---- grupo MO"+data.data);
         }else{
           console.log('error al consultar');

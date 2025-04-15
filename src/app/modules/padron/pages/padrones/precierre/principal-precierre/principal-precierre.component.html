@@ -49,7 +49,7 @@
                </div>
                <div class="row">
                 <div class="col-sm-12 text-center">
-                   <button mat-fab extended class="boton_general" (click)="clickButton(2, stepper)">
+                   <button mat-fab extended class="boton_general" *ngIf="this.vmontoPagarVistaPreviaCierre>0" (click)="clickButton(2, stepper)">
                     <mat-icon>library_add_check</mat-icon>
                     GENERAR PRE CIERRE
                   </button>
@@ -121,9 +121,8 @@
               </div>
              </div>
              <div class="row">
-              <div class="col-sm-12 text-center">
-                 <button mat-fab extended class="boton_general" (click)="clickButton(3, stepper)"
-                 [disabled]="listaHogaresAptosPrecierre.length === 0">
+              <div class="col-sm-12 text-center" *ngIf="this.listaHogaresAptosPrecierre.length > 0">
+                 <button mat-fab extended class="boton_general" (click)="clickButton(3, stepper)">
                   <mat-icon>library_add_check</mat-icon>
                   GENERAR CIERRE
                 </button>
@@ -185,7 +184,7 @@
 
         
         <div style="text-align: center;">
-          <button mat-fab extended class="boton_general" (click)="descargarReporteHogaresValidados(this.codigoPrecierre)">
+          <button mat-fab extended class="boton_general" (click)="descargarReporteHogaresValidados(this.codigoPrecierre)" *ngIf="this.listaHogaresAptosPrecierre.length>0">
             <mat-icon>library_add_check</mat-icon>
               DESCARGAR REPORTE
           </button>

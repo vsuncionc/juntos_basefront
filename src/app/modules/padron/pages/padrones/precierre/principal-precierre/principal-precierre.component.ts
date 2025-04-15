@@ -15,6 +15,7 @@ import { HogaresPreValidadoSuspendidosResponse } from '@principal/model/padron/r
 import { GeneracionCierrePadronResponse } from '@principal/model/padron/request/GeneracionCierrePadronResponse';
 import { saveAs } from 'file-saver';
 import { MensajeComponent } from '@compartido/component/mensaje/mensaje.component';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-principal-precierre',
@@ -61,6 +62,7 @@ export class PrincipalPrecierreComponent implements OnInit {
 
   // Variables para el formulario Cierre
   respuestaCierre: GeneracionCierrePadronResponse[] = [];
+  
 
   @ViewChild('stepper') private myStepper!: MatStepper;
 
@@ -132,16 +134,12 @@ export class PrincipalPrecierreComponent implements OnInit {
         if (result === "SI") {
           if (index === 2) {
             // Generamos para el pre cierre
-            this.cargando = true;
             this.generarPreCierre();
             this.pcontinua1 = "OK";
-            this.cargando = false;
             this.vistaPreviaFormGroup.controls['strContinua1'].setValue(this.pcontinua1);
           } else if (index === 3) {
             // Generamos el cierre
-            this.cargando = true;
             this.generarCierre();
-            this.cargando = false;
             this.pcontinua2 = "OK";
             this.resumenPreCierreFormGroup.controls['strContinua2'].setValue(this.pcontinua2);
           }
@@ -166,13 +164,20 @@ export class PrincipalPrecierreComponent implements OnInit {
     console.log("hoagres procesar ="+this.listaRecibida);
     const request: PadronSeleccionHogaresRequest = {
       idetpadrones : this.listaRecibida
-    } ;
+    };
 
-    this.padronService.listarHogarSeleccionadoPrecierre<HogaresPadronRevaluacionResponse>(request).
-    subscribe({
+    this.cargando=true;
+    this.padronService.listarHogarSeleccionadoPrecierre<HogaresPadronRevaluacionResponse>(request)
+    .pipe(
+      finalize(() => {
+        this.cargando = false; // Finaliza el spinner
+        console.log('Finalizó la petición del padrón');
+      })
+    )
+    .subscribe({
       next: (data) => {
         if (data.status === '1') {
-          this.cargando=true;
+          
           this.listaHogarSeleccionadoVistaPrevia = data.data;
           this.obtenerInformacionCabeceraVistaPreviaCierre(data.data);
           this.obtenerHogarSeleccionadoPrecierre(data.data);
@@ -189,8 +194,7 @@ export class PrincipalPrecierreComponent implements OnInit {
         }
           
       },
-      error: (error) => {
-        this.cargando=false;
+      error: (error) => { 
         console.error('Error en la petición:', error);
         this.mostrarMensaje('OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
       }
@@ -210,6 +214,12 @@ export class PrincipalPrecierreComponent implements OnInit {
   this.vistaPreviaFormGroup.controls['strFechaPreCierre'].setValue(this.vFechaSistema);
   this.vistaPreviaFormGroup.controls['strCantidadHogares'].setValue(this.vcantidadHogaresVistaPreviaCierre);
   this.vistaPreviaFormGroup.controls['strMontoPagar'].setValue(this.vmontoPagarVistaPreviaCierre);
+
+  //MOSTRAMOS SI EL MONTO A PAGAR ES 0
+  if(this.vmontoPagarVistaPreviaCierre == 0){
+    this.mostrarMensaje('INFORMACION','El monto a pagar es cero, no podra continuar','var(--mensaje-color-informativo)');
+  }
+
  } 
 
 
@@ -221,12 +231,19 @@ export class PrincipalPrecierreComponent implements OnInit {
 // *****************  Funciones para el formulario Resumen precierre ***********************
 
  generarPreCierre(){
+  this.cargando = true;
   const request: PadronSeleccionHogaresRequest = {
     idetpadrones : this.listaRecibida
   };
 
-  this.padronService.generarPrecierre<GeneracionPreCierreResponse>(request).
-  subscribe({
+  this.padronService.generarPrecierre<GeneracionPreCierreResponse>(request)
+  .pipe(
+    finalize(() => {
+      this.cargando = false; // Finaliza el spinner
+      console.log('Finalizó la petición del padrón');
+    })
+  )
+  .subscribe({
     next: (data) => {
       if (data.status === '1') {
         this.listaHogaresVistaPreviaCierre = data.data;
@@ -251,12 +268,20 @@ export class PrincipalPrecierreComponent implements OnInit {
 
 // *****************  Funciones para el Resumen del PreCierre ***********************
 ObtenerInformacionCabeceraResumenPreCierre(codigo:number){
+
+  this.cargando = true; 
   const request: PadronPreCierreRequest = {
     codigoPreValidacionHogar : codigo
   };
 
- this.padronService.informacionCabeceraResumenPreCierreResponse<InformacionCabeceraPreCierreResponse>(request).
-  subscribe({
+ this.padronService.informacionCabeceraResumenPreCierreResponse<InformacionCabeceraPreCierreResponse>(request)
+ .pipe(
+  finalize(() => {
+    this.cargando = false; // Finaliza el spinner
+    console.log('Finalizó la petición del padrón');
+  })
+)
+ .subscribe({
     next: (data) => {
       if (data.status === '1') {
         this.infoCabeceraResumenPreCierre = data.data;  
@@ -272,6 +297,7 @@ ObtenerInformacionCabeceraResumenPreCierre(codigo:number){
         //LISTAMOS LOS HOGARES SUSPENDIDOS
         this.obtenerHogaresSuspendidos(this.infoCabeceraResumenPreCierre[0].id);
 
+        
       }else{
         console.log('error al consultar');
         this.mostrarMensaje('OCURRIO UN ERROR',data.message,'var(--mensaje-color-error)');
@@ -288,12 +314,23 @@ ObtenerInformacionCabeceraResumenPreCierre(codigo:number){
 
 
 obtenerHogaresAptos(codigoCierre:number){
+ // this.cargando = true;
   const request: PadronPreCierreRequest = {
     codigoPreValidacionHogar : codigoCierre
   };
 
-this.padronService.listaHogaresAptosPrecierre<HogaresPreValidadosAptosResponse>(request).
-  subscribe({
+this.padronService.listaHogaresAptosPrecierre<HogaresPreValidadosAptosResponse>(request)
+.pipe(
+  finalize(() => {
+    //this.cargando = false; // Finaliza el spinner
+     //MOSTRAMOS MENSAJE SI NO EXISTEN HOGARES APTOS
+    if(this.listaHogaresAptosPrecierre.length == 0){
+      this.mostrarMensaje('INFORMACION','No existen hogares aptos para el cierre','var(--mensaje-color-informativo)');
+    }
+    console.log('Finalizó obtenerHogaresAptos');
+  })
+)
+.subscribe({
     next: (data) => {
       if (data.status === '1') {
        // this.respuesta = data.data;
@@ -308,6 +345,8 @@ this.padronService.listaHogaresAptosPrecierre<HogaresPreValidadosAptosResponse>(
       this.mostrarMensaje('OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
     },
   });
+
+ 
 }
 
 
@@ -316,8 +355,8 @@ obtenerHogaresSuspendidos(codigoCierre:number){
     codigoPreValidacionHogar : codigoCierre
   };
 
-this.padronService.listaHogaresSuspendidosPrecierre<HogaresPreValidadoSuspendidosResponse>(request).
-  subscribe({
+this.padronService.listaHogaresSuspendidosPrecierre<HogaresPreValidadoSuspendidosResponse>(request)
+  .subscribe({
     next: (data) => {
       if (data.status === '1') {
        // this.respuesta = data.data;
@@ -338,12 +377,19 @@ this.padronService.listaHogaresSuspendidosPrecierre<HogaresPreValidadoSuspendido
 // *****************  Funciones para el formulario Cierre ***********************
 
 generarCierre(){
+  this.cargando = true;
   const request: PadronPreCierreRequest = {
     codigoPreValidacionHogar : this.codigoPrecierre
   };
 
-  this.padronService.generarCierre<GeneracionCierrePadronResponse>(request).
-  subscribe({
+  this.padronService.generarCierre<GeneracionCierrePadronResponse>(request)
+  .pipe(
+    finalize(() => {
+      this.cargando = false; // Finaliza el spinner
+      console.log('Finalizó la petición del padrón');
+    })
+  )
+  .subscribe({
     next: (data) => {
       if (data.status === '1') {
         this.respuestaCierre = data.data;
@@ -407,6 +453,10 @@ mostrarMensaje(titulo_p:string,mensaje_p:string,color_p:string){
     width: '500px',
     data: { titulo: titulo_p ,mensaje: mensaje_p,colorTitulo: color_p }
  });
+ }
+
+ descargarReportePrecierre(codigo:number){
+   
  }
 
 

@@ -19,4 +19,10 @@ export class TablonService {
     return this.http.
     post<ApiResponse<T>>(this.URL+"tablon/buscar", parametros);
   }
+
+  descargaReporteTablones(params: number): Observable<Blob>{
+    return this.http.get(this.URL+`tablon/generarexceltablon?id=${params}`, {
+      responseType: 'blob'
+   });
+  }
 }

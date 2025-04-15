@@ -6,10 +6,12 @@ import { MensajeConfirmacionComponent } from '@compartido/component/mensaje-conf
 import { MensajeComponent } from '@compartido/component/mensaje/mensaje.component';
 import { ListaRevaluacionesService } from '@modulos/padron/service/lista-revaluaciones.service';
 import { PadronService } from '@modulos/padron/service/padron.service';
+import { PadronProcesarRequest } from '@principal/model/padron/request/PadronProcesarRequest';
 import { RevaluacionSeleccionadaRevPostRequest } from '@principal/model/padron/request/RevaluacionSeleccionadaRevPostRequest';
 import { GeneracionPadronResponse } from '@principal/model/padron/response/GeneracionPadronResponse';
 import { ListaHogarSeleccionadosRevaResponse } from '@principal/model/padron/response/ListaHogarSeleccionadosRevaResponse';
 import { ListaMoRevaluacionResponse } from '@principal/model/padron/response/ListaMoRevaluacionResponse';
+import { finalize } from 'rxjs/operators';
 
 
 @Component({
@@ -44,7 +46,7 @@ export class PrincipalComponent  implements OnInit{
   //INFORMACION CABECERA
   cantidadHogares: number=0;
   MontoTotal: number=0;
-  codpadron: number=596;
+  codpadron: number=0;
 
   ngOnInit(): void { 
     this.route.data.subscribe(data => {
@@ -60,13 +62,6 @@ export class PrincipalComponent  implements OnInit{
   }
 
   validarCarga(){
-    // const datos = this.revaluacionService.getDatosRev();
-    //agregamos una instancia a la lista
-    /*const datos = this.revaluacionService.getDatosRev();
-    datos.forEach((elemento, index) => {
-     console.log(`Elemento ${index}: ${elemento}`);
-     });*/
- 
      this.listaRevaluacionSeleccionada = { idrevaluaciones: this.revaluacionService.getDatosRev() };
      
      if(this.listaRevaluacionSeleccionada.idrevaluaciones.length==0){
@@ -129,10 +124,22 @@ export class PrincipalComponent  implements OnInit{
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed'+result);
-      if (result == "SI") {
-        //INVOCAMOS EL SERVICIO DE PROCESAR
-        this.padronService.generarPadronRevaluacion<GeneracionPadronResponse>(this.listaRevaluacionSeleccionada).
-        subscribe({
+      if (result == "SI") {//INVOCAMOS EL SERVICIO DE PROCESAR
+        const request = {
+          idrevaluaciones: this.listaRevaluacionSeleccionada.idrevaluaciones ,
+          descripcion: this.frmProceo.get('strDescripcion')?.value,
+          codigoUsuario: '1' //this.usuarioService.getUsuario().codigoUsuario
+        } as PadronProcesarRequest;
+
+        this.cargando=true;
+        this.padronService.generarPadronRevaluacion<GeneracionPadronResponse>(request)
+        .pipe(
+          finalize(() => {
+            this.cargando = false; // Finaliza el spinner
+            console.log('Finalizó la petición del padrón');
+          })
+        )
+        .subscribe({
           next: (data) => {
             if(data.code === 'OK'){ 
               console.log('Código Padrón generado:', data.data[0].codigopadron);

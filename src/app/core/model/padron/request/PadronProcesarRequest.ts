@@ -1,3 +1,5 @@
 export interface PadronProcesarRequest {
-    idrevaluaciones: Number[]
+    idrevaluaciones: Number[],
+    descripcion: string,
+    codigoUsuario: string
 }

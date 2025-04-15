@@ -36,7 +36,8 @@ export class TablonPrincipalComponent  implements OnInit{
   listacombo: ComboGenericoResponse[] = [];
   listaTablones: TablonCierrePadronResponse[]=[];
   cargando: boolean = false;
-  displayedColumns: string[] = ['ITEM','CODIGO', 'USUARIO', 'FECHA_REGISTRO','FECHA_PROCESADO', 'CANTIDAD_APTOS', 'CANTIDAD_SUSPENDIDOS','CANTIDAD_ERROR', 'TOTAL','MONTO','DESCARGAR'];
+  //displayedColumns: string[] = ['ITEM','CODIGO', 'USUARIO', 'FECHA_REGISTRO','FECHA_PROCESADO', 'CANTIDAD_APTOS', 'CANTIDAD_SUSPENDIDOS','CANTIDAD_ERROR', 'TOTAL','MONTO','DESCARGAR'];
+  displayedColumns: string[] = ['ITEM','USUARIO','FECHA_PROCESADO', 'CANTIDAD_APTOS', 'CANTIDAD_SUSPENDIDOS','CANTIDAD_ERROR', 'TOTAL','MONTO','DESCARGAR'];
   dataSource =new MatTableDataSource<TablonCierrePadronResponse>();
 
 
@@ -114,9 +115,9 @@ export class TablonPrincipalComponent  implements OnInit{
   }
 
   descargarReporteHogaresValidados(codigo:number){
-    this.padronService.descargaReporteHogaresAptos(codigo).
+    this.tablonService.descargaReporteTablones(codigo).
     subscribe((data)=>{
-      saveAs(data,`ReporteHogaresAptos_${codigo}.xlsx`);
+      saveAs(data,`ReporteTablon_${codigo}.xlsx`);
     });
   }
 

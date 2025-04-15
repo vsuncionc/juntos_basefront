@@ -96,4 +96,10 @@ getDatoslsHgSel(): number[] {
 }
 
 
+listaHogaresAptoscierre<T>(parametro:PadronPreCierreRequest):Observable<ApiResponse<T>>{
+  return this.http.
+  post<ApiResponse<T>>(this.URL+`padron/listahogaresvalcierre`,parametro);
+}
+
+
 }
