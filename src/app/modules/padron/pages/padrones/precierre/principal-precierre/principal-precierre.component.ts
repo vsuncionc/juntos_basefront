@@ -12,7 +12,7 @@ import { PadronPreCierreRequest } from '@principal/model/padron/request/PadronPr
 import { InformacionCabeceraPreCierreResponse } from '@principal/model/padron/response/InformacionCabeceraPreCierreResponse';
 import { HogaresPreValidadosAptosResponse } from '@principal/model/padron/response/HogaresPreValidadosAptosResponse';
 import { HogaresPreValidadoSuspendidosResponse } from '@principal/model/padron/response/HogaresPreValidadoSuspendidosResponse';
-import { GeneracionCierrePadronResponse } from '@principal/model/padron/request/GeneracionCierrePadronResponse';
+import { GeneracionCierrePadronResponse } from '@principal/model/padron/response/GeneracionCierrePadronResponse';
 import { saveAs } from 'file-saver';
 import { MensajeComponent } from '@compartido/component/mensaje/mensaje.component';
 import { finalize } from 'rxjs/operators';

@@ -7,31 +7,38 @@ import { PrincipalComponent } from '@modulos/padron/pages/revaluacion/generacion
 import { PadronHomeComponent } from '@modulos/padron/pages/padrones/padron-home/padron-home.component';
 import { PrincipalPrecierreComponent } from '@modulos/padron/pages/padrones/precierre/principal-precierre/principal-precierre.component';
 import { TablonPrincipalComponent } from './pages/tablones/tablon-principal/tablon-principal.component';
+import { SessionGuard } from '@principal/guards/session.guard';
  
 const routes: Routes = [
   {
     path:'',component:HomeComponent,
-    data: { title: 'MODULO REVALUACIONES' }
+    data: { title: 'MODULO REVALUACIONES' },
+    canActivate:[SessionGuard] 
   },
   {
     path:'procesar',component:PrincipalComponent,
-    data: { title: 'PROCESAMIENTO REVALIDACIONES' }
+    data: { title: 'PROCESAMIENTO REVALIDACIONES' },
+    canActivate:[SessionGuard] 
   },
   {
     path:'resumen/:codigopadron',component:ResumenComponent
-    ,data: { title: 'RESUMEN DEL PROCESAMIENTO' }
+    ,data: { title: 'RESUMEN DEL PROCESAMIENTO' },
+    canActivate:[SessionGuard] 
   },
   {
     path: 'padron',component:PadronHomeComponent,
-    data: { title: 'MODULO VALIDACION HOGARES' }
+    data: { title: 'MODULO VALIDACION HOGARES' },
+    canActivate:[SessionGuard] 
   },
   {
     path: 'precierre',component:PrincipalPrecierreComponent,
-    data: { title: 'Pre Cierre' }
+    data: { title: 'Pre Cierre' },
+    canActivate:[SessionGuard] 
   },
   {
     path: 'tablon',component:TablonPrincipalComponent,
-    data: { title: 'TABLONES' }
+    data: { title: 'TABLONES' },
+    canActivate:[SessionGuard] 
   }
 
 ];

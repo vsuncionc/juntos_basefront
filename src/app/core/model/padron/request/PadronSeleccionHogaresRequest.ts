@@ -1,3 +1,3 @@
 export interface PadronSeleccionHogaresRequest{
-    idetpadrones: Number[] 
+    idetpadrones: Number[]; 
 }

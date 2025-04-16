@@ -1,4 +1,4 @@
 export interface ComboGenericoResponse {
- id: string,
- descripcion: string
+ id: string;
+ descripcion: string;
 }

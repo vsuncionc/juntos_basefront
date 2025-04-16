@@ -1,3 +1,3 @@
 export interface PadronBuscarRequest {
-    codigoPadron:number
+    codigoPadron:number;
 }

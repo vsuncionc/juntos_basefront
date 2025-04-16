@@ -1,6 +1,6 @@
 export interface RevaluacionRequest {
-    codigoRevaluacion ?: number;
+    codigoRevaluacion?: number;
     tipobusqueda : string;
     criterio : string;
-    grupoesquema : string; 
+    grupoesquema : string;
 }

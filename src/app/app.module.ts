@@ -7,7 +7,9 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 import localePy from '@angular/common/locales/es-PY';
 import { DatePipe, registerLocaleData } from '@angular/common';
-import { provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
+import {CookieService} from 'ngx-cookie-service'; 
+import { inyectarTokenInterceptor } from '@principal/interceptors/inyectar-token.interceptor';
 registerLocaleData(localePy,'es')
 
 @NgModule({
@@ -22,7 +24,8 @@ registerLocaleData(localePy,'es')
     provideAnimationsAsync(),
     {provide: LOCALE_ID,useValue: 'es'},
     provideHttpClient(),
-    DatePipe
+    DatePipe,
+    CookieService
   ],
   bootstrap: [AppComponent]
 })

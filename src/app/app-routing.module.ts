@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from '@modulos/dashboard/pages/home/home.component';
+import { HomeComponent } from '@modulos/dashboard/pages/home/home.component'; 
+import { SessionGuard } from '@principal/guards/session.guard';
+ 
 
 const routes: Routes = [
   { path: '',redirectTo: '/login', pathMatch: 'full' }, 
@@ -8,7 +10,12 @@ const routes: Routes = [
   { 
     path: 'principal', // path: 'principal', 
     component: HomeComponent,
-    loadChildren: ()=>import('@modulos/dashboard/dashboard.module').then(m=>m.DashboardModule)
+    loadChildren: ()=>import('@modulos/dashboard/dashboard.module').then(m=>m.DashboardModule),
+    canActivate:[SessionGuard] 
+  },
+  {
+    path: '**',//TODO 404 cuando no existe la ruta
+    redirectTo: '/login'
   }
 ];
 

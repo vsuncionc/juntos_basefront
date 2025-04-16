@@ -1,3 +1,3 @@
 export interface PadronPreCierreRequest {
-    codigoPreValidacionHogar: number
+    codigoPreValidacionHogar: number;
 }

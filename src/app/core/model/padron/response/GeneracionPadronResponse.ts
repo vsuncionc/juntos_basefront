@@ -1,3 +1,3 @@
 export  interface GeneracionPadronResponse{
-    codigopadron: number
+    codigopadron: number;
 }  

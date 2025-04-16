@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 
 @Component({
@@ -8,10 +9,14 @@ import { Router } from '@angular/router';
   styleUrl: './menu.component.scss'
 })
 export class MenuComponent {
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private cookieService: CookieService
+  ) {}
 
   cerrarSession(){
     console.log("inresee");
+    this.cookieService.delete('token', '/');
     this.router.navigate(["/login"]);
   }
 }
