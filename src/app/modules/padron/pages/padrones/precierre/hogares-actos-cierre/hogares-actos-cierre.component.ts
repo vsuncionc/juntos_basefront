@@ -29,8 +29,7 @@ export class HogaresActosCierreComponent implements OnInit {
     this.listarHogaresActosValidados();
   }
 
-  listarHogaresActosValidados(){
-    console.log("************* lsHogaresActosValidados === "+this.lsHogaresActosValidados.length);
+  listarHogaresActosValidados(){ 
     this.dataSource =new MatTableDataSource<HogaresValidadosAptosResponse>(this.lsHogaresActosValidados);
          setTimeout(() => {
           this.dataSource.paginator = this.paginator;

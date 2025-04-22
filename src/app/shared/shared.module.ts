@@ -6,8 +6,8 @@ import { MaterialModule } from '@principal/material/material.module';
 import { RouterModule } from '@angular/router';
 import { MensajeConfirmacionComponent } from './component/mensaje-confirmacion/mensaje-confirmacion.component';
 import { SpinerComponent } from './component/spiner/spiner.component';
-import { MensajeComponent } from './component/mensaje/mensaje.component';
-
+import { MensajeComponent } from './component/mensaje/mensaje.component'; 
+ 
 
 @NgModule({
   declarations: [
@@ -27,6 +27,7 @@ import { MensajeComponent } from './component/mensaje/mensaje.component';
     MenuComponent,
     MensajeConfirmacionComponent,
     SpinerComponent
-  ] 
+  ],
+  providers: []
 })
 export class SharedModule { }

@@ -9,6 +9,7 @@ import { PadronBuscarRequest } from '@principal/model/padron/request/PadronBusca
 import { RevaluacionPadronResponse } from '@principal/model/padron/response/RevaluacionPadronResponse';
 import { InformacionComponent } from '../detalle/informacion/informacion.component';
 import { MensajeComponent } from '@compartido/component/mensaje/mensaje.component';
+import { finalize } from 'rxjs';
  
 @Component({
   selector: 'app-formrevalupadron',
@@ -48,8 +49,13 @@ constructor(
  buscarRevaluacionPadron(){
    console.log('CODIGO PADRON ='+this.frmRevaluacionpadron.get('nCodigoPadron')?.value);
    const request = { codigoPadron:this.frmRevaluacionpadron.get('nCodigoPadron')?.value} as PadronBuscarRequest
-   this.revaluacionService.ListarRevaluacionesPorPadron<RevaluacionPadronResponse>(request).
-   subscribe({
+   this.revaluacionService.ListarRevaluacionesPorPadron<RevaluacionPadronResponse>(request)
+   .pipe(
+         finalize(() => {
+           console.log('Finalizó buscarRevaluacionPadron');
+         })
+       )
+   .subscribe({
     next: (data) => {
       if (data.status === '1') {
         console.log('data:', data.data);

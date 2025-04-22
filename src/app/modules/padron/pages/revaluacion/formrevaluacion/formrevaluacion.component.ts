@@ -12,6 +12,7 @@ import { RevaluacionRequest } from '@principal/model/padron/request/RevaluacionR
 import { MatSort } from '@angular/material/sort';
 import { ComboGenericoResponse } from '@principal/model/padron/response/ComboGenericoResponse';
 import {MensajeComponent} from '@compartido/component/mensaje/mensaje.component'
+import { finalize } from 'rxjs';
  
  
 @Component({
@@ -137,8 +138,14 @@ constructor(
     grupoesquema : "" 
   } as RevaluacionRequest;
 
-  this.revaluacionService.obtenerTodasRevaluaciones<RevaluacionResponse>(request).
-   subscribe({
+  this.revaluacionService.obtenerTodasRevaluaciones<RevaluacionResponse>(request)
+  .pipe(
+    finalize(() => {
+      this.cargando=false;
+      console.log('Finalizó listarTodasRevaluaciones');
+    })
+  )
+  .subscribe({
     next: (data) => {
       if (data.status === '1') {
         this.cargando=true;
@@ -148,11 +155,7 @@ constructor(
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         });
-
-       /* setTimeout(() => {
-          console.log("Retrasado por 1 segundo.");
-        }, 5000);*/
-        this.cargando=false;
+        
       }else{
         console.log('error al consultar');
         this.mostrarMensaje('2 OCURRIO UN ERROR',data.message,'var(--mensaje-color-error)');
@@ -176,23 +179,27 @@ constructor(
       grupoesquema : this.frmRevaluacion.get('cbTipoEsquema')?.value
     } as RevaluacionRequest;
 
-    this.revaluacionService.obtenerTodasRevaluaciones<RevaluacionResponse>(request).
-    subscribe({
+    this.revaluacionService.obtenerTodasRevaluaciones<RevaluacionResponse>(request)
+    .pipe(
+          finalize(() => { 
+            this.cargando=false;
+            console.log('Finalizó buscarRevaluacionCriterio');
+          })
+        )
+    .subscribe({
       next: (data) => {
         if (data.status === '1') {
           this.cargando=true;
           this.respuesta = data.data;
           this.dataSource =new MatTableDataSource<RevaluacionResponse>(data.data);
-        setTimeout(() => {
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-        });
-        console.log("cargando");
-        this.cargando=false;
+          setTimeout(() => {
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          });
+
         }else{
           this.cargando=false;
           console.log('error al consultar');
-          
           this.mostrarMensaje('5 OCURRIO UN ERROR',data.message,'var(--mensaje-color-error)');
           
         }
@@ -213,8 +220,14 @@ constructor(
   }
 
   listarTiposEsquema(){
-    this.revaluacionService.listarGrupoEsquema<ComboGenericoResponse>('GRUPOESQUEMATIM').
-    subscribe({
+    this.revaluacionService.listarGrupoEsquema<ComboGenericoResponse>('GRUPOESQUEMATIM')
+    .pipe(
+      finalize(() => {
+        
+        console.log('Finalizó la petición del padrón');
+      })
+     )
+    .subscribe({
       next: (data)=>{
         if(data.status === '1'){
          // console.log("---- grupo esquema"+data.data);

@@ -15,18 +15,11 @@ export class InformacionComponent implements OnInit {
   pidrevaluacion:number=0;
 
   ngOnInit(): void {
-    console.log('....'+this.data.tipo);
-    console.log('....'+this.data.expediente);
-    console.log('....'+this.data.documento);
-    console.log('....'+this.data.proceso); 
-    console.log('....'+this.data.idrevaluacion);
     this.pidrevaluacion=this.data.idrevaluacion;
     this.cargarFormulario(this.data.tipo,this.data.expediente,this.data.documento,this.data.proceso);
   }
  
-  onInput(event: Event) {
-   console.log('....'+this.data);
-  }
+  onInput(event: Event) { }
 
   onCancel(): void { 
     this.dialogRef.close(); 

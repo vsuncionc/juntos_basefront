@@ -5,6 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ListaMoPorRevaluacionResponse } from '@principal/model/padron/response/ListaMoPorRevaluacionResponse';
 import { RevaluacionRequest } from '@principal/model/padron/request/RevaluacionRequest'; 
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-mobjetivos',
@@ -41,8 +42,13 @@ constructor(
       criterio : "",
       grupoesquema : "" 
     } as RevaluacionRequest
-   this.revaluacionService.listarMoPorRevaluacion<ListaMoPorRevaluacionResponse>(request).
-    subscribe({
+   this.revaluacionService.listarMoPorRevaluacion<ListaMoPorRevaluacionResponse>(request)
+   .pipe(
+         finalize(() => {
+           console.log('Finalizó listarMoPorRevaluacion');
+         })
+     )
+   .subscribe({
       next: (data) => {
         if(data.status === '1'){
           this.listaMoPorHogar=data.data;

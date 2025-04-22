@@ -28,8 +28,7 @@ export class HogaresActosComponent implements OnInit {
    this.listarHogaresAptosPreCierre();
   }
 
-  listarHogaresAptosPreCierre(){
-    console.log("*************"+this.lsHogaresAptosPreCierre);
+  listarHogaresAptosPreCierre(){ 
      this.dataSource =new MatTableDataSource<HogaresPreValidadosAptosResponse>(this.lsHogaresAptosPreCierre);
      setTimeout(() => {
       this.dataSource.paginator = this.paginator;

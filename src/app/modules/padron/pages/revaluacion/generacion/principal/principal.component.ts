@@ -71,8 +71,13 @@ export class PrincipalComponent  implements OnInit{
    }
 
   cargarMiembrosHogar(){
-   this.revaluacionService.listarHogarRevPostSeleccionados<ListaHogarSeleccionadosRevaResponse>(this.listaRevaluacionSeleccionada).
-    subscribe({
+   this.revaluacionService.listarHogarRevPostSeleccionados<ListaHogarSeleccionadosRevaResponse>(this.listaRevaluacionSeleccionada)
+   .pipe(
+    finalize(() => { 
+      console.log('Finalizó la petición del padrón');
+     })
+    )
+   .subscribe({
       next: (data) => {
         if (data.status === '1') {
           this.cargando = true;
@@ -91,8 +96,13 @@ export class PrincipalComponent  implements OnInit{
   }
 
   cargarMiembrosObjetivos(){
-    this.revaluacionService.listarMoRevPostSeleccionados<ListaMoRevaluacionResponse>(this.listaRevaluacionSeleccionada).
-    subscribe({
+    this.revaluacionService.listarMoRevPostSeleccionados<ListaMoRevaluacionResponse>(this.listaRevaluacionSeleccionada)
+    .pipe(
+      finalize(() => { 
+        console.log('Finalizó la petición del padrón');
+      })
+    )
+    .subscribe({
       next: (data)=>{
          if(data.status === '1'){
           this.listaMoSeleccionadoRevPost = data.data;

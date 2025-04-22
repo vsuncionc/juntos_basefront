@@ -29,9 +29,7 @@ export class HogareSuspendidosComponent implements OnInit {
     this.listarHogarSuspendidosPreCierre();
   }
 
-  listarHogarSuspendidosPreCierre(){
-    console.log("lsHogaresSuspendidosPreCierre",this.lsHogaresSuspendidosPreCierre.length);
-    console.log("*************"+this.lsHogaresSuspendidosPreCierre);
+  listarHogarSuspendidosPreCierre(){ 
     this.dataSource =new MatTableDataSource<HogaresPreValidadoSuspendidosResponse>(this.lsHogaresSuspendidosPreCierre);
     setTimeout(() => {
      this.dataSource.paginator = this.paginator;
