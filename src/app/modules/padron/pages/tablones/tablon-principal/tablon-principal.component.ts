@@ -7,7 +7,6 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MensajeComponent } from '@compartido/component/mensaje/mensaje.component';
-import { PadronService } from '@modulos/padron/service/padron.service';
 import { TablonService } from '@modulos/padron/service/tablon.service';
 import { TablonBuscarRequest } from '@principal/model/padron/request/TablonBuscarRequest';
 import { ComboGenericoResponse } from '@principal/model/padron/response/ComboGenericoResponse';
@@ -27,8 +26,7 @@ export class TablonPrincipalComponent  implements OnInit{
     private router: ActivatedRoute,
     private tablonService: TablonService,
     private dialog: MatDialog,
-    private datePipe: DatePipe,
-    private padronService: PadronService
+    private datePipe: DatePipe
   ){}
 
   frmTablon!: FormGroup;

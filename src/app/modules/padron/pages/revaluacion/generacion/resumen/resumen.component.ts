@@ -6,7 +6,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { MensajeComponent } from '@compartido/component/mensaje/mensaje.component';
 import { PadronBuscarRequest } from '@principal/model/padron/request/PadronBuscarRequest';
 import { ResumenGeneracionPadronResponse } from '@principal/model/padron/response/ResumenGeneracionPadronResponse';
-import { saveAs } from 'file-saver';
+import saveAs from 'file-saver';
 
 
 
@@ -84,7 +84,7 @@ export class ResumenComponent implements OnInit {
 descargarReporte(){
   this.padronservice.descargaReportePadronGenerado(this.codigoPadron).
   subscribe((data)=>{
-    saveAs(data,`ReportePadron_${this.codigoPadron}.xlsx`);
+    saveAs(data,`ReporteResumen_${this.codigoPadron}.xlsx`);
   });
 }
 

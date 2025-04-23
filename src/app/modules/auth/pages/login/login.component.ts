@@ -1,7 +1,9 @@
 import { AuthService } from './../../service/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { MensajeComponent } from '@compartido/component/mensaje/mensaje.component';
 import { UsuarioLoginRequest } from '@principal/model/padron/request/UsuarioLoginRequest';
 import { UsuarioLogeadoResponse } from '@principal/model/padron/response/UsuarioLogeadoResponse';
 import { CookieService } from 'ngx-cookie-service';
@@ -19,6 +21,7 @@ export class LoginComponent  implements OnInit{
   constructor(
     private router: Router,
     private authService: AuthService,
+    private dialog: MatDialog,
     private cookieService: CookieService
   ) {}
 
@@ -61,10 +64,19 @@ export class LoginComponent  implements OnInit{
       error: (error) => { 
         console.log('Error en la petición:', error);
         this.cookieService.delete('token', '/');
+        this.mostrarMensaje('OCURRIO ERROR','Usuario/Contraseña incorrectos','var(--mensaje-color-error)');
       }
     });
  
   }
+
+
+   mostrarMensaje(titulo_p:string,mensaje_p:string,color_p:string){
+    const dialogRef = this.dialog.open(MensajeComponent, {
+      width: '500px',
+      data: { titulo: titulo_p ,mensaje: mensaje_p,colorTitulo: color_p }
+   });
+   }
 
   
 }

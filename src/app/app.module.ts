@@ -10,7 +10,7 @@ import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';    
  
 import { HttpClientModule } from '@angular/common/http';
-import { TokenInterceptor } from '@principal/interceptors/TokenInterceptor';
+import { TokenInterceptor } from './core/interceptors/session-token.interceptor';
 registerLocaleData(localePy,'es')
 
 @NgModule({

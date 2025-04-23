@@ -64,6 +64,11 @@ constructor(
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         });
+
+        if(data.data.length === 0){
+          this.mostrarMensaje('INFORMACION','No se encontraron resultados','var(--mensaje-color-informativo)');
+        }
+        
        } else {
         this.mostrarMensaje('OCURRIO UN ERROR','No se encontraron resultados','var(--mensaje-color-informativo)');
         console.log('error al consultar');
