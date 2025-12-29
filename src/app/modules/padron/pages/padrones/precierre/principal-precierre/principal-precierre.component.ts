@@ -42,6 +42,7 @@ export class PrincipalPrecierreComponent implements OnInit {
   formGenerarPadronCierre!: FormGroup;
   pcontinua1! : string;
   pcontinua2! : string;
+  botonReportePreCierre: boolean = true;
   private _formBuilder = inject(FormBuilder);
 
 
@@ -69,7 +70,7 @@ export class PrincipalPrecierreComponent implements OnInit {
   @ViewChild('stepper') private myStepper!: MatStepper;
 
   vistaPreviaFormGroup = this._formBuilder.group({
-    strUsuario : ['SCUTIPA'],
+    strUsuario : ['EASENCIO'],
     strCantidadHogares : [0],
     strMontoPagar : [0],
     strFechaPreCierre : [''], 
@@ -77,7 +78,7 @@ export class PrincipalPrecierreComponent implements OnInit {
   });
 
   resumenPreCierreFormGroup = this._formBuilder.group({
-    strUsuarioResumen : ['SCUTIPA'],
+    strUsuarioResumen : ['EASENCIO'],
     strCantidadHogaresResumen : [0],
     strMontoPagarResumen : [0],
     strFechaPreCierreResumen : [''] ,
@@ -85,7 +86,7 @@ export class PrincipalPrecierreComponent implements OnInit {
   });
 
   cierreFormGroup = this._formBuilder.group({
-    strUsuarioCierre : ['SCUTIPA'],
+    strUsuarioCierre : ['EASENCIO'],
     strCantidadHogaresCierre : [0],
     strMontoPagarCierre : [0],
     strFechaCierre : ['']
@@ -152,8 +153,8 @@ export class PrincipalPrecierreComponent implements OnInit {
         }
       },
       error: (error) => {
-        console.error('Error al cerrar el diálogo:', error);
-        this.mostrarMensaje('OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
+        console.error('Error al cerrar el diálogo:', error.message);
+        this.mostrarMensaje('OCURRIO UN ERROR',error.message,'var(--mensaje-color-error)');
       }
     });
   }
@@ -163,7 +164,7 @@ export class PrincipalPrecierreComponent implements OnInit {
 // *****************  Funciones para el formulario Vistaprevia precierre ***********************
    listarHogaresVistaPreviaCierre(){
     this.listaRecibida = this.padronService.getDatoslsHgSel();
-    console.log("hoagres procesar ="+this.listaRecibida);
+    console.log("hogares procesar ="+this.listaRecibida);
     const request: PadronSeleccionHogaresRequest = {
       idetpadrones : this.listaRecibida
     };
@@ -197,8 +198,8 @@ export class PrincipalPrecierreComponent implements OnInit {
           
       },
       error: (error) => { 
-        console.error('Error en la petición:', error);
-        this.mostrarMensaje('OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
+        console.error('Error en la petición:', error.message);
+        this.mostrarMensaje('OCURRIO UN ERROR',error.message,'var(--mensaje-color-error)');
       }
     });
    }
@@ -236,6 +237,7 @@ export class PrincipalPrecierreComponent implements OnInit {
   .pipe(
     finalize(() => {
       this.cargando = false; // Finaliza el spinner
+      this.botonReportePreCierre = false;
       console.log('Finalizó la petición del padrón');
     })
   )
@@ -252,8 +254,8 @@ export class PrincipalPrecierreComponent implements OnInit {
         
     },
     error: (error) => {
-      console.error('Error en la petición:', error);
-      this.mostrarMensaje('OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
+      console.error('Error en la petición:', error.message);
+      this.mostrarMensaje('OCURRIO UN ERROR',error.message,'var(--mensaje-color-error)');
     }
   });
  
@@ -301,8 +303,8 @@ ObtenerInformacionCabeceraResumenPreCierre(codigo:number){
         
     },
     error: (error) => {
-      console.error('Error en la petición:', error);
-      this.mostrarMensaje('OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
+      console.error('Error en la petición:', error.message);
+      this.mostrarMensaje('OCURRIO UN ERROR',error.message,'var(--mensaje-color-error)');
     }
   });
   
@@ -337,8 +339,8 @@ this.padronService.listaHogaresAptosPrecierre<HogaresPreValidadosAptosResponse>(
       } 
     },
     error: (error) => {
-      console.error('Error en la petición:', error);
-      this.mostrarMensaje('OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
+      console.error('Error en la petición:', error.message);
+      this.mostrarMensaje('OCURRIO UN ERROR',error.message,'var(--mensaje-color-error)');
     },
   });
 
@@ -363,7 +365,7 @@ this.padronService.listaHogaresSuspendidosPrecierre<HogaresPreValidadoSuspendido
       } 
     },
     error: (error) => {
-      console.error('Error en la petición:', error);
+      console.error('Error en la petición:', error.message);
     },
   });
 }
@@ -411,8 +413,8 @@ generarCierre(){
        this.obtenerInformacionCabeceraResumenCierre(this.codigoPrecierre); 
     },
     error: (error) => {
-      console.error('Error en la petición:', error);
-      this.mostrarMensaje('OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
+      console.error('Error en la petición:', error.message);
+      this.mostrarMensaje('OCURRIO UN ERROR',error.message,'var(--mensaje-color-error)');
     }
   });
 }
@@ -446,8 +448,8 @@ obtenerInformacionCabeceraResumenCierre(codigo:number){
         
     },
     error: (error) => {
-      this.mostrarMensaje('OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
-      console.error('Error en la petición:', error);
+      this.mostrarMensaje('OCURRIO UN ERROR',error.message,'var(--mensaje-color-error)');
+      console.error('Error en la petición:', error.message);
     }
   });
 }
@@ -480,9 +482,9 @@ obtenerHogaresAptosCierre(codigo:number){
 
     },
     error: (error) => {
-      console.error('Error en la petición:', error);
+      console.error('Error en la petición:', error.message);
       this.cargando=false;
-      this.mostrarMensaje('3 OCURRIO UN ERROR',error,'var(--mensaje-color-error)');
+      this.mostrarMensaje('3 OCURRIO UN ERROR',error.message,'var(--mensaje-color-error)');
     }
 
 

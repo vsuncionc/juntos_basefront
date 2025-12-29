@@ -9,7 +9,6 @@ import { DatePipe, registerLocaleData } from '@angular/common';
 import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';    
  
-import { HttpClientModule } from '@angular/common/http';
 import { TokenInterceptor } from './core/interceptors/session-token.interceptor';
 registerLocaleData(localePy,'es')
 
@@ -19,10 +18,10 @@ registerLocaleData(localePy,'es')
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    HttpClientModule
+    AppRoutingModule
   ],
   providers: [
+    provideHttpClient(),
     { provide: 
       HTTP_INTERCEPTORS, 
       useClass: TokenInterceptor, 
@@ -30,7 +29,6 @@ registerLocaleData(localePy,'es')
     },
     provideAnimationsAsync(),
     {provide: LOCALE_ID,useValue: 'es'},
-    provideHttpClient(),
     DatePipe,
     CookieService
   ],

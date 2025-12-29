@@ -123,7 +123,7 @@
              <div class="row">
 
               <div class="col-sm-6" style="text-align: right">
-                <button mat-fab extended class="boton_general" (click)="this.descargarReportePrecierreTodos()">
+                <button mat-fab extended class="boton_general" [disabled]="this.botonReportePreCierre"  (click)="this.descargarReportePrecierreTodos()">
                   <mat-icon>library_books</mat-icon>
                   DESCARGAR REPORTE
                 </button>
@@ -187,12 +187,12 @@
       </mat-card>    
 
       <app-spiner *ngIf="this.cargando"></app-spiner><br>
-      <div class="title_center"> Lista de Hoagres Actos Validados</div>
+      <div class="title_center"> Lista de Hogares Actos Validados</div>
       <div class="row">
         <app-hogares-actos-cierre *ngIf="this.lsHogaresAptosValidados.length>0"  [lsHogaresActosValidados]="this.lsHogaresAptosValidados"></app-hogares-actos-cierre>
       </div>
         <div style="text-align: center;">
-          <button mat-fab extended class="boton_general" (click)="descargarReporteHogaresValidados(this.codigoPrecierre)" *ngIf="this.listaHogaresAptosPrecierre.length>0">
+          <button mat-fab extended class="boton_general"  [disabled]="this.botonReportePreCierre" (click)="descargarReporteHogaresValidados(this.codigoPrecierre)" *ngIf="this.listaHogaresAptosPrecierre.length>0">
             <mat-icon>library_add_check</mat-icon>
               DESCARGAR REPORTE
           </button>

@@ -218,4 +218,8 @@ lista: number[] = [];
    });
    }
 
+   limpiar(){
+    this.formProcesarPadron.reset();
+   }
+
 }

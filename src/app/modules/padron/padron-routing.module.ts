@@ -17,7 +17,7 @@ const routes: Routes = [
   },
   {
     path:'procesar',component:PrincipalComponent,
-    data: { title: 'PROCESAMIENTO REVALIDACIONES' },
+    data: { title: 'GENERACION PADRON REVALUACION' },
     canActivate:[SessionGuard] 
   },
   {

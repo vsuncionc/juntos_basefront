@@ -17,6 +17,6 @@ export class MenuComponent {
   cerrarSession(){
     console.log("inresee");
     this.cookieService.delete('token', '/');
-    this.router.navigate(["/login"]);
+    this.router.navigate(['/']);
   }
 }

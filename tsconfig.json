@@ -24,7 +24,10 @@
       "@datos/*"      : ["src/app/data/*"],
       "@principal/*"  : ["src/app/core/*"],
       "@compartido/*" : ["src/app/shared/*"],
-      "@envieromen/*" : ["src/environments/*"]
+      "@envieromen/*" : ["src/environments/*"],
+      "file-saver-es": [
+        "@types/file-saver"
+      ]
     },
     "lib": [
       "ES2022",

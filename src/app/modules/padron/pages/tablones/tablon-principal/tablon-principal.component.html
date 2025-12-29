@@ -116,7 +116,7 @@
 
         <!-- Position Column -->
         <ng-container matColumnDef="MONTO">
-          <th mat-header-cell *matHeaderCellDef> MONTO </th>
+          <th mat-header-cell *matHeaderCellDef> MONTO S/</th>
           <td mat-cell *matCellDef="let element"> {{element.monto}} </td>
         </ng-container>
 
@@ -138,7 +138,7 @@
       <div class="row" style="padding-top: 5px;">
         <div class="col-sm-14 text-end" >
           <mat-paginator  
-          [pageSizeOptions]="[6]" 
+          [pageSizeOptions]="[10,14]" 
           showFirstLastButtons
           aria-label="Select page of periodic elements">
          </mat-paginator>

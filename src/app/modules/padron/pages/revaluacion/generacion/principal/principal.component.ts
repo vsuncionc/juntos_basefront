@@ -48,6 +48,8 @@ export class PrincipalComponent  implements OnInit{
   MontoTotal: number=0;
   codpadron: number=0;
 
+  btnprocesar: boolean = true;
+
   ngOnInit(): void { 
     this.route.data.subscribe(data => {
       this.title = data['title'];
@@ -55,10 +57,7 @@ export class PrincipalComponent  implements OnInit{
     this.validarCarga();
     this.cargarFormulario();
     this.cargarMiembrosHogar();
-    this.cargarMiembrosObjetivos();
-    
-
-     
+    this.cargarMiembrosObjetivos(); 
   }
 
   validarCarga(){
@@ -82,7 +81,7 @@ export class PrincipalComponent  implements OnInit{
         if (data.status === '1') {
           this.cargando = true;
           this.listaHogarSeleccionadoRevPost=data.data;
-          this.informcionCabecera()
+          this.informcionCabecera();
           this.cargando = false;
         }
       },
@@ -181,6 +180,9 @@ export class PrincipalComponent  implements OnInit{
     for(let posicion of this.listaHogarSeleccionadoRevPost){
        this.MontoTotal = this.MontoTotal+posicion.monto;
     }
+    if(this.cantidadHogares>0){
+      this.btnprocesar = false;
+    }
   }
 
 
@@ -190,5 +192,7 @@ export class PrincipalComponent  implements OnInit{
       data: { titulo: titulo_p ,mensaje: mensaje_p,colorTitulo: color_p }
    });
    }
+
+ 
 
 }
